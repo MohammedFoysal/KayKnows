@@ -29,10 +29,10 @@ INSERT INTO capabilities VALUES (5, "Project Management", 5);
 INSERT INTO capabilities VALUES (6, "Travel", 6 );
 
 -- roles
-INSERT INTO roles VALUES (1, "Sales Director","role spec", 1, 1, 2);
-INSERT INTO roles VALUES (2, "Software Engineer","role spec",2 , 2, 6);
-INSERT INTO roles VALUES (3, "Agile Lead", "role spec",3, 3, 4);
-INSERT INTO roles VALUES (4, "User Researcher","role spec", 4, 4, 7);
-INSERT INTO roles VALUES (5, "Team Leader","role spec", 5, 5, 5);
-INSERT INTO roles VALUES (6, "Travel Associate","role spec", 6, 6, 7);
+INSERT INTO roles VALUES (1, "Sales Director","role spec","Description", 1, 1, 2);
+INSERT INTO roles VALUES (2, "Software Engineer","role spec","Description",2 , 2, 6);
+INSERT INTO roles VALUES (3, "Agile Lead", "role spec","Description",3, 3, 4);
+INSERT INTO roles VALUES (4, "User Researcher","role spec","Description", 4, 4, 7);
+INSERT INTO roles VALUES (5, "Team Leader","role spec","Description", 5, 5, 5);
+INSERT INTO roles VALUES (6, "Travel Associate","role spec","Description", 6, 6, 7);
 
