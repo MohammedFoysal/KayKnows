@@ -14,7 +14,6 @@ const start = module.exports = function makeServer() {
     if (err.errno === 3819) {
       err.code = "ER_CHECK_CONSTRAINT_VIOLATED";
     }
-    //  console.error(`${err.errno} (${err.code}) : ${err.sqlMessage}`);
     res.status(500).send({
       message: err
     });
