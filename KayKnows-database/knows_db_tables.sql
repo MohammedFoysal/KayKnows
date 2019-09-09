@@ -25,6 +25,7 @@ CREATE TABLE IF NOT EXISTS roles(
     role_id SMALLINT UNSIGNED PRIMARY KEY auto_increment,
     role_name VARCHAR(100) NOT NULL,
     role_spec VARCHAR(300) NULL,
+    role_description VARCHAR(500) NULL,
     capability_id SMALLINT UNSIGNED,
     family_id SMALLINT UNSIGNED,
     band_id SMALLINT UNSIGNED,
