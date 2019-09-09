@@ -23,8 +23,6 @@ const start = module.exports = function makeServer() {
     console.log('express started on port 8002');
   });
 
-
-
   return server;
 };
 
