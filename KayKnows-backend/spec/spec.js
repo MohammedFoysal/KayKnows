@@ -34,13 +34,53 @@ describe('loading express', () => {
 
 // These tests assume that the dummy data script has been run
 describe('get endpoints for base tables', () => {
-  it('should respond to /capabilities', function () {
-    request(server)
+  it('should respond to /capabilities', () => {
+    return request(server)
     .get('/capabilities')
     .expect(200)
-    .expect(function (res) {
-      assert(res.length, 6);
+    .then(res => {
+      let json = JSON.parse(res.text);
+      assert(json.length === 11);
     })
   });
-  // TODO Rest of the get end point tests
+
+  it('should respond to /roles', () => {
+    return request(server)
+    .get('/roles')
+    .expect(200)
+    .then(res => {
+      let json = JSON.parse(res.text);
+      assert(json.length === 23);
+    })
+  });
+
+  it('should respond to /families', () => {
+    return request(server)
+    .get('/families')
+    .expect(200)
+    .then(res => {
+      let json = JSON.parse(res.text);
+      assert(json.length === 6);
+    })
+  });
+
+  it('should respond to /bands', () => {
+    return request(server)
+    .get('/bands')
+    .expect(200)
+    .then(res => {
+      let json = JSON.parse(res.text);
+      assert(json.length === 9);
+    })
+  });
+
+  it('should respond to /all', function () {
+    return request(server)
+    .get('/all')
+    .expect(200)
+    .then(res => {
+      let json = JSON.parse(res.text);
+      assert(json.length === 23);
+    })
+  });
 });
