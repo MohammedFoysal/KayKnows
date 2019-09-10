@@ -4,7 +4,8 @@
   "description": "Backend for KayKnows",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "nodemon index.js",
+    "test": "NODE_ENV=test jasmine"
   },
   "author": "",
   "license": "ISC",
@@ -13,7 +14,6 @@
     "dotenv": "^8.1.0",
     "express": "^4.17.1",
     "express-validator": "^6.2.0",
-    "moment": "^2.24.0",
     "mysql": "^2.17.1"
   },
   "devDependencies": {
