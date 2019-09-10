@@ -18,12 +18,35 @@ const start = module.exports = function makeServer() {
     console.error(`${err.errno} (${err.code}) : ${err.sqlMessage}`);
 
     res.status(500).send({
+      successful: false,
       message: err.sqlMessage
+    });
+  }
+
+  function handleAsyncError(result, res) {
+    var data = "Unknown Error";
+
+    if (!result.successful) {
+      data = result.data;
+    }
+
+    res.status(500).send({
+      successful: false,
+      data: data
     });
   }
 
   const server = app.listen(8002, function () {
     console.log('express started on port 8002');
+  });
+
+  app.get('/families', (req, res) => {
+    db.getFamilies((error, rows) => {
+      if (error) {
+        return handleError(error, req, res);
+      }
+      res.send(rows)
+    })
   });
 
   app.get('/capabilities', (req, res) => {
@@ -35,12 +58,12 @@ const start = module.exports = function makeServer() {
     })
   });
 
-  app.get('/families', (req, res) => {
-    db.getFamilies((error, rows) => {
+  app.get('/capabilities/:family_id', (req, res) => {
+    db.getCapabilitiesByFamilyId(req.params.family_id, (error, rows) => {
       if (error) {
         return handleError(error, req, res);
       }
-      res.send(rows)
+      res.send(rows);
     })
   });
 
@@ -69,6 +92,27 @@ const start = module.exports = function makeServer() {
       }
       res.send(rows);
     })
+  });
+
+  app.get('/family-filters', async (req, res) => {
+    try {
+      const families = await db.getFamilies();
+
+      for (family of families) {
+        const capabilities = await db.getAsyncCapabilitiesByFamilyId(family.family_id);
+
+        family.isSelected = false;
+        family.capabilities = capabilities;
+
+        for (capability of capabilities) {
+          capability.isSelected = false;
+        } 
+      }
+    
+      res.send(families);
+    } catch (err) {
+      return handleError(err, req, res);
+    }
   });
 
   return server;

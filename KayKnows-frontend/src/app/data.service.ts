@@ -7,27 +7,18 @@ import {HttpClient} from '@angular/common/http';
 })
 export class DataService {
 
-  families;
+  real_checkbox_data: any[];
+  
   http: HttpClient;
+  flatData = [];
   nestedData = [];
-  // Manual filtering
-  familyIds = [1, 2, 3, 4, 5, 6, 7, 8];
-  capabilityIds = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14];
+  familyIds = [];
+  capabilityIds = [];
 
   constructor(http: HttpClient) {
     this.http = http;
-    this.getFamilies();
+    this.getCheckboxData();
     this.getTreeData();
-  }
-
-  getFamilies(): void {
-    this.http.get<Family[]>('/api/families').subscribe(res => {
-      if (res[0] == null) {
-        console.error(res);
-      } else {
-        this.families = res;
-      }
-    });
   }
 
   getTreeData(): void {
@@ -35,9 +26,45 @@ export class DataService {
       if (res[0] == null) {
         console.error(res);
       } else {
-        this.treeDataNested(res);
+        this.flatData = res;
+        this.treeDataNested(this.flatData);
       }
     });
+  }
+
+  getCheckboxData() {
+    this.http.get<Family[]>('/api/family-filters').subscribe(res => {
+      if (res[0] == null) {
+        console.error(res);
+      } else {
+        this.real_checkbox_data = res;
+        this.refreshFilters();
+      }
+    });
+  }
+
+  refreshFilters() {
+    var selectedFamilies = this.real_checkbox_data.filter(function (family) {
+      return family.isSelected;
+    });
+
+    this.familyIds = selectedFamilies.map(
+      family => family.family_id
+    );
+
+    var tempCapabilityIds = [];
+
+    for (const selectedFamily of selectedFamilies) {
+      for (const capability of selectedFamily.capabilities) {
+        if (capability.isSelected) {
+          tempCapabilityIds.push(capability.capability_id);
+        }
+      }
+    }
+
+    this.capabilityIds = tempCapabilityIds;
+
+    this.treeDataNested(this.flatData);
   }
 
   treeDataNested(flatData) {
@@ -45,7 +72,6 @@ export class DataService {
     const families = [];
     const capabilities = [];
     const roles = [];
-
 
     for (const element of flatData) {
       // Extract Families
@@ -77,8 +103,6 @@ export class DataService {
     });
 
     newFlat = [...families];
-
-    console.log(newFlat);
 
     this.nestedData = newFlat;
 

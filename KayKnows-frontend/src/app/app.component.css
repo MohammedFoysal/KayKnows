@@ -14,3 +14,12 @@
     margin: 20px 15px 5px 15px;
     color: #202D52;
 }
+
+.checkbox {
+    columns: 1;
+    display: inline-block;
+}
+
+.listGrid {
+    display: grid;
+}

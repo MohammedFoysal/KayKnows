@@ -44,6 +44,11 @@
 	display: inline-block;
 }
 
+.capability-item {
+	margin-left: 40px;
+	list-style-type: none;
+}
+
 /*We will use ::before and ::after to draw the connectors*/
 
 .tree li::before, .tree li::after{

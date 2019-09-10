@@ -1,3 +1,4 @@
+
 <div class="header">
   <img src="assets/logo.png" alt="Kainos Logo" />
   <div class="name">
@@ -5,6 +6,28 @@
   </div>
 </div>
 <div class="page-container">
+
+  <div class="col-md-6">
+    <b>Filters</b>
+    <br><br>
+  
+    <ul class="list-group">
+      <li class="list-group-item" *ngFor="let item of dataService.real_checkbox_data">
+        <input type="checkbox" [(ngModel)]="item.isSelected" name="list_name" value="{{item.family_id}}"
+           (ngModelChange)="checkboxChanged($event)" />
+        {{item.family_name}}
+  
+        <ul class="list-group" *ngIf="item.isSelected">
+          <li class="capability-item list-group-item" *ngFor="let capability of item.capabilities">
+            <input type="checkbox" [(ngModel)]="capability.isSelected" (ngModelChange)="checkboxChanged($event)" name="list_name" />
+            {{capability.capability_name}}
+          </li>
+        </ul>
+  
+      </li>
+    </ul>
+  
+  </div>
 
   <div class="tree-container">
     <div class="tree">
