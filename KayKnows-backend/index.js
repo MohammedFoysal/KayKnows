@@ -3,7 +3,11 @@ const start = module.exports = function makeServer() {
   const express = require('express');
   const app = express();
   const bodyParser = require('body-parser');
-  const {check, validationResult, body} = require('express-validator'); // Later use
+  const {check, validationResult, body} = require('express-validator');
+  var log4js = require('log4js');
+  var logger = log4js.getLogger();
+  app.use(log4js.connectLogger(logger, { level: process.env.LOG_LEVEL || 'info' }));
+  logger.level = 'debug';
 
   app.use(bodyParser.json());
   app.use(bodyParser.urlencoded());
@@ -15,15 +19,41 @@ const start = module.exports = function makeServer() {
       err.code = "ER_CHECK_CONSTRAINT_VIOLATED";
     }
 
-    console.error(`${err.errno} (${err.code}) : ${err.sqlMessage}`);
+    logger.error(`${err.errno} (${err.code}) : ${err.sqlMessage}`);
 
     res.status(500).send({
+      successful: false,
       message: err.sqlMessage
     });
   }
 
+  function handleAsyncError(result, res) {
+    var data = "Unknown Error";
+
+    if (!result.successful) {
+      data = result.data;
+    }
+    let payload = {
+      successful: false,
+      data: data
+    };
+
+    logger.error(payload);
+
+    res.status(500).send(payload);
+  }
+
   const server = app.listen(8002, function () {
-    console.log('express started on port 8002');
+    logger.info('express started on port 8002');
+  });
+
+  app.get('/families', (req, res) => {
+    db.getFamilies((error, rows) => {
+      if (error) {
+        return handleError(error, req, res);
+      }
+      res.send(rows)
+    })
   });
 
   app.get('/capabilities', (req, res) => {
@@ -35,12 +65,12 @@ const start = module.exports = function makeServer() {
     })
   });
 
-  app.get('/families', (req, res) => {
-    db.getFamilies((error, rows) => {
+  app.get('/capabilities/:family_id', (req, res) => {
+    db.getCapabilitiesByFamilyId(req.params.family_id, (error, rows) => {
       if (error) {
         return handleError(error, req, res);
       }
-      res.send(rows)
+      res.send(rows);
     })
   });
 
@@ -69,6 +99,27 @@ const start = module.exports = function makeServer() {
       }
       res.send(rows);
     })
+  });
+
+  app.get('/family-filters', async (req, res) => {
+    try {
+      const families = await db.getFamilies();
+
+      for (family of families) {
+        const capabilities = await db.getAsyncCapabilitiesByFamilyId(family.family_id);
+
+        family.isSelected = false;
+        family.capabilities = capabilities;
+
+        for (capability of capabilities) {
+          capability.isSelected = false;
+        } 
+      }
+    
+      res.send(families);
+    } catch (err) {
+      return handleError(err, req, res);
+    }
   });
 
   return server;

@@ -1,6 +1,9 @@
 require('dotenv').config({path: 'mysql.env'})
-
+const util = require('util');
 const mysql = require('mysql');
+var log4js = require('log4js');
+var logger = log4js.getLogger();
+logger.level = 'debug';
 const env = process.env.NODE_ENV === 'test' || 'dev';
 
 const connection = (env === 'dev') ? process.env.DB_DATABASE
@@ -13,11 +16,13 @@ const db = mysql.createConnection({
   database: connection
 });
 
+const query = util.promisify(db.query).bind(db);
+
 db.connect(err => {
   if (err) {
     throw err;
   }
-  console.log("Connected to MySQL");
+  logger.info("Connected to MySQL");
 });
 
 exports.getAll = function (callback) {
@@ -41,8 +46,8 @@ exports.getCapabilities = function (callback) {
       })
 };
 
-exports.getFamilies = function (callback) {
-  db.query('SELECT * FROM families',
+exports.getCapabilitiesByFamilyId = function (family_id, callback) {
+  db.query('SELECT * FROM capabilities WHERE family_id = ?', [family_id],
       (error, rows) => {
         if (error) {
           return callback(error, null);
@@ -70,6 +75,16 @@ exports.getBands = function (callback) {
         callback(null, rows);
       })
 };
+
+exports.getFamilies = async () => {
+  return await query("SELECT * FROM families");
+}
+
+exports.getAsyncCapabilitiesByFamilyId = async (family_id) => {
+  return await query("SELECT * FROM capabilities WHERE family_id = ?", [family_id]);
+}
+
+
 
 
 
