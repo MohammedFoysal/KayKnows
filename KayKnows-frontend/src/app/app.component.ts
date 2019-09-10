@@ -108,15 +108,29 @@ export class AppComponent {
     var newFlat = [];
 
     for (let i = 0; i < this.flat.length; i++) {
-      if (this.family_ids.includes(this.flat[i].family_id) && 
-      this.capability_ids.includes(this.flat[i].capability_id)) {
+      if (this.family_ids.includes(this.flat[i].family_id)) {
         newFlat.push(this.flat[i]);
       }
     }
 
     let nestedData = this.getFamiliesNested(newFlat);
+
+    for (var familyIndex in nestedData) {
+      let family = nestedData[familyIndex];
+      
+      for (var capabilityIndex in family.children) {
+        let capability = nestedData[familyIndex].children[capabilityIndex];
+        
+        if (!this.existsInFilteredCapabilities(capability, this.capability_ids)) {
+          nestedData[familyIndex].children.splice(capabilityIndex, 1)
+        }
+
+        console.log(capability)
+      }
+    }
+
     this.data = nestedData;
-    console.log(nestedData);
+    // console.log(nestedData);
 
 
 
@@ -126,6 +140,16 @@ export class AppComponent {
     // this.data.filter(function(obj) {
     //   return this.familyIdExists(obj, this.family_ids);
     // });
+  }
+
+  existsInFilteredCapabilities(capability, capability_ids) {
+    for (let i = 0; i < capability_ids.length; i++) {
+      if (capability.capability_id === capability_ids[i]) {
+        return true;
+      }
+    }
+
+    return false;
   }
 
   getFamiliesNested(flatData) {
