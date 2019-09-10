@@ -36,3 +36,22 @@ exports.getFamilies = function (callback) {
       })
 };
 
+exports.getRoles = function (callback) {
+  db.query('SELECT * FROM roles',
+      (error, rows) => {
+        if (error) {
+          return callback(error, null);
+        }
+        callback(null, rows);
+      })
+};
+
+exports.getBands = function (callback) {
+  db.query('SELECT * FROM bands',
+      (error, rows) => {
+        if (error) {
+          return callback(null, error);
+        }
+        callback(rows, null)
+      })
+};

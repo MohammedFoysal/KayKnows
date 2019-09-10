@@ -28,15 +28,37 @@ const start = module.exports = function makeServer() {
 
   app.get('/capabilities', (req, res) => {
     db.getCapabilities((error, rows) => {
-      if (error) return handleError(error, req, res);
+      if (error) {
+        return handleError(error, req, res);
+      }
       res.send(rows)
     })
   });
 
   app.get('/families', (req, res) => {
     db.getFamilies((error, rows) => {
-      if (error) return handleError(error, req, res);
+      if (error) {
+        return handleError(error, req, res);
+      }
       res.send(rows)
+    })
+  });
+
+  app.get('/roles', (req, res) => {
+    db.getRoles((error, rows) => {
+      if (error) {
+        return handleError(error, req, res);
+      }
+      res.send(rows);
+    })
+  });
+
+  app.get('/bands', (req, res) => {
+    db.getBands((error, rows) => {
+      if (error) {
+        return handleError(error, req, res);
+      }
+      res.send(rows);
     })
   });
 
