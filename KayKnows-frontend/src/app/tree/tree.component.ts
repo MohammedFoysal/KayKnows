@@ -9,9 +9,11 @@ export class TreeComponent implements OnInit {
 
     @Input() data;
 
-    constructor() { }
+    constructor() { 
+    }
 
     ngOnInit() {
+        
     }
 
 }
