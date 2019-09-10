@@ -27,8 +27,7 @@ jasmine.getEnv().addReporter(new HtmlReporter({
 // Tests below me
 describe('loading express', () => {
   it('should load without errors', () => {
-    assert(server);
-    assert(server != null);
+    expect(server).toBeTruthy();
   });
 });
 
