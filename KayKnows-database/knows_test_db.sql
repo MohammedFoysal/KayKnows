@@ -36,9 +36,6 @@ CREATE TABLE IF NOT EXISTS roles(
     FOREIGN KEY(parent_role_id) REFERENCES roles(role_id)
 );
 
-
-USE knows_db;
-
 -- bands table
 INSERT INTO bands VALUES (1, "Executive");
 INSERT INTO bands VALUES (2, "Leadership Community");
