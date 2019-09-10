@@ -1,5 +1,40 @@
+DROP DATABASE IF EXISTS knows_test_db;
+CREATE DATABASE IF NOT EXISTS knows_test_db;
+USE knows_test_db;
 
-USE knows_db;
+CREATE TABLE IF NOT EXISTS families(
+    family_id SMALLINT UNSIGNED PRIMARY KEY auto_increment,
+    family_name VARCHAR(100) NOT NULL
+);
+
+
+CREATE TABLE IF NOT EXISTS capabilities(
+    capability_id SMALLINT UNSIGNED PRIMARY KEY auto_increment,
+    capability_name VARCHAR(100) NOT NULL,
+    family_id SMALLINT UNSIGNED,
+    FOREIGN KEY(family_id) REFERENCES families(family_id)
+);
+
+CREATE TABLE IF NOT EXISTS bands(
+    band_id SMALLINT UNSIGNED PRIMARY KEY auto_increment,
+    band_name VARCHAR(100) NOT NULL
+    -- band_colour CHAR(6)
+);
+
+CREATE TABLE IF NOT EXISTS roles(
+    role_id SMALLINT UNSIGNED PRIMARY KEY auto_increment,
+    role_name VARCHAR(100) NOT NULL,
+    role_spec VARCHAR(300) NULL,
+    role_description VARCHAR(500) NULL,
+    capability_id SMALLINT UNSIGNED,
+    family_id SMALLINT UNSIGNED,
+    band_id SMALLINT UNSIGNED,
+    parent_role_id SMALLINT UNSIGNED NULL, 
+    FOREIGN KEY(capability_id) REFERENCES capabilities(capability_id),
+    FOREIGN KEY(family_id) REFERENCES families(family_id),
+    FOREIGN KEY(band_id) REFERENCES bands(band_id),
+    FOREIGN KEY(parent_role_id) REFERENCES roles(role_id)
+);
 
 -- bands table
 INSERT INTO bands VALUES (1, "Executive");
@@ -33,8 +68,6 @@ INSERT INTO capabilities VALUES (9, "UX Design", 4);
 INSERT INTO capabilities VALUES (10, "Creative Design", 4);
 INSERT INTO capabilities VALUES (11, "People", 6);
 
-
-
 -- roles
 INSERT INTO roles VALUES (1, "Sales Director","role spec","Description", 1, 1, 2, NULL);
 INSERT INTO roles VALUES (2, "Sales Executive","role spec","Description", 1, 1, 4, NULL);
@@ -62,7 +95,6 @@ INSERT INTO roles VALUES (16, "Design Consultant","role spec","Description", 9, 
 
 INSERT INTO roles VALUES (17, "Art Director","role spec","Description", 10, 4, 4, NULL);
 INSERT INTO roles VALUES (18, "Design Consultant","role spec","Description", 10, 4, 5, NULL);
-
 
 INSERT INTO roles VALUES (19, "Team Leader","role spec","Description", 5, 5, 5, NULL);
 

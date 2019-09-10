@@ -1,6 +1,8 @@
 require('dotenv').config({path: 'mysql.env'})
 
 const mysql = require('mysql');
+const db;
+
 
 const env = process.env.NODE_ENV === 'test' || 'dev';
 
@@ -71,3 +73,6 @@ exports.getBands = function (callback) {
         callback(rows, null)
       })
 };
+
+
+
