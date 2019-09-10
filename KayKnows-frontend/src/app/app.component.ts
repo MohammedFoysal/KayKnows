@@ -14,7 +14,9 @@ export class AppComponent {
   title = 'KayKnows-frontend';
   dataService: DataService;
   data = [];
-  flat = [
+  family_ids = [1, 3, 2];
+  capability_ids = [1, 2]
+  originalFlat = [
     {
       "capability_id": 1,
       "family_id": 1,
@@ -94,17 +96,44 @@ export class AppComponent {
     }
   ];
 
+  flat = this.originalFlat;
+
   constructor(dataService: DataService) {
     this.dataService = dataService;
-    this.data = this.getFamiliesNested();
+    // this.data = this.getFamiliesNested();
+    this.filter();
   }
 
-  getFamiliesNested() {
+  filter() {
+    var newFlat = [];
+
+    for (let i = 0; i < this.flat.length; i++) {
+      if (this.family_ids.includes(this.flat[i].family_id) && 
+      this.capability_ids.includes(this.flat[i].capability_id)) {
+        newFlat.push(this.flat[i]);
+      }
+    }
+
+    let nestedData = this.getFamiliesNested(newFlat);
+    this.data = nestedData;
+    console.log(nestedData);
+
+
+
+    // this.data = newFlat;
+    // this.data = this.getFamiliesNested();
+    // console.log(this.data);
+    // this.data.filter(function(obj) {
+    //   return this.familyIdExists(obj, this.family_ids);
+    // });
+  }
+
+  getFamiliesNested(flatData) {
     var families = [];
     var capabilities = [];
     var roles = [];
 
-    this.flat.forEach(square => {
+    flatData.forEach(square => {
       if (!this.familyExists(square, families)) {
         families.push({
           family_id: square.family_id,
@@ -137,7 +166,7 @@ export class AppComponent {
       }
     });
 
-    console.log(families);
+    // console.log(families);
     // console.log(capabilities);
     // console.log(roles);
 
@@ -169,6 +198,16 @@ export class AppComponent {
   familyExists(family, families) {
     for (let i = 0; i < families.length; i++) {
       if (families[i].family_id === family.family_id) {
+        return true;
+      }
+    }
+
+    return false;
+  }
+
+  familyIdExists(family, family_ids) {
+    for (let i = 0; i < family_ids.length; i++) {
+      if (family_ids[i] === family.family_id) {
         return true;
       }
     }
