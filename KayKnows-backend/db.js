@@ -1,13 +1,25 @@
 require('dotenv').config({path: 'mysql.env'});
 
 const mysql = require('mysql');
+const db;
 
-const db = mysql.createConnection({
-  host: process.env.DB_HOST,
-  user: process.env.DB_USER,
-  password: process.env.DB_PASS,
-  database: process.env.DB_DATABASE
-});
+
+if (process.env.NODE_ENV) {
+  db = mysql.createConnection({
+    host: process.env.DB_HOST,
+    user: process.env.DB_USER,
+    password: process.env.DB_PASS,
+    database: process.env.DB_DATABASE
+  });
+}
+else{
+  db = mysql.createConnection({
+    host: process.env.TEST_DB_HOST,
+    user: process.env.TEST_DB_USER,
+    password: process.env.TEST_DB_PASS,
+    database: process.env.TEST_DB_DATABASE
+  });
+}
 
 db.connect(err => {
   if (err) {
@@ -55,3 +67,6 @@ exports.getBands = function (callback) {
         callback(rows, null)
       })
 };
+
+
+
