@@ -29,6 +29,12 @@ describe('loading express', () => {
   it('should load without errors', () => {
     expect(server).toBeTruthy();
   });
+
+  it('should fail on unknown urls', function () {
+    request(server)
+    .get('/not-me')
+    .expect(404);
+  });
 });
 
 // These tests assume that the dummy data script has been run
