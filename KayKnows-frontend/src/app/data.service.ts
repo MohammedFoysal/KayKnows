@@ -20,8 +20,26 @@ export class DataService {
             {id: 4, opened: false, label: 'grandchild2', children: []}
           ]},
           {id: 5, opened: false, label: 'Technical', children: [
-            {id: 7, opened: false, label: 'grandchild3'},
-            {id: 8, opened: false, label: 'grandchild4', children: []}
+            {id: 7, opened: false, label: 'Software Engineer'},
+            {id: 8, opened: false, label: 'Data Engineering', children: [
+              {id: 15, opened: true, label: 'Lead Software Engineer', children: [
+              {id: 16, opened: true, label: 'Software Engineer', children: [
+                {id: 17, opened: true, label: 'Software Engineer'}
+              ]},
+              ]},
+
+
+            ]},
+            {id: 14, opened: false, label: 'Data Engineering', children: []},
+            {id: 8, opened: false, label: 'Data Engineering', children: []},
+            {id: 8, opened: false, label: 'Data Engineering', children: []},
+            {id: 8, opened: false, label: 'Data Engineering', children: []},
+            {id: 8, opened: false, label: 'Data Engineering', children: []},
+            {id: 8, opened: false, label: 'Data Engineering', children: []},
+            {id: 8, opened: false, label: 'Data Engineering', children: []},
+            {id: 8, opened: false, label: 'Data Engineering', children: []},
+            {id: 8, opened: false, label: 'Data Engineering', children: []},
+            {id: 8, opened: false, label: 'Data Engineering', children: []},
           ]},
           {id: 6, opened: false, label: 'Consulting', children: [
             {id: 9, opened: false, label: 'grandchild7', children: []},
