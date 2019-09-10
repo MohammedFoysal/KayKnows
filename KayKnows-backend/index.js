@@ -62,6 +62,15 @@ const start = module.exports = function makeServer() {
     })
   });
 
+  app.get('/all', (req, res) => {
+    db.getAll((error, rows) => {
+      if (error) {
+        return handleError(error, req, res);
+      }
+      res.send(rows);
+    })
+  });
+
   return server;
 };
 

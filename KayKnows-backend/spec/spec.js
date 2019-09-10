@@ -25,3 +25,22 @@ jasmine.getEnv().addReporter(new HtmlReporter({
 }));
 
 // Tests below me
+describe('loading express', () => {
+  it('should load without errors', () => {
+    assert(server);
+    assert(server != null);
+  });
+});
+
+// These tests assume that the dummy data script has been run
+describe('get endpoints for base tables', () => {
+  it('should respond to /capabilities', function () {
+    request(server)
+    .get('/capabilities')
+    .expect(200)
+    .expect(function (res) {
+      assert(res.length, 6);
+    })
+  });
+  // TODO Rest of the get end point tests
+});
