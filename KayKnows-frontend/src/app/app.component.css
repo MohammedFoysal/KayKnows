@@ -1,0 +1,14 @@
+.header {
+    width: 100%;
+    background-color: lightgray;
+}
+
+.header img {
+    height: 50px;
+    margin: 10px;
+}
+
+.name {
+    float: right;
+    margin: 20px 15px 15px 15px;
+}
