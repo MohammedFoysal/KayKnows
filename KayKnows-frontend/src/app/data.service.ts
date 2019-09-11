@@ -1,6 +1,6 @@
-import { Injectable } from '@angular/core';
-import { Family } from './family';
-import { HttpClient } from '@angular/common/http';
+import {Injectable} from '@angular/core';
+import {Family} from './family';
+import {HttpClient} from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
@@ -9,9 +9,10 @@ export class DataService {
 
   families;
   http: HttpClient;
-  treeData = [];
-  familyIds = [3, 2];
-  capabilityIds = [2, 7];
+  nestedData = [];
+  // Manual filtering
+  familyIds = [1,2,3,4,5,6,7,8];
+  capabilityIds = [1,2,3,4,5,6,7,8,9,10,11,12,13,14];
 
   constructor(http: HttpClient) {
     this.http = http;
@@ -34,21 +35,19 @@ export class DataService {
       if (res[0] == null) {
         console.error(res);
       } else {
-        this.treeData = res;
+        this.treeDataNested(res);
       }
     });
   }
 
-  get treeDataNested() {
-    let newFlat = [];
+  treeDataNested(flatData) {
+    let newFlat: any[];
     const families = [];
     const capabilities = [];
     const roles = [];
 
 
-    for (const element of this.treeData) {
-      // const element = this.treeData[i];
-
+    for (const element of flatData) {
       // Extract Families
       if (this.familyIds.includes(element.family_id)) {
         if (!this.familyExists(element, families)) {
@@ -80,6 +79,8 @@ export class DataService {
     newFlat = [...families];
 
     console.log(newFlat);
+
+    this.nestedData = newFlat;
 
     return newFlat;
   }
@@ -121,7 +122,7 @@ export class DataService {
       band_id: data.band_id,
       capability_id: data.capability_id,
       family_id: data.family_id,
-      opened: this.capabilityIds.includes(data.capability_id)
+      opened: /*this.capabilityIds.includes(data.capability_id)*/true
     };
   }
 
