@@ -87,7 +87,7 @@ INSERT INTO roles VALUES (36, "Ops Engineer","role spec","Description", 15, 2, 6
 INSERT INTO roles VALUES (37, "Ops Engineer","role spec","Description", 15, 2, 7, NULL);
 INSERT INTO roles VALUES (38, "Ops Engineer","role spec","Description", 15, 2, 8, NULL);
 
---Infrastructure
+-- Infrastructure
 INSERT INTO roles VALUES (39, "Infrastructure Leader","role spec","Description", 16, 2, 2, NULL);
 INSERT INTO roles VALUES (40, "Infrastructure Consultant","role spec","Description", 16, 2, 5, NULL);
 INSERT INTO roles VALUES (41, "Infrastructure Engineer","role spec","Description", 16, 2, 6, NULL);
@@ -95,7 +95,7 @@ INSERT INTO roles VALUES (42, "Infrastructure Engineer","role spec","Description
 INSERT INTO roles VALUES (43, "Infrastructure Engineer","role spec","Description", 16, 2, 8, NULL);
 INSERT INTO roles VALUES (44, "Infrastructure Engineer","role spec","Description", 16, 2, 9, NULL);
 
---Testing
+-- Testing
 INSERT INTO roles VALUES (45, "Test Manager","role spec","Description", 17, 2, 4, NULL);
 INSERT INTO roles VALUES (46, "Lead Test Engineer","role spec","Description", 17, 2, 5, NULL);
 INSERT INTO roles VALUES (47, "Test Engineer","role spec","Description", 17, 2, 6, NULL);
@@ -103,33 +103,33 @@ INSERT INTO roles VALUES (48, "Test Engineer","role spec","Description", 17, 2, 
 INSERT INTO roles VALUES (49, "Test Engineer","role spec","Description", 17, 2, 8, NULL);
 INSERT INTO roles VALUES (50, "Test Engineer","role spec","Description", 17, 2, 9, NULL);
 
---Analytics
+-- Analytics
 INSERT INTO roles VALUES (51, "Principal Data Consultant","role spec","Description", 18, 2, 3, NULL);
 INSERT INTO roles VALUES (52, "Data Architect","role spec","Description", 18, 2, 4, NULL);
 INSERT INTO roles VALUES (53, "Data Scientist","role spec","Description", 18, 2, 5, NULL);
 INSERT INTO roles VALUES (54, "Data Scientist","role spec","Description", 18, 2, 6, NULL);
 INSERT INTO roles VALUES (55, "Data Consultant","role spec","Description", 18, 2, 7, NULL);
-INSERT INTO roles VALUES (56, "Data Scientist","role spec","Description", 18, 2, 8, NULL);
+INSERT INTO roles VALUES (71, "Data Scientist","role spec","Description", 18, 2, 8, NULL);
 
---Integration
+-- Integration
 INSERT INTO roles VALUES (56, "Lead Integration Consultant","role spec","Description", 19, 2, 4, NULL);
 INSERT INTO roles VALUES (57, "Integration Consultant","role spec","Description", 19, 2, 5, NULL);
 INSERT INTO roles VALUES (58, "Integration Consultant","role spec","Description", 19, 2, 6, NULL);
 INSERT INTO roles VALUES (59, "Integration Consultant","role spec","Description", 19, 2, 7, NULL);
 INSERT INTO roles VALUES (60, "Integration Consultant","role spec","Description", 19, 2, 8, NULL);
 
---Product Specialist
+-- Product Specialist
 INSERT INTO roles VALUES (61, "Lead Product Specialist","role spec","Description", 20, 2, 5, NULL);
 INSERT INTO roles VALUES (62, "Product Specialist","role spec","Description", 20, 2, 6, NULL);
 INSERT INTO roles VALUES (63, "Product Specialist","role spec","Description", 20, 2, 7, NULL);
 INSERT INTO roles VALUES (64, "Product Specialist","role spec","Description", 20, 2, 8, NULL);
 
---Product Support
+-- Product Support
 INSERT INTO roles VALUES (65, "Product Support Engineer","role spec","Description", 21, 2, 6, NULL);
 INSERT INTO roles VALUES (66, "Product Support Engineer","role spec","Description", 21, 2, 7, NULL);
 INSERT INTO roles VALUES (67, "Product Support Engineer","role spec","Description", 21, 2, 8, NULL);
 
---Technical Specialist
+-- Technical Specialist
 INSERT INTO roles VALUES (68, "Technical Consultant","role spec","Description", 22, 2, 4, NULL);
 INSERT INTO roles VALUES (69, "Technical Consultant","role spec","Description", 22, 2, 5, NULL);
 INSERT INTO roles VALUES (70, "Technical Consultant","role spec","Description", 22, 2, 6, NULL);
