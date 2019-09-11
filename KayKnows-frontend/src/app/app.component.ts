@@ -124,22 +124,10 @@ export class AppComponent {
         if (!this.existsInFilteredCapabilities(capability, this.capability_ids)) {
           nestedData[familyIndex].children.splice(capabilityIndex, 1)
         }
-
-        console.log(capability)
       }
     }
 
     this.data = nestedData;
-    // console.log(nestedData);
-
-
-
-    // this.data = newFlat;
-    // this.data = this.getFamiliesNested();
-    // console.log(this.data);
-    // this.data.filter(function(obj) {
-    //   return this.familyIdExists(obj, this.family_ids);
-    // });
   }
 
   existsInFilteredCapabilities(capability, capability_ids) {
@@ -189,10 +177,6 @@ export class AppComponent {
         })
       }
     });
-
-    // console.log(families);
-    // console.log(capabilities);
-    // console.log(roles);
 
     capabilities.forEach(capability => {
       capability.children = this.getRolesForCapability(capability.capability_id, roles);
