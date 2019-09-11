@@ -7,11 +7,13 @@ import { AppComponent } from './app.component';
 import { DataService } from './data.service'
 import { TreeComponent } from './tree/tree.component';
 import { LogService } from './shared/log.service';
+import { MoreInformationComponent } from './more-information/more-information.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    TreeComponent
+    TreeComponent,
+    MoreInformationComponent
   ],
   imports: [
     BrowserModule,

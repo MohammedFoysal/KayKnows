@@ -83,6 +83,7 @@ export class DataService {
     const families = [];
     const capabilities = [];
     const roles = [];
+    const users = [];
 
     for (const element of flatData) {
       // Extract Families
@@ -103,6 +104,9 @@ export class DataService {
       if (!this.roleExists(element, roles)) {
         roles.push(this.makeRole(element));
       }
+
+//       // Extract Users
+//       if()
     }
 
     capabilities.forEach(capability => {
@@ -133,7 +137,6 @@ export class DataService {
   makeFamily(data) {
     return {
       family_id: data.family_id,
-      family_name: data.family_name,
       label: data.family_name,
       type: 'family',
       opened: this.familyIds.includes(data.family_id)
@@ -143,7 +146,6 @@ export class DataService {
   makeCapability(data) {
     return {
       capability_id: data.capability_id,
-      capability_name: data.capability_name,
       label: data.capability_name,
       family_id: data.family_id,
       type: 'capability',
@@ -154,7 +156,6 @@ export class DataService {
   makeRole(data) {
     return {
       role_id: data.role_id,
-      role_name: data.role_name,
       label: data.role_name,
       band_id: data.band_id,
       band_name: data.band_name,

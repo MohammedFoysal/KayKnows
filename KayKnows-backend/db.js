@@ -66,6 +66,27 @@ exports.getRoles = function (callback) {
       })
 };
 
+exports.getCapabilityLeads = function (callback) {
+  db.query('SELECT * FROM capability_leads',
+      (error, rows) => {
+        if (error) {
+          return callback(error, null);
+        }
+        callback(null, rows);
+      })
+};
+
+exports.getCapabilityLeadsByCapabilityId = function (capability_id, callback) {
+  db.query('SELECT capability_lead_id, user_id, user_name, capability_lead_photo, capability_lead_message FROM capability_leads LEFT JOIN capabilities USING(capability_id) LEFT JOIN users USING(user_id) WHERE capability_id = ?',
+   [capability_id],
+      (error, rows) => {
+        if (error) {
+          return callback(error, null);
+        }
+        callback(null, rows);
+      })
+};
+
 exports.getBands = function (callback) {
   db.query('SELECT * FROM bands',
       (error, rows) => {

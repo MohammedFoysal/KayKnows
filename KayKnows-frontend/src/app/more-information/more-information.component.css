@@ -1,0 +1,17 @@
+.detail {
+  text-align: center;
+  position: fixed;
+  color: white;
+  background-image: linear-gradient(#0698D6, #417ABD);
+  right: 0;
+  width: 30%;
+  height: 100%;
+  font-size: 40px;
+  z-index: 1;
+}
+
+#hideButton{
+  margin-right: 600px;
+  height: 30px;
+  width: 30px;
+}

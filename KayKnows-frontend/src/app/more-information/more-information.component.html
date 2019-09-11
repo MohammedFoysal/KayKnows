@@ -1,0 +1,8 @@
+<ng-container *ngIf="show">
+  <div class="detail" *ngIf="family">
+    <input id="hideButton" (click)="toggle()" type="image" src="https://icon-library.net/images/arrow-icon-transparent-background/arrow-icon-transparent-background-12.jpg"/>
+    <div>
+      {{family.label}}
+    </div>
+  </div>
+</ng-container>
