@@ -14,8 +14,8 @@ export class AppComponent {
   title = 'KayKnows-frontend';
   dataService: DataService;
   data = [];
-  family_ids = [1, 3, 2];
-  capability_ids = [1, 2]
+  family_ids = [3, 2];
+  capability_ids = [2, 10]
   originalFlat = [
     {
       "capability_id": 1,
@@ -40,12 +40,12 @@ export class AppComponent {
       "band_id": 6
     },
     {
-      "capability_id": 2,
+      "capability_id": 10,
       "family_id": 2,
       "family_name": "Technical",
-      "capability_name": "Software Engineering",
+      "capability_name": "Software Advanced Engineering",
       "role_id": 7,
-      "role_name": "Lead Software Engineer",
+      "role_name": "Lead Software Advanced Engineer",
       "role_spec": "role_spec",
       "role_description": "desc",
       "band_id": 3
