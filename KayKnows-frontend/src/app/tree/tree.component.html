@@ -1,5 +1,5 @@
 <li *ngFor="let dataObject of data">
-    <a (click)="dataObject.opened = !dataObject.opened" href="#">{{ dataObject.label }}</a>
+    <a (click)="dataObject.opened = !dataObject.opened" href="#">{{ dataObject.label }}, {{ dataObject.opened }} </a>
 
     <ul app-tree [data]="dataObject.children" [class.inactive]="!dataObject.opened" *ngIf="dataObject.children"></ul>
 </li>

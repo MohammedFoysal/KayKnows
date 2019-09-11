@@ -96,150 +96,49 @@ export class AppComponent {
     }
   ];
 
-  flat = this.originalFlat;
+  checkboxData = [
+    {family_id: 1, isSelected: false},
+    {family_id: 2, isSelected: false},
+    {family_id: 3, isSelected: false},
+    {family_id: 4, isSelected: false},
+  ]
+
+  flat = [];
 
   constructor(dataService: DataService) {
     this.dataService = dataService;
     // this.data = this.getFamiliesNested();
-    this.filter();
+    this.flat = this.dataService.treeDataNested;
+    // this.filter();
   }
 
-  filter() {
-    var newFlat = [];
+  
 
-    for (let i = 0; i < this.flat.length; i++) {
-      if (this.family_ids.includes(this.flat[i].family_id)) {
-        newFlat.push(this.flat[i]);
-      }
-    }
+  // filter() {
+  //   var newFlat = [];
 
-    let nestedData = this.getFamiliesNested(newFlat);
+  //   for (let i = 0; i < this.flat.length; i++) {
+  //     if (this.family_ids.includes(this.flat[i].family_id)) {
+  //       newFlat.push(this.flat[i]);
+  //     }
+  //   }
 
-    for (var familyIndex in nestedData) {
-      let family = nestedData[familyIndex];
+  //   let nestedData = this.getFamiliesNested(newFlat);
+
+  //   for (var familyIndex in nestedData) {
+  //     let family = nestedData[familyIndex];
       
-      for (var capabilityIndex in family.children) {
-        let capability = nestedData[familyIndex].children[capabilityIndex];
+  //     for (var capabilityIndex in family.children) {
+  //       let capability = nestedData[familyIndex].children[capabilityIndex];
         
-        if (!this.existsInFilteredCapabilities(capability, this.capability_ids)) {
-          nestedData[familyIndex].children.splice(capabilityIndex, 1)
-        }
-      }
-    }
+  //       if (!this.existsInFilteredCapabilities(capability, this.capability_ids)) {
+  //         nestedData[familyIndex].children.splice(capabilityIndex, 1)
+  //       }
+  //     }
+  //   }
 
-    this.data = nestedData;
-  }
+  //   this.data = nestedData;
+  // }
 
-  existsInFilteredCapabilities(capability, capability_ids) {
-    for (let i = 0; i < capability_ids.length; i++) {
-      if (capability.capability_id === capability_ids[i]) {
-        return true;
-      }
-    }
 
-    return false;
-  }
-
-  getFamiliesNested(flatData) {
-    var families = [];
-    var capabilities = [];
-    var roles = [];
-
-    flatData.forEach(square => {
-      if (!this.familyExists(square, families)) {
-        families.push({
-          family_id: square.family_id,
-          family_name: square.family_name,
-          label: square.family_name,
-          opened: false
-        });
-      }
-
-      if (!this.capabilityExists(square, capabilities)) {
-        capabilities.push({
-          capability_id: square.capability_id,
-          capability_name: square.capability_name,
-          label: square.capability_name,
-          family_id: square.family_id,
-          opened: false
-        })
-      }
-
-      if (!this.roleExists(square, roles)) {
-        roles.push({
-          role_id: square.role_id,
-          role_name: square.role_name,
-          label: square.role_name,
-          band_id: square.band_id,
-          capability_id: square.capability_id,
-          family_id: square.family_id,
-          opened: false
-        })
-      }
-    });
-
-    capabilities.forEach(capability => {
-      capability.children = this.getRolesForCapability(capability.capability_id, roles);
-    })
-
-    families.forEach(family => {
-      family.children = this.getCapabilitiesForFamily(family.family_id, capabilities);
-    })
-
-    return families;
-  }
-
-  getRolesForCapability(capability_id, roles) {
-    return roles.filter(function (role) {
-      return role.capability_id === capability_id;
-    }).sort(function (role, roleTwo) {
-      return role.band_id - roleTwo.band_id;
-    });
-  }
-
-  getCapabilitiesForFamily(family_id, capabilities) {
-    return capabilities.filter(function (capability) {
-      return capability.family_id === family_id;
-    });
-  }
-
-  familyExists(family, families) {
-    for (let i = 0; i < families.length; i++) {
-      if (families[i].family_id === family.family_id) {
-        return true;
-      }
-    }
-
-    return false;
-  }
-
-  familyIdExists(family, family_ids) {
-    for (let i = 0; i < family_ids.length; i++) {
-      if (family_ids[i] === family.family_id) {
-        return true;
-      }
-    }
-
-    return false;
-  }
-
-  capabilityExists(capability, capabilities) {
-    for (let i = 0; i < capabilities.length; i++) {
-      if (capabilities[i].capability_id === capability.capability_id) {
-        return true;
-      }
-    }
-
-    return false;
-  }
-
-  roleExists(role, roles) {
-    for (let i = 0; i < roles.length; i++) {
-      if (roles[i].role_id === role.role_id) {
-        return true;
-      }
-    }
-
-    return false;
-  }
 }
