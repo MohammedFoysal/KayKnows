@@ -1,9 +1,6 @@
 require('dotenv').config({path: 'mysql.env'})
 
 const mysql = require('mysql');
-const db;
-
-
 const env = process.env.NODE_ENV === 'test' || 'dev';
 
 const connection = (env === 'dev') ? process.env.DB_DATABASE
