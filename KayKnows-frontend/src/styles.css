@@ -1,5 +1,18 @@
 /*Now the CSS*/
-* {margin: 0; padding: 0;}
+* {
+	margin: 0;
+	 padding: 0;
+
+}
+
+.tree-container {
+	overflow: scroll;
+	white-space: nowrap;
+}
+
+.tree {
+	white-space: nowrap;
+}
 
 .tree ul {
 	padding-top: 20px; position: relative;
@@ -7,6 +20,7 @@
 	transition: all 0.5s;
 	-webkit-transition: all 0.5s;
 	-moz-transition: all 0.5s;
+
 }
 
 .tree li {
@@ -18,6 +32,8 @@
 	transition: all 0.5s;
 	-webkit-transition: all 0.5s;
 	-moz-transition: all 0.5s;
+
+	display: inline-block;
 }
 
 /*We will use ::before and ::after to draw the connectors*/
