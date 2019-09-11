@@ -1,14 +1,16 @@
 .header {
     width: 100%;
-    background-color: lightgray;
+    background-color: #FFFFFF;
+    border-bottom: 2px solid lightgray;
 }
 
 .header img {
     height: 50px;
-    margin: 10px;
+    margin: 10px 10px 5px 10px;
 }
 
 .name {
     float: right;
-    margin: 20px 15px 15px 15px;
+    margin: 20px 15px 5px 15px;
+    color: #202D52;
 }
