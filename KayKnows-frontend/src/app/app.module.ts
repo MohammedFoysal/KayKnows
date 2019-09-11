@@ -6,6 +6,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { DataService } from './data.service'
 import { TreeComponent } from './tree/tree.component';
+import { LogService } from './shared/log.service';
 
 @NgModule({
   declarations: [
@@ -17,7 +18,7 @@ import { TreeComponent } from './tree/tree.component';
     AppRoutingModule,
     HttpClientModule
   ],
-  providers: [DataService],
+  providers: [DataService,  LogService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
