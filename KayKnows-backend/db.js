@@ -1,20 +1,40 @@
-require('dotenv').config({path: 'mysql.env'});
-
+require('dotenv').config({path: 'mysql.env'})
+const util = require('util');
 const mysql = require('mysql');
+var log4js = require('log4js');
+var logger = log4js.getLogger();
+logger.level = 'debug';
+const env = process.env.NODE_ENV === 'test' || 'dev';
+
+const connection = (env === 'dev') ? process.env.DB_DATABASE
+    : process.env.DB_TEST_DATABASE;
 
 const db = mysql.createConnection({
   host: process.env.DB_HOST,
   user: process.env.DB_USER,
   password: process.env.DB_PASS,
-  database: process.env.DB_DATABASE
+  database: connection
 });
+
+const query = util.promisify(db.query).bind(db);
 
 db.connect(err => {
   if (err) {
     throw err;
   }
-  console.log("Connected to MySQL");
+  logger.info("Connected to MySQL");
 });
+
+exports.getAll = function (callback) {
+  db.query(
+      'SELECT families.family_id, family_name, capability_id, capability_name, role_id, role_name, band_id, band_name FROM families LEFT JOIN capabilities USING(family_id) LEFT JOIN roles USING(capability_id) LEFT JOIN bands USING(band_id)',
+      (error, rows) => {
+        if (error) {
+          return callback(error, null);
+        }
+        callback(null, rows);
+      })
+};
 
 exports.getCapabilities = function (callback) {
   db.query('SELECT * FROM capabilities',
@@ -26,8 +46,8 @@ exports.getCapabilities = function (callback) {
       })
 };
 
-exports.getFamilies = function (callback) {
-  db.query('SELECT * FROM families',
+exports.getCapabilitiesByFamilyId = function (family_id, callback) {
+  db.query('SELECT * FROM capabilities WHERE family_id = ?', [family_id],
       (error, rows) => {
         if (error) {
           return callback(error, null);
@@ -50,8 +70,21 @@ exports.getBands = function (callback) {
   db.query('SELECT * FROM bands',
       (error, rows) => {
         if (error) {
-          return callback(null, error);
+          return callback(error, null);
         }
-        callback(rows, null)
+        callback(null, rows);
       })
 };
+
+exports.getFamilies = async () => {
+  return await query("SELECT * FROM families");
+}
+
+exports.getAsyncCapabilitiesByFamilyId = async (family_id) => {
+  return await query("SELECT * FROM capabilities WHERE family_id = ?", [family_id]);
+}
+
+
+
+
+

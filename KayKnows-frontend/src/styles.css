@@ -1,5 +1,31 @@
 /*Now the CSS*/
-* {margin: 0; padding: 0;}
+* {
+	margin: 0;
+	 padding: 0;
+	 font-family: DINNextW01-Regular, arial, verdana, tahoma;
+
+}
+
+.page-container {
+	display: flex;
+	justify-content: space-between;
+}
+
+.header {
+	background-color: #202D52 !important;
+}
+
+.tree-container {
+	overflow: scroll;
+	white-space: nowrap;
+	width: 100%;
+	height: 100vh;
+}
+
+.tree {
+	white-space: nowrap;
+	width: 4000px;
+}
 
 .tree ul {
 	padding-top: 20px; position: relative;
@@ -7,10 +33,12 @@
 	transition: all 0.5s;
 	-webkit-transition: all 0.5s;
 	-moz-transition: all 0.5s;
+
 }
 
 .tree li {
-	float: left; text-align: center;
+	float: left; 
+	text-align: center;
 	list-style-type: none;
 	position: relative;
 	padding: 20px 5px 0 5px;
@@ -18,6 +46,43 @@
 	transition: all 0.5s;
 	-webkit-transition: all 0.5s;
 	-moz-transition: all 0.5s;
+
+	display: inline-block;
+}
+
+.capability-item {
+	margin-left: 40px;
+	list-style-type: none;
+}
+
+.filter-container {
+	margin-left: 10px;
+	padding-right: 10px;
+	border: 1px solid #ccc;
+}
+
+.filter-container .list-group {
+	margin: 0px 0px 10px 10px;
+	list-style: none;
+	white-space: nowrap;
+}
+
+.filter-container .filter-label {
+	display: inline-block;
+	margin: 10px 0px 0px 10px;
+}
+
+.placeholder {
+	margin-top: 50px;
+	margin-left: 50px;
+}
+
+.placeholder .heading {
+	color: #9d9d9d;
+}
+
+.placeholder .subheading {
+	color: #9d9d9d;
 }
 
 /*We will use ::before and ::after to draw the connectors*/
@@ -73,7 +138,6 @@ right connector from last child*/
 	padding: 10px 15px;
 	text-decoration: none;
 	color: #666;
-	font-family: arial, verdana, tahoma;
 	font-size: 11px;
 	display: inline-block;
 	
@@ -88,17 +152,129 @@ right connector from last child*/
 
 /*Time for some hover effects*/
 /*We will apply the hover effect the the lineage of the element also*/
-.tree li a:hover, .tree li a:hover+ul li a {
-	background: #c8e4f8; color: #000; border: 1px solid #94a0b4;
+/* .tree li a:hover, .tree li a:hover+ul li a {
+	background-image: linear-gradient(#417ABD, #00558C);
+	color: #FFFFFF; 
+	border: 1px solid #94a0b4;
+} */
+
+/* basic positioning */
+.legendcontainer {z-index: -1;}
+.legend { list-style: none; width: 120px; border:1px double lightgray; margin-right: 5px; z-index: -1;}
+.legend li { margin: 10px 0px 10px 10px; z-index: -1;}
+.legend span { border: 1px solid #ccc; float: left; width: 12px; height: 12px; margin: 2px; z-index: -1;}
+/* your colors */
+.legend .family { background-image: linear-gradient(#417ABD, #00558C); }
+.legend .capability { background-image: linear-gradient(#95C11F, #90C365); }
+.legend .role { background-image: linear-gradient(#EB595E, #E64360); }
+
+
+.tooltip .tooltiptext {
+	visibility: hidden;
+	min-width: 120px;
+	max-width: 220px;
+	background-color: black;
+	color: #fff;
+	text-align: center;
+	border-radius: 6px;
+	padding: 5px 2px;
+  
+	/* Position the tooltip */
+	position: absolute;
+	z-index: 1000;
+	top: 2.5em;
+	left: 50%;
+	transform: translateX(-50%) translateY(-2px);
+  }
+
+  .tooltip:hover .tooltiptext {
+	visibility: visible;
+}
+
+.tree li a.family:hover{
+	background-image: linear-gradient(#417ABD, #00558C);
+	color: #FFFFFF; 
+	border: 1px solid #94a0b4;
+	/* visibility: visible;  */
+}
+
+.tree li a.capability:hover{
+	background-image: linear-gradient(#95C11F, #90C365);
+	color: #FFFFFF; 
+	border: 1px solid #94a0b4;
+}
+
+.tree li a.role:hover{
+	background-image: linear-gradient(#EB595E, #E64360);
+	color: #FFFFFF; 
+	border: 2px solid #94a0b4;
+
 }
 /*Connector styles on hover*/
 .tree li a:hover+ul li::after, 
 .tree li a:hover+ul li::before, 
 .tree li a:hover+ul::before, 
 .tree li a:hover+ul ul::before{
-	border-color:  #94a0b4;
+	border-color: rgba(0, 0, 0, 0.493);
+	border-width: 3px;
 }
 
 .tree ul.inactive {
     display: none;
 }
+
+.tooltip-new {
+	position: relative;
+}
+  
+.tooltip-new::after {
+	opacity: 0;
+	visibility: hidden;
+	position: absolute;
+	content: attr(data-tooltip);
+	padding: 6px 10px;
+	top: 2.5em;
+	left: 50%;
+	transform: translateX(-50%) translateY(-2px);
+	background: grey;
+	color: white;
+	white-space: nowrap;
+	z-index: 2;
+	border-radius: 2px;
+	/* transition: opacity 0.2s $cubic, transform 0.2s $cubic; */
+}
+
+.tooltip-new:hover::after {
+	display: block;
+	opacity: 1;
+	visibility: visible;
+	transform: translateX(-50%) translateY(0);
+}
+
+.tooltip-sub {
+	opacity: 0;
+	visibility: hidden;
+	position: absolute;
+	padding: 6px 10px;
+	top: 2.5em;
+	left: 50%;
+	transform: translateX(-50%) translateY(-2px);
+	background: grey;
+	color: white;
+	white-space: nowrap;
+	z-index: 2;
+	border-radius: 2px;
+	display: block;
+	opacity: 1;
+	visibility: visible;
+	transform: translateX(-50%) translateY(0);
+	/* transition: opacity 0.2s $cubic, transform 0.2s $cubic; */
+}
+
+.tooltip-new:hover::after {
+	display: block;
+	opacity: 1;
+	visibility: visible;
+	transform: translateX(-50%) translateY(0);
+}
+

@@ -1,2 +1,4 @@
 .DS_Store
 .idea
+kayknows_api.*
+!kayknows_api.raml
