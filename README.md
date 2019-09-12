@@ -1,5 +1,7 @@
 # KayKnows
 
+KayKnows presents the new design for the career lattice, no longer will you have to look at a table. Now you can navigate the career ladder with a wonderful tree!!!!
+
 ## Setup the Database
 
 + Navigate to the `KayKnows-database` directory.
@@ -108,4 +110,4 @@ From the root directory run the following command:
 raml2html -i kayknows_api.raml -o kayknows_api.html
 ```
 
-The generated file can then be viewed. Whilst the generated file can be called anything, to ensure that it is still ignored by the `.gitignore` make sure that the name of the file is `kayknows_api`
+The generated file can then be viewed. Whilst the generated file can be called anything, to ensure that it is still ignored by the `.gitignore` make sure that the name of the file is `kayknows_api`.
