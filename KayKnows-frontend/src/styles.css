@@ -6,9 +6,15 @@
 
 }
 
+.page-container {
+	display: flex;
+	justify-content: space-between;
+}
+
 .tree-container {
 	overflow: scroll;
 	white-space: nowrap;
+	width: 100%;
 }
 
 .tree {
@@ -105,8 +111,57 @@ right connector from last child*/
 
 /*Time for some hover effects*/
 /*We will apply the hover effect the the lineage of the element also*/
-.tree li a:hover, .tree li a:hover+ul li a {
+/* .tree li a:hover, .tree li a:hover+ul li a {
 	background-image: linear-gradient(#417ABD, #00558C);
+	color: #FFFFFF; 
+	border: 1px solid #94a0b4;
+} */
+
+/* basic positioning */
+.legendcontainer {z-index: -1;}
+.legend { list-style: none; width: 120px; border:1px double lightgray; margin-right: 5px; z-index: -1;}
+.legend li { margin: 10px 0px 10px 10px; z-index: -1;}
+.legend span { border: 1px solid #ccc; float: left; width: 12px; height: 12px; margin: 2px; z-index: -1;}
+/* your colors */
+.legend .family { background-image: linear-gradient(#417ABD, #00558C); }
+.legend .capability { background-image: linear-gradient(#95C11F, #90C365); }
+.legend .role { background-image: linear-gradient(#EB595E, #E64360); }
+
+
+.tooltip .tooltiptext {
+	visibility: hidden;
+	width: 120px;
+	background-color: black;
+	color: #fff;
+	text-align: center;
+	border-radius: 6px;
+	padding: 5px 0;
+  
+	/* Position the tooltip */
+	position: absolute;
+	z-index: 1000;
+	top: -2px;
+  }
+
+  .tooltip:hover .tooltiptext {
+	visibility: visible;
+}
+
+.tree li a.family:hover{
+	background-image: linear-gradient(#417ABD, #00558C);
+	color: #FFFFFF; 
+	border: 1px solid #94a0b4;
+	/* visibility: visible;  */
+}
+
+.tree li a.capability:hover{
+	background-image: linear-gradient(#95C11F, #90C365);
+	color: #FFFFFF; 
+	border: 1px solid #94a0b4;
+}
+
+.tree li a.role:hover{
+	background-image: linear-gradient(#EB595E, #E64360);
 	color: #FFFFFF; 
 	border: 1px solid #94a0b4;
 }
