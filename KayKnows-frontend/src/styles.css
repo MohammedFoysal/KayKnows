@@ -64,6 +64,19 @@
 	margin: 10px 0px 0px 10px;
 }
 
+.placeholder {
+	text-align: center;
+	margin-top: 150px;
+}
+
+.placeholder .heading {
+	color: #9d9d9d;
+}
+
+.placeholder .subheading {
+	color: #9d9d9d;
+}
+
 /*We will use ::before and ::after to draw the connectors*/
 
 .tree li::before, .tree li::after{
@@ -183,7 +196,8 @@ right connector from last child*/
 .tree li a.role:hover{
 	background-image: linear-gradient(#EB595E, #E64360);
 	color: #FFFFFF; 
-	border: 1px solid #94a0b4;
+	border: 2px solid #94a0b4;
+
 }
 /*Connector styles on hover*/
 .tree li a:hover+ul li::after, 
@@ -191,6 +205,7 @@ right connector from last child*/
 .tree li a:hover+ul::before, 
 .tree li a:hover+ul ul::before{
 	border-color: rgba(0, 0, 0, 0.493);
+	border-width: 3px;
 }
 
 .tree ul.inactive {

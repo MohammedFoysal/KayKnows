@@ -8,7 +8,7 @@
 <div class="page-container">
 
   <div class="col-md-6 filter-container">
-    <span class="filter-label">FILTERS</span>
+    <span class="filter-label">FEATURE SELECTOR</span>
     <br><br>
   
     <ul class="list-group">
@@ -31,8 +31,14 @@
 
   <div class="tree-container">
     <div class="tree">
-      <ul app-tree [data]="dataService.nestedData"></ul>
+      <ul app-tree *ngIf="dataService.familyIds.length > 0; else placeholder" [data]="dataService.nestedData"></ul>
     </div>
+    <ng-template class="placeholder-container" #placeholder>
+        <div class="placeholder">
+            <h2 class="heading">Use the feature selector</h2>
+            <h3 class="subheading">Select relevant families & capabilities</h3>
+        </div>
+    </ng-template>
   </div>
 
   <div class="legendcontainer">
