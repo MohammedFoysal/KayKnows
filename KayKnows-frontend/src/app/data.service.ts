@@ -100,6 +100,7 @@ export class DataService {
       family_id: data.family_id,
       family_name: data.family_name,
       label: data.family_name,
+      type: 'family',
       opened: this.familyIds.includes(data.family_id)
     };
   }
@@ -110,6 +111,7 @@ export class DataService {
       capability_name: data.capability_name,
       label: data.capability_name,
       family_id: data.family_id,
+      type: 'capability',
       opened: this.capabilityIds.includes(data.capability_id)
     };
   }
@@ -120,8 +122,10 @@ export class DataService {
       role_name: data.role_name,
       label: data.role_name,
       band_id: data.band_id,
+      band_name: data.band_name,
       capability_id: data.capability_id,
       family_id: data.family_id,
+      type: 'role',
       opened: true
     };
   }
