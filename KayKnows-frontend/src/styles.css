@@ -5,20 +5,24 @@
 	 font-family: DINNextW01-Regular, arial, verdana, tahoma;
 
 }
-
+html, body {
+	height: 100%;
+}
 .page-container {
 	display: flex;
-	justify-content: space-between;
+	height: 100%;
 }
 
 .tree-container {
-	overflow: scroll;
-	white-space: nowrap;
-	width: 100%;
+	flex: 1;
+	height: 100%;
+	
+	overflow: auto;
 }
 
 .tree {
-	white-space: nowrap;
+	width: 3200px;
+	height: 50px;
 }
 
 .tree ul {
