@@ -11,8 +11,8 @@ export class DataService {
   http: HttpClient;
   nestedData = [];
   // Manual filtering
-  familyIds = [1,2,3,4,5,6,7,8];
-  capabilityIds = [1,2,3,4,5,6,7,8,9,10,11,12,13,14];
+  familyIds = [1, 2, 3, 4, 5, 6, 7, 8];
+  capabilityIds = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14];
 
   constructor(http: HttpClient) {
     this.http = http;
@@ -126,7 +126,7 @@ export class DataService {
       capability_id: data.capability_id,
       family_id: data.family_id,
       type: 'role',
-      opened: /*this.capabilityIds.includes(data.capability_id)*/true
+      opened: true
     };
   }
 
@@ -161,11 +161,24 @@ export class DataService {
   }
 
   getRolesForCapability(capabilityId, roles) {
-    return roles.filter(role => {
+    // Get the correct roles and sort them
+    const sortedRoles = roles.filter(role => {
       return role.capability_id === capabilityId;
     }).sort((role, roleTwo) => {
       return role.band_id - roleTwo.band_id;
     });
+
+    // now make the roles children of each other
+    const top = [sortedRoles[0]];
+    let previous = null;
+    for (const role of sortedRoles) {
+      if (previous !== null) {
+        previous.children = [role];
+      }
+      previous = role;
+    }
+
+    return top;
   }
 
   getCapabilitiesForFamily(familyId, capabilities) {
