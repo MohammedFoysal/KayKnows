@@ -1,6 +1,23 @@
-<div class="tree-container">
-  <div class="tree">
-    <ul app-tree [data]="dataService.nestedData"></ul>
+<div class="header">
+  <img src="assets/logo.png" alt="Kainos Logo" />
+  <div class="name">
+    <h1>Career Tree</h1>
   </div>
 </div>
+<div class="page-container">
 
+  <div class="tree-container">
+    <div class="tree">
+      <ul app-tree [data]="dataService.nestedData"></ul>
+    </div>
+  </div>
+
+  <div class="legendcontainer">
+    <ul class="legend">
+      <li>COLOUR KEY</li>
+      <li><span class="family"></span> Family</li>
+      <li><span class="capability"></span> Capability</li>
+      <li><span class="role"></span> Role</li>
+    </ul>
+  </div>
+</div>
