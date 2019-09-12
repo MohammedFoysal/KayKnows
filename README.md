@@ -16,6 +16,8 @@
 
 ### Running Express
 
+To run express first make sure that the database is [setup](#setup-the-database).
+
 + To run express first navigate to the `KayKnows-backend` directory.
 
 + Then ensure that npm is set up by running
@@ -44,7 +46,7 @@
 
 ### Running Angular
 
-To ensure that data is being transfered make sure that you follow the steps to run express and setup mysql.
+To ensure that data is being transfered make sure that you follow the steps to [run express](#running-express) and [setup mysql](#setup-the-database).
 
 + To run angular first navigate to the `KayKnows-frontend` directory.
 
@@ -64,7 +66,7 @@ To ensure that data is being transfered make sure that you follow the steps to r
 
 ### Testing Express
 
-To test express first ensure that the database is setup from the [mysql secition](#setup-the-database).
+To test express first ensure that the database is setup from the [mysql section](#setup-the-database).
 
 + Set up npm with:
 
@@ -95,7 +97,7 @@ When testing the angular front end ensure that express is [setup and running](#r
   ```shell
   ng test
   ```
-  
+
 ## API Document Generator
 
 Install your generator of choice, this guide will assume that you are using [raml2html](https://github.com/raml2html/raml2html).
@@ -106,4 +108,4 @@ From the root directory run the following command:
 raml2html -i kayknows_api.raml -o kayknows_api.html
 ```
 
-The generated file can then be viewed.
+The generated file can then be viewed. Whilst the generated file can be called anything, to ensure that it is still ignored by the `.gitignore` make sure that the name of the file is `kayknows_api`
