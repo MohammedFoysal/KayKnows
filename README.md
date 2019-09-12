@@ -6,13 +6,13 @@ KayKnows presents the new design for the career lattice, no longer will you have
 
 + Navigate to the `KayKnows-database` directory.
 
-+ Open a mysql environment and run the `knows_db_tables.sql` file.
++ Open a mysql environment and run the `knows_db_tables.sql` file to setup the development/production database.
 
-+ In the same environment run the `knows_test_db.sql` file.
++ In the same environment run the `knows_test_db.sql` file to set up the test database.
 
 + Make a user that has permissions to `SELECT` for the generated tables.
 
-+ If you want the database to be populated with some dummy data run the `chunky_dummy.sql` file.
++ If you want the development database to be populated with some dummy data run the `chunky_dummy.sql` file.
 
 ## How to Run
 
