@@ -65,9 +65,9 @@ exports.getBands = function (callback) {
   db.query('SELECT * FROM bands',
       (error, rows) => {
         if (error) {
-          return callback(null, error);
+          return callback(error, null);
         }
-        callback(rows, null)
+        callback(null, rows);
       })
 };
 
