@@ -2,6 +2,10 @@ import {Injectable} from '@angular/core';
 import {Family} from './family';
 import {HttpClient} from '@angular/common/http';
 import { Band } from './band';
+import {CapabilityLead} from './capability-lead';
+import { User } from './user';
+import { Observable } from 'rxjs/internal/Observable';
+import { Role } from './role';
 
 @Injectable({
   providedIn: 'root'
@@ -30,6 +34,18 @@ export class DataService {
         this.treeDataNested(this.flatData);
       }
     });
+  }
+
+  getUser(user_id: number): Observable<User>{
+    return this.http.get<User>("/api/users/"+ user_id);
+  }
+
+  getCapabilityLeadForCapability(capability_id: number): Observable<CapabilityLead> {
+    return this.http.get<CapabilityLead>("/api/capability-leads/" + capability_id);
+  }
+
+  getRoleById(role_id: number): Observable<Role>{
+    return this.http.get<Role>("/api/roles/" + role_id);
   }
 
   getCheckboxData() {

@@ -76,8 +76,8 @@ exports.getCapabilityLeads = function (callback) {
       })
 };
 
-exports.getCapabilityLeadsByCapabilityId = function (capability_id, callback) {
-  db.query('SELECT capability_lead_id, user_id, user_name, capability_lead_photo, capability_lead_message FROM capability_leads LEFT JOIN capabilities USING(capability_id) LEFT JOIN users USING(user_id) WHERE capability_id = ?',
+exports.getCapabilityLeadByCapabilityId = function (capability_id, callback) {
+  db.query('SELECT capability_lead_id, user_id, user_full_name, capability_lead_photo, capability_lead_message FROM capability_leads LEFT JOIN capabilities USING(capability_id) LEFT JOIN users USING(user_id) WHERE capability_id = ?',
    [capability_id],
       (error, rows) => {
         if (error) {
@@ -85,6 +85,28 @@ exports.getCapabilityLeadsByCapabilityId = function (capability_id, callback) {
         }
         callback(null, rows);
       })
+};
+
+exports.getUserById = function (user_id, callback) {
+  db.query('SELECT user_id, user_password, user_email, role_id, user_admin, user_full_name FROM users WHERE user_id = ?',
+   [user_id],
+      (error, rows) => {
+        if (error) {
+          return callback(error, null);
+        }
+        callback(null, rows);
+      })
+};
+
+exports.getRoleById = function (role_id, callback) {
+  db.query('SELECT role_id, role_name, capability_id, family_id, band_id, role_spec, role_description from roles WHERE role_id = ?',
+  [role_id],
+     (error, rows) => {
+       if (error) {
+         return callback(error, null);
+       }
+       callback(null, rows);
+     })
 };
 
 exports.getBands = function (callback) {

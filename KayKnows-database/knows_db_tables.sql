@@ -41,7 +41,7 @@ CREATE TABLE IF NOT EXISTS users(
     user_email VARCHAR(100) NOT NULL,
     role_id SMALLINT UNSIGNED,
     user_admin BIT,
-    user_name VARCHAR(100),
+    user_full_name VARCHAR(100),
     FOREIGN KEY(role_id) REFERENCES roles(role_id)
 );
 

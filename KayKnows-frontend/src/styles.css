@@ -101,7 +101,7 @@
 }
 
 
-/*We need to remove left-right connectors from elements without 
+/*We need to remove left-right connectors from elements without
 any siblings*/
 
 .tree li:only-child::after,
@@ -117,7 +117,7 @@ any siblings*/
 }
 
 
-/*Remove left connector from first child and 
+/*Remove left connector from first child and
 right connector from last child*/
 
 .tree li:first-child::before,
@@ -156,7 +156,7 @@ right connector from last child*/
 
 .tree li a {
     border: 1px solid #ccc;
-    padding: 10px 15px;
+    padding: 3px 15px;
     text-decoration: none;
     color: #666;
     font-size: 11px;

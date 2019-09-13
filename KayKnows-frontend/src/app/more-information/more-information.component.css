@@ -1,17 +1,119 @@
-.detail {
+.detail{
   text-align: center;
-  position: fixed;
-  color: white;
-  background-image: linear-gradient(#0698D6, #417ABD);
-  right: 0;
+  position: absolute;
+  color: black;
+  background-image: linear-gradient(white, #afafaf);
+  right:0;
   width: 30%;
   height: 100%;
   font-size: 40px;
   z-index: 1;
+  border-left: solid;
+  border-color: #c3e0c3;
 }
 
-#hideButton{
-  margin-right: 600px;
+.detailRole{
+  text-align: left;
+  position: absolute;
+  color: black;
+  background-image: linear-gradient(white, #afafaf);
+  right:0;
+  width: 30%;
+  height: 100%;
+  font-size: 40px;
+  z-index: 1;
+  border-left: solid;
+  border-color: #e6445f;
+}
+
+.detailHeaderSectionCapability {
+  color: white;
+	background-image: linear-gradient(#95C11F, #90C365);
+	display: inline-block;
+	width: 100%;
+	border-bottom: solid;
+	border-color: #75a76b;
+	margin-bottom: 5px;
+}
+
+.detailHeaderSectionRole {
+  color: white;
+	background-image: linear-gradient(#EB595E, #E64360);
+	display: inline-block;
+	width: 100%;
+	border-bottom: solid;
+	border-color: #b7001f;
+	margin-bottom: 5px;
+	text-align: center;
+}
+
+
+.hideButton{
   height: 30px;
   width: 30px;
+  cursor: pointer;
+  position: relative;
+  padding-top: 10px;
+  padding-left: 10px;
 }
+
+.hideButtonSection{
+  float:left;
+}
+
+.capabilityLeadPhoto{
+  border-radius: 50%;
+  width: 100px;
+  height: 100px;
+  position: absolute;
+  left: 10px;
+}
+
+.description{
+	font-family: DINNextW01-Regular, arial, verdana, tahoma;
+  font-size: 20px;
+  margin:10px;
+  padding:15px;
+  text-align:left;
+  position:absolute;
+  left: 0;
+}
+
+.descriptionRole{
+  position: relative;
+  font-family: DINNextW01-Regular, arial, verdana, tahoma;
+  font-size: 20px;
+  padding: 15px;
+  text-align: left;
+  left: 0px;
+  margin-top: 58px;
+  width: 90%;
+}
+
+.capabilityLeadProfile{
+  padding-top: 10px;
+  height: 100px;
+  padding-bottom: 10px;
+}
+
+.capabilityLeadName{
+      position: relative;
+      bottom: 10px;
+      font-size: x-large;
+}
+
+.h5{
+  text-align: left;
+}
+
+.line{
+  width: 75%;
+  left: 12%;
+  position: relative;
+}
+
+.detailTitle{
+  position: relative;
+  top: 5px;
+}
+

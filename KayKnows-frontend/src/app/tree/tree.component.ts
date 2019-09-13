@@ -3,6 +3,9 @@ import { DataService } from '../data.service';
 import { SwitchboardService } from '../switchboard.service';
 import { Family } from '../family';
 import { CapabilityLead } from '../capability-lead';
+import { Capability } from '../capability';
+import { runInThisContext } from 'vm';
+import { User } from '../user';
 
 @Component({
     selector: '[app-tree]',
@@ -14,23 +17,39 @@ export class TreeComponent implements OnInit {
     static highlighted: number = -1;
     dataService: DataService;
     switchboard: SwitchboardService;
-    thisFamily: Family;
-    thisCapabilityLead: CapabilityLead;
+    family: Family;
+    capability_lead: CapabilityLead;
+    capabilityLeadJson : string;
+    capability: Capability;
+    user: User;
+
     @Input() data;
 
     constructor(dataService: DataService, switchboard: SwitchboardService) {
       this.switchboard = switchboard;
       this.dataService = dataService;
-
     }
 
-    onSelect(newFamily: Family) : void{
-      this.thisFamily = newFamily;
-      this.switchboard.switchFamily(this.thisFamily);
-      console.log('Hello There family');
+    onSelect(dataObject: any, e:Event) : void{
+        e.stopPropagation();
+        e.preventDefault();
+      if(dataObject.type === "family"){
+        this.switchboard.switchFamily(dataObject);
+      }
+      if(dataObject.type === "capability"){
+        this.capability = new Capability(dataObject.capability_id, dataObject.label, dataObject.family_id);
+        this.switchboard.switchCapability(this.capability);
+        this.switchboard.switchCapabilityLead(this.capability.capability_id);
+      }
+      if(dataObject.type === "role"){
+        this.switchboard.switchRole(dataObject.role_id);
+      }
+      console.log("data object: ");
+      console.log(dataObject);
     }
 
     ngOnInit() {
+
     }
 
     getColour(data: any): string {

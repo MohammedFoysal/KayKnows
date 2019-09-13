@@ -17,8 +17,8 @@ export class AppComponent {
   dataService: DataService;
 
   constructor(dataService: DataService, private logger: LogService, switchboard: SwitchboardService) {
-    switchboard: SwitchboardService;
     this.dataService = dataService;
+    // this.switchboard = new SwitchboardService(dataService);
     logger.info('AppComponent: Successful launch');
   }
 
