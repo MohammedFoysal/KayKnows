@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
-import {Family} from './family';
-import {HttpClient} from '@angular/common/http';
 import { Band } from './band';
+import { Family } from './family';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
@@ -52,6 +52,37 @@ export class DataService {
       }
 
     });
+  }
+  
+  login(data, callback) {
+    this.http.post('/api/login', data).subscribe(
+      data => callback(data, null),
+      error => callback(null, error),
+    );
+  }
+
+  register(data, callback) {
+    this.http.post('/api/register', data).subscribe(
+      data => callback(data, null),
+      error => callback(null, error),
+    );
+  }
+
+  logout() {
+    localStorage.removeItem('token');
+    localStorage.removeItem('user_id');
+    localStorage.removeItem('user_email');
+    localStorage.removeItem('user_admin');
+    localStorage.removeItem('user_full_name');
+  }
+
+  getLoggedInUser(callback) {
+    let token = 'Bearer ' + localStorage.getItem('token');
+    const headers = new HttpHeaders().set('Authorization', token);
+    this.http.get('/api/me', {headers}).subscribe(
+      data => callback(data, null),
+      error => callback(null, error),
+    );
   }
 
   refreshFilters() {

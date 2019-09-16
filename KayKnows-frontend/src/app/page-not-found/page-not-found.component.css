@@ -1,0 +1,10 @@
+.container {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-image: radial-gradient( circle farthest-corner at 10% 20%,  #95C11F 0%, #35983F 90% );
+    color: #000;
+    text-align: center;
+}

@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Router, ActivatedRoute } from '@angular/router';
 
 import { LogService } from './shared/log.service';
 import { DataService } from './data.service'; 
@@ -11,20 +12,33 @@ import { DataService } from './data.service';
 
 export class AppComponent {
   title = 'KayKnows-frontend';
+  dataService: DataService;
+  isAdmin: Boolean = false;
+  isViewingAsAdmin: Boolean = false;
 
-  constructor(private dataService: DataService, private logger: LogService) {
+  constructor(dataService: DataService, private logger: LogService,  private route: ActivatedRoute, private router: Router) { 
+    this.dataService = dataService;
     logger.info('AppComponent: Successful launch');
   }
 
   ngOnInit() {
+      let localAdmin = localStorage.getItem('user_admin');
+      this.isAdmin = localAdmin != null && localAdmin == '1' ? true : false;
   }
 
   checkboxChanged(event) {
     this.dataService.refreshFilters();
   }
 
+  logout() {
+    this.dataService.logout()
+    this.router.navigate(['/login']);
+  }
+
   printData() {
     console.log(JSON.stringify(this.dataService.nestedData))
   }
+
+  
 
 }

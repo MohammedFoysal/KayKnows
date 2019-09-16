@@ -155,3 +155,8 @@ INSERT INTO roles VALUES (20, "Travel Associate","role spec","Description", 6, 6
 INSERT INTO roles VALUES (21, "Head of People & Talent Development","role spec", "Description", 11, 6, 1, NULL);
 INSERT INTO roles VALUES (22, "People Manager","role spec", "Description", 11, 6, 3, NULL);
 INSERT INTO roles VALUES (23, "People Manager","role spec", "Description", 11, 6, 4, NULL);
+
+INSERT INTO users VALUES (1, 'emp@test.com', 'hashedPassword', 0, 6, 'Employee');
+INSERT INTO users VALUES (2, 'admin@test.com', 'hashedPassword', 1, 7, 'Admin');
+
+

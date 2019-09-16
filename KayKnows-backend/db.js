@@ -1,4 +1,4 @@
-require('dotenv').config({path: 'mysql.env'})
+require('dotenv').config({path: 'config.env'})
 const util = require('util');
 const mysql = require('mysql');
 var log4js = require('log4js');
@@ -84,7 +84,27 @@ exports.getAsyncCapabilitiesByFamilyId = async (family_id) => {
   return await query("SELECT * FROM capabilities WHERE family_id = ?", [family_id]);
 }
 
+exports.getUsers = async () => {
+  return await query("SELECT user_id, user_email, user_admin, role_id, user_full_name FROM users");
+}
 
+exports.getUser = async (user_id) => {
+  return await query("SELECT user_id, user_email, user_admin, role_id, user_full_name FROM users WHERE user_id = ?", [user_id]);
+}
 
+exports.getUserByEmail = async (email) => {
+  return await query("SELECT user_id, user_email, user_admin, role_id, user_full_name FROM users WHERE user_email = ?", [email]);
+}
 
+exports.getUserByEmailWithPassword = async (email) => {
+  return await query("SELECT user_id, user_password, user_email, user_admin, role_id, user_full_name FROM users WHERE user_email = ?", [email]);
+}
+
+exports.isUserAdmin = async(user_id) => {
+  return await query("SELECT user_id, user_email, user_admin, role_id, user_full_name FROM users WHERE user_id = ? AND user_admin = 1", [user_id]);
+}
+
+exports.storeUser = async (user_email, user_password, user_admin, role_id, user_full_name) => {
+  return await query("INSERT INTO users (user_email, user_password, user_admin, role_id, user_full_name) VALUES (?, ?, ?, ?, ?)", [user_email, user_password, user_admin, role_id, user_full_name]); 
+}
 
