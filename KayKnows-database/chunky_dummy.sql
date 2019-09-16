@@ -2,15 +2,15 @@
 USE knows_db;
 
 -- bands table
-INSERT INTO bands VALUES (1, "Executive");
-INSERT INTO bands VALUES (2, "Leadership Community");
-INSERT INTO bands VALUES (3, "Principle");
-INSERT INTO bands VALUES (4, "Manager");
-INSERT INTO bands VALUES (5, "Consultant");
-INSERT INTO bands VALUES (6, "Senior Associate");
-INSERT INTO bands VALUES (7, "Associate");
-INSERT INTO bands VALUES (8, "Trainee");
-INSERT INTO bands VALUES (9, "Apprentice");
+INSERT INTO bands VALUES (1, "Executive", "#5C2684");
+INSERT INTO bands VALUES (2, "Leadership Community", "#56B6B1");
+INSERT INTO bands VALUES (3, "Principle", "#417ABD");
+INSERT INTO bands VALUES (4, "Manager", "#EF7DA9");
+INSERT INTO bands VALUES (5, "Consultant", "#F7BE00");
+INSERT INTO bands VALUES (6, "Senior Associate", "#707271");
+INSERT INTO bands VALUES (7, "Associate", "#446b23");
+INSERT INTO bands VALUES (8, "Trainee", "#115E67");
+INSERT INTO bands VALUES (9, "Apprentice", "#ed8941");
 
 -- families table
 INSERT INTO families VALUES (1, "Sales & Marketing");
