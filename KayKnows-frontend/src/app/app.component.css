@@ -23,3 +23,11 @@
 .listGrid {
     display: grid;
 }
+
+.band {
+    color: white;
+    margin: 0px;
+    padding: 5px;
+    text-align: center;
+
+}
