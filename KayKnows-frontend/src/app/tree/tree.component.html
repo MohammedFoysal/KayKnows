@@ -1,10 +1,13 @@
 <li *ngFor="let dataObject of data">
-    <a class="tooltip tooltip-new {{dataObject.type}}" 
+    <a class="tooltip tooltip-new {{dataObject.type}}" (mouseover)="setHighlighted(dataObject.band_id)" (mouseleave)="setHighlighted(-1)" [ngStyle] = "{
+        'border' : getColour(dataObject),
+        'background-color' : getHighlighted()===dataObject.band_id ? getBackgroundColour(dataObject) : 'white',
+        'color' :  getHighlighted()===dataObject.band_id ? 'white' : (dataObject.type==='role') ? 'black' : 'white'}" 
     (click)="dataObject.opened = !dataObject.opened" href="#">
         {{ dataObject.label }}
         <span class="tooltiptext tooltip-sub">
             {{ dataObject.type | uppercase }}
-            <br> <span *ngIf="dataObject.band_name">Band: {{dataObject.band_name}}</span>
+            <!-- <br> <span *ngIf="dataObject.band_name">Band: {{dataObject.band_name}}</span>  -->
         
         </span>
     </a>

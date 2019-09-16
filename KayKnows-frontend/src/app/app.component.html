@@ -46,7 +46,14 @@
       <li>COLOUR KEY</li>
       <li><span class="family"></span> Family</li>
       <li><span class="capability"></span> Capability</li>
-      <li><span class="role"></span> Role</li>
+    </ul>
+    <ul class="legend">
+      <li>BANDS</li>
+      <li class="band" *ngFor="let band of dataService.bands"
+         [ngStyle] = "{
+          'background-color': '#' + band.band_colour
+        }">
+        {{band.band_name}}</li>
     </ul>
   </div>
 </div>

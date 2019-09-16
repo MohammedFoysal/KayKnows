@@ -1,6 +1,7 @@
 import {Injectable} from '@angular/core';
 import {Family} from './family';
 import {HttpClient} from '@angular/common/http';
+import { Band } from './band';
 
 @Injectable({
   providedIn: 'root'
@@ -13,11 +14,13 @@ export class DataService {
   nestedData = [];
   familyIds = [];
   capabilityIds = [];
+  bands: Band[] = [];
 
   constructor(http: HttpClient) {
     this.http = http;
     this.getCheckboxData();
     this.getTreeData();
+    this.getBands();
   }
 
   getTreeData(): void {
@@ -39,6 +42,17 @@ export class DataService {
         this.real_checkbox_data = res;
         this.refreshFilters();
       }
+    });
+  }
+
+  getBands() {
+    this.http.get<Band[]>('/api/bands').subscribe(res => {
+      if (res[0] == null) {
+        console.error(res);
+      } else {
+        this.bands = res;
+      }
+
     });
   }
 
@@ -146,6 +160,7 @@ export class DataService {
       label: data.role_name,
       band_id: data.band_id,
       band_name: data.band_name,
+      band_colour: data.band_colour,
       capability_id: data.capability_id,
       family_id: data.family_id,
       type: 'role',
