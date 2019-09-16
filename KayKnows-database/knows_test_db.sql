@@ -36,12 +36,12 @@ CREATE TABLE IF NOT EXISTS roles(
     FOREIGN KEY(parent_role_id) REFERENCES roles(role_id)
 );
 
-CREATE TABLE IF NOT EXISTS users(
+CREATE TABLE IF NOT EXISTS users (
     user_id SMALLINT UNSIGNED PRIMARY KEY auto_increment,
-    user_password VARCHAR(100) NOT NULL,
-    user_email VARCHAR(100) NOT NULL,
+    user_email VARCHAR(120) NOT NULL UNIQUE,
+    user_password VARCHAR(64) NOT NULL,
+    user_admin BOOLEAN,
     role_id SMALLINT UNSIGNED,
-    user_admin BIT,
     user_full_name VARCHAR(100),
     FOREIGN KEY(role_id) REFERENCES roles(role_id)
 );
@@ -55,6 +55,7 @@ CREATE TABLE IF NOT EXISTS capability_leads(
     FOREIGN KEY(user_id) REFERENCES users(user_id),
     FOREIGN KEY(capability_id) REFERENCES capabilities(capability_id)
 );
+
 -- bands table
 INSERT INTO bands VALUES (1, "Executive");
 INSERT INTO bands VALUES (2, "Leadership Community");
@@ -122,3 +123,6 @@ INSERT INTO roles VALUES (20, "Travel Associate","role spec","Description", 6, 6
 INSERT INTO roles VALUES (21, "Head of People & Talent Development","role spec", "Description", 11, 6, 1, NULL);
 INSERT INTO roles VALUES (22, "People Manager","role spec", "Description", 11, 6, 3, NULL);
 INSERT INTO roles VALUES (23, "People Manager","role spec", "Description", 11, 6, 4, NULL);
+
+INSERT INTO users VALUES (1, 'emp@test.com', 'hashedPassword', 0, 6, 'Employee');
+INSERT INTO users VALUES (2, 'admin@test.com', 'hashedPassword', 1, 7, 'Admin');

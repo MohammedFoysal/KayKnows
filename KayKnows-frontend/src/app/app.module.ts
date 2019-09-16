@@ -8,22 +8,38 @@ import { DataService } from './data.service'
 import { TreeComponent } from './tree/tree.component';
 import { LogService } from './shared/log.service';
 import { MoreInformationComponent } from './more-information/more-information.component';
-import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { LandingComponent } from './landing/landing.component';
+import { LoginComponent } from './login/login.component';
+import { RouterModule, Routes } from '@angular/router';
+import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
+import { ReactiveFormsModule } from '@angular/forms';
+import { RegisterComponent } from './register/register.component';
+
+const appRoutes: Routes = [
+  { path: 'login', component: LoginComponent },
+  { path: 'home', component: AppComponent },
+];
 
 @NgModule({
   declarations: [
     AppComponent,
     TreeComponent,
-    MoreInformationComponent
+    MoreInformationComponent,
+    LandingComponent,
+    LoginComponent,
+    PageNotFoundComponent,
+    RegisterComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
     FormsModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    ReactiveFormsModule
   ],
   providers: [DataService,  LogService],
-  bootstrap: [AppComponent]
+  bootstrap: [LandingComponent]
 })
 export class AppModule { }
