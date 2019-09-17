@@ -155,3 +155,9 @@ INSERT INTO roles VALUES (20, "Travel Associate","role spec","Description", 6, 6
 INSERT INTO roles VALUES (21, "Head of People & Talent Development","role spec", "Description", 11, 6, 1, NULL);
 INSERT INTO roles VALUES (22, "People Manager","role spec", "Description", 11, 6, 3, NULL);
 INSERT INTO roles VALUES (23, "People Manager","role spec", "Description", 11, 6, 4, NULL);
+
+-- users
+INSERT INTO users VALUES (1, "password", "kyle.a@kainos.com", 7, 1, "Kyle Allen-Taylor");
+
+-- capabiliy leads
+INSERT INTO capability_leads VALUES (1, 1, "https://media.licdn.com/dms/image/C4D03AQEJKzONm7TdxA/profile-displayphoto-shrink_800_800/0?e=1573689600&v=beta&t=IukaWvOoMic3bZunKzDZkC4teugahaWZuwJm4h0bArE","At Kainos we want the best for you, Kainos is at the forefront for technological advancements and we wish to continue this.", 2);
