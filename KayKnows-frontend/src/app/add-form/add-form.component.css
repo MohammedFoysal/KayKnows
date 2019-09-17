@@ -1,0 +1,200 @@
+/* [Object] Modal
+ * =============================== */
+
+.modal {
+  z-index: 1000;
+  opacity: 0;
+  visibility: hidden;
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  text-align: left;
+  background: rgba(0, 0, 0, .9);
+  transition: opacity .25s ease;
+}
+
+.modal__bg {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  cursor: pointer;
+}
+
+.modal-state {
+  display: none;
+}
+
+.modal-state:checked + .modal {
+  opacity: 1;
+  visibility: visible;
+}
+
+.modal-state:checked + .modal .modal__inner {
+  top: 0;
+}
+
+.modal__inner {
+  transition: top .25s ease;
+  position: absolute;
+  top: -20%;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  width: 50%;
+  margin: auto;
+  overflow: auto;
+  background: #fff;
+  border-radius: 5px;
+  padding: 1em 2em;
+  height: fit-content;
+}
+
+.modal__close {
+  position: absolute;
+  right: 9px;
+  top: 7px;
+  width: 1.1em;
+  height: 1.1em;
+  cursor: pointer;
+}
+
+.modal__close:after,
+.modal__close:before {
+  content: '';
+  position: absolute;
+  width: 2px;
+  height: 1.5em;
+  background: #929693;
+  display: block;
+  transform: rotate(45deg);
+  left: 50%;
+  margin: -3px 0 0 -1px;
+  top: 0;
+}
+
+.modal__close:hover:after,
+.modal__close:hover:before {
+  background: #707271;
+}
+
+.modal__close:before {
+  transform: rotate(-45deg);
+}
+
+@media screen and (max-width: 768px) {
+  .modal__inner {
+    width: 90%;
+    height: 90%;
+    box-sizing: border-box;
+  }
+}
+
+
+/* Other
+   * =============================== */
+
+.content {
+  margin-left: 5%;
+}
+
+body {
+  padding: 1%;
+  text-align: center;
+}
+
+.btn {
+  cursor: pointer;
+  background: #35983F;
+  display: inline-block;
+  margin-top: .3em;
+  padding: .5em 1em;
+  color: #fff;
+  border-radius: 3px;
+}
+
+.btn:hover,
+.btn:focus {
+  background: #37a841;
+}
+
+.btn:active {
+  background: #37a841;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, .2) inset;
+}
+
+p img {
+  max-width: 200px;
+  height: auto;
+  float: left;
+  margin: 0 1em 1em 0;
+}
+
+
+/* The alert message box */
+
+.alert {
+  padding: 20px;
+  color: white;
+  margin-bottom: 15px;
+}
+
+
+/* The close button */
+
+.closebtn {
+  margin-left: 15px;
+  color: white;
+  font-weight: bold;
+  float: right;
+  font-size: 22px;
+  line-height: 20px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+
+/* When moving the mouse over the close button */
+
+.closebtn:hover {
+  color: black;
+}
+
+.alert.success {
+  background-color: #35983F;
+}
+
+fieldset {
+  margin: auto;
+  text-align: center;
+}
+
+legend {
+  margin: 2%;
+  text-align: left;
+  font-size: 20px;
+}
+
+.error {
+  color: red;
+  font-size: 14px;
+}
+
+input[type=submit] {
+  padding: 5px 15px;
+  background: #ccc;
+  border: 0 none;
+  cursor: pointer;
+  -webkit-border-radius: 5px;
+  border-radius: 5px;
+}
+
+button {
+  background-color: #00558C;
+  color: white;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}

@@ -1,6 +1,8 @@
 import {Injectable} from '@angular/core';
 import {Family} from './family';
-import {HttpClient} from '@angular/common/http';
+import {HttpClient, HttpErrorResponse} from '@angular/common/http';
+import {Observable, throwError} from 'rxjs';
+import {catchError} from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -14,8 +16,13 @@ export class DataService {
   familyIds = [];
   capabilityIds = [];
 
+
   constructor(http: HttpClient) {
     this.http = http;
+    this.loadTree();
+  }
+
+  loadTree(): void {
     this.getCheckboxData();
     this.getTreeData();
   }
@@ -40,6 +47,28 @@ export class DataService {
         this.refreshFilters();
       }
     });
+  }
+
+  addFamily(newFamily: Family): Observable<Family> {
+    return this.http.post<Family>('/api/add-family', newFamily).pipe(catchError(this.handleError));
+  }
+
+  private handleError(error: HttpErrorResponse) {
+    const msg = {
+      code: undefined,
+      message: undefined
+    };
+    if (error.error instanceof ErrorEvent) {
+      // A client-side or network error occurred. Handle it accordingly.
+      msg.message = error.error.message;
+    } else {
+      // The backend returned an unsuccessful response code.
+      // The response body may contain clues as to what went wrong,
+      msg.code = error.status;
+      msg.message = error.error.message;
+    }
+    // return an observable with a user-facing error message
+    return throwError(msg);
   }
 
   refreshFilters() {
