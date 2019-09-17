@@ -27,7 +27,7 @@ db.connect(err => {
 
 exports.getAll = function (callback) {
   db.query(
-      'SELECT families.family_id, family_name, capability_id, capability_name, role_id, role_name, band_id, band_name FROM families LEFT JOIN capabilities USING(family_id) LEFT JOIN roles USING(capability_id) LEFT JOIN bands USING(band_id)',
+      'SELECT families.family_id, family_name, capability_id, capability_name, role_id, role_name, band_id, band_name, band_colour FROM families LEFT JOIN capabilities USING(family_id) LEFT JOIN roles USING(capability_id) LEFT JOIN bands USING(band_id)',
       (error, rows) => {
         if (error) {
           return callback(error, null);
