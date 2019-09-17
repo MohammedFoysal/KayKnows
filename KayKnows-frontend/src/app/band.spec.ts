@@ -20,4 +20,7 @@ describe('Band', () => {
   it('should be the correct band id', () => {
     expect(band.band_id).toBe(1)
   });
+  it('should create an instance', () => {
+    expect(new Band()).toBeTruthy();
+  });
 });

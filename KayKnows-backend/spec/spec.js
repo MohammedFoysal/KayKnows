@@ -124,3 +124,31 @@ describe('get endpoints for base tables', () => {
     })
   });
 });
+
+describe('post endpoints', () => {
+  it('should respond to /add-family', () => {
+    return request(server)
+    .post('/add-family')
+    .expect(200)
+    .then(res => {
+      let json = JSON.parse(res.text);
+      assert(json.length === 7);
+    })
+  });
+
+
+});
+
+describe('post endpoints', () => {
+  it('should respond to /add-family', () => {
+    return request(server)
+    .post('/add-family')
+    .expect(200)
+    .then(res => {
+      let json = JSON.parse(res.text);
+      assert(json.length === 7);
+    })
+  });
+
+
+});

@@ -1,75 +1,69 @@
 <div class="header">
-  <div class="logo"><img src="assets/Kainos-logo-neg.png" alt="Kainos Logo" /></div>
-  <button (click)="logout()" class="logout">Logout</button>
+    <div class="logo"><img src="assets/Kainos-logo-neg.png" alt="Kainos Logo" /></div>
+    <button mat-flat-button (click)="logout()" class="logout">Logout</button>
 
-  <div class="onoffswitch" *ngIf="dataService.isAdmin">
-    <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" [(ngModel)]="dataService.isViewingAsAdmin"
-      id="myonoffswitch">
-    <label class="onoffswitch-label" for="myonoffswitch">
+    <div class="onoffswitch" *ngIf="dataService.isAdmin">
+        <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" [(ngModel)]="dataService.isViewingAsAdmin" id="myonoffswitch">
+        <label class="onoffswitch-label" for="myonoffswitch">
       <span class="onoffswitch-inner"></span>
       <span class="onoffswitch-switch"></span>
     </label>
-  </div>
+    </div>
 
-  <div class="name">
-    <h1>Career Tree</h1>
-  </div>
+    <div class="name">
+        <h1>Career Tree</h1>
+    </div>
 </div>
 <app-more-information></app-more-information>
 <div class="page-container">
 
-  <div class="col-md-6 filter-container">
-    <span class="filter-label">FEATURE SELECTOR</span>
-    <br><br>
+    <div class="col-md-6 filter-container">
+        <span class="filter-label">FEATURE SELECTOR</span>
+        <br><br>
 
-    <ul class="list-group">
-      <li class="list-group-item" *ngFor="let item of dataService.real_checkbox_data">
-        <input type="checkbox" [(ngModel)]="item.isSelected" name="list_name" value="{{item.family_id}}"
-          (ngModelChange)="checkboxChanged($event)" /> {{item.family_name}}
+        <ul class="list-group">
+            <li class="list-group-item" *ngFor="let item of dataService.real_checkbox_data">
+                <input type="checkbox" [(ngModel)]="item.isSelected" name="list_name" value="{{item.family_id}}" (ngModelChange)="checkboxChanged($event)" /> {{item.family_name}}
 
-        <ul class="list-group" *ngIf="item.isSelected">
-          <li class="capability-item list-group-item" *ngFor="let capability of item.capabilities">
-            <input type="checkbox" [(ngModel)]="capability.isSelected" (ngModelChange)="checkboxChanged($event)"
-              name="list_name" /> {{capability.capability_name}}
-          </li>
+                <ul class="list-group" *ngIf="item.isSelected">
+                    <li class="capability-item list-group-item" *ngFor="let capability of item.capabilities">
+                        <input type="checkbox" [(ngModel)]="capability.isSelected" (ngModelChange)="checkboxChanged($event)" name="list_name" /> {{capability.capability_name}}
+                    </li>
+                </ul>
+
+            </li>
         </ul>
 
-      </li>
-    </ul>
-
-    <div *ngIf="dataService.isViewingAsAdmin" class="admin-container">
-      <!-- TODO - Add admin content here -->
-      Admin actions...
-
-
+        <div *ngIf="dataService.isViewingAsAdmin" class="admin-container">
+            <app-add-form></app-add-form>
+        </div>
     </div>
 
-  </div>
-
-  <div class="tree-container">
-    <div class="tree">
-      <ul app-tree *ngIf="dataService.familyIds.length > 0; else placeholder" [data]="dataService.nestedData"></ul>
+    <div class="tree-container">
+        <div class="tree">
+            <ul app-tree *ngIf="dataService.familyIds.length > 0; else placeholder" [data]="dataService.nestedData"></ul>
+        </div>
+        <ng-template class="placeholder-container" #placeholder>
+            <div class="placeholder">
+                <h2 class="heading">Use the feature selector</h2>
+                <h3 class="subheading">Select relevant families & capabilities</h3>
+            </div>
+        </ng-template>
     </div>
-    <ng-template class="placeholder-container" #placeholder>
-      <div class="placeholder">
-        <h2 class="heading">Use the feature selector</h2>
-        <h3 class="subheading">Select relevant families & capabilities</h3>
-      </div>
-    </ng-template>
-  </div>
 
-  <div class="legendcontainer">
-    <ul class="legend">
-      <li>COLOUR KEY</li>
-      <li><span class="family"></span> Family</li>
-      <li><span class="capability"></span> Capability</li>
-    </ul>
-    <ul class="legend">
-      <li>BANDS</li>
-      <li class="band" *ngFor="let band of dataService.bands" [ngStyle]="{
+    <div class="legendcontainer">
+        <ul class="legend">
+            <li>COLOUR KEY</li>
+            <li><span class="family"></span> Family</li>
+            <li><span class="capability"></span> Capability</li>
+        </ul>
+        <ul class="legend">
+            <li>BANDS</li>
+            <li class="band" *ngFor="let band of dataService.bands" [ngStyle]="{
           'background-color': band.band_colour
         }">
-        {{band.band_name}}</li>
-    </ul>
-  </div>
+                {{band.band_name}}</li>
+        </ul>
+    </div>
+
 </div>
