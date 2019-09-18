@@ -2,6 +2,10 @@ import {Injectable} from '@angular/core';
 import {Family} from './family';
 import {HttpClient} from '@angular/common/http';
 import { Band } from './band';
+import {CapabilityLead} from './capability-lead';
+import { User } from './user';
+import { Observable } from 'rxjs/internal/Observable';
+import { Role } from './role';
 
 @Injectable({
   providedIn: 'root'
@@ -30,6 +34,18 @@ export class DataService {
         this.treeDataNested(this.flatData);
       }
     });
+  }
+
+  getUser(user_id: number): Observable<User>{
+    return this.http.get<User>("/api/users/"+ user_id);
+  }
+
+  getCapabilityLeadForCapability(capability_id: number): Observable<CapabilityLead> {
+    return this.http.get<CapabilityLead>("/api/capability-leads/" + capability_id);
+  }
+
+  getRoleById(role_id: number): Observable<Role>{
+    return this.http.get<Role>("/api/roles/" + role_id);
   }
 
   getCheckboxData() {
@@ -83,6 +99,7 @@ export class DataService {
     const families = [];
     const capabilities = [];
     const roles = [];
+    const users = [];
 
     for (const element of flatData) {
       // Extract Families
@@ -103,6 +120,9 @@ export class DataService {
       if (!this.roleExists(element, roles)) {
         roles.push(this.makeRole(element));
       }
+
+//       // Extract Users
+//       if()
     }
 
     capabilities.forEach(capability => {
@@ -133,7 +153,6 @@ export class DataService {
   makeFamily(data) {
     return {
       family_id: data.family_id,
-      family_name: data.family_name,
       label: data.family_name,
       type: 'family',
       opened: this.familyIds.includes(data.family_id)
@@ -143,7 +162,6 @@ export class DataService {
   makeCapability(data) {
     return {
       capability_id: data.capability_id,
-      capability_name: data.capability_name,
       label: data.capability_name,
       family_id: data.family_id,
       type: 'capability',
@@ -154,7 +172,6 @@ export class DataService {
   makeRole(data) {
     return {
       role_id: data.role_id,
-      role_name: data.role_name,
       label: data.role_name,
       band_id: data.band_id,
       band_name: data.band_name,

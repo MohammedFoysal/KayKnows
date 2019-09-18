@@ -92,6 +92,42 @@ const start = module.exports = function makeServer() {
     })
   });
 
+  app.get('/capability-leads', (req, res) => {
+    db.getCapabilityLeads((error, rows) => {
+      if (error) {
+        return handleError(error, req, res);
+      }
+      res.send(rows);
+    })
+  });
+
+  app.get('/capability-leads/:capability_id', (req, res) => {
+    db.getCapabilityLeadByCapabilityId(req.params.capability_id, (error, rows) => {
+      if (error) {
+        return handleError(error, req, res);
+      }
+      res.send(rows);
+    })
+  });
+
+    app.get('/users/:user_id', (req, res) => {
+      db.getUserById(req.params.user_id, (error, rows) => {
+        if (error) {
+          return handleError(error, req, res);
+        }
+        res.send(rows);
+      })
+    });
+
+    app.get('/roles/:role_id', (req, res) => {
+      db.getRoleById(req.params.role_id, (error, rows) => {
+        if (error) {
+          return handleError(error, req, res);
+        }
+        res.send(rows);
+      })
+    });
+
   app.get('/all', (req, res) => {
     db.getAll((error, rows) => {
       if (error) {

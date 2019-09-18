@@ -4,10 +4,13 @@
         'background-color' : getHighlighted() === dataObject.band_id ? getBackgroundColour(dataObject) : 'white',
         'color' :  getHighlighted() === dataObject.band_id ? 'white' : (dataObject.type === 'role') ? 'black' : 'white'
     }" (click)="dataObject.opened = !dataObject.opened" href="#">
-        {{ dataObject.label }}
-        <span class="tooltiptext tooltip-sub">
+        {{ dataObject.label }}        <br> <input *ngIf="dataObject.type != 'family'" id=moreInfo (click)="onSelect(dataObject, $event)" type="image" src="https://image.flaticon.com/icons/png/512/51/51941.png">
+
+      <span class="tooltiptext tooltip-sub">
             {{ dataObject.type | uppercase }}
         </span>
+        <br>
     </a>
     <ul app-tree [data]="dataObject.children" [class.inactive]="!dataObject.opened" *ngIf="dataObject.children"></ul>
 </li>
+

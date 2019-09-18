@@ -7,7 +7,6 @@ CREATE TABLE IF NOT EXISTS families(
     family_name VARCHAR(100) NOT NULL
 );
 
-
 CREATE TABLE IF NOT EXISTS capabilities(
     capability_id SMALLINT UNSIGNED PRIMARY KEY auto_increment,
     capability_name VARCHAR(100) NOT NULL,
@@ -29,10 +28,29 @@ CREATE TABLE IF NOT EXISTS roles(
     capability_id SMALLINT UNSIGNED,
     family_id SMALLINT UNSIGNED,
     band_id SMALLINT UNSIGNED,
-    parent_role_id SMALLINT UNSIGNED NULL, 
+    parent_role_id SMALLINT UNSIGNED NULL,
     FOREIGN KEY(capability_id) REFERENCES capabilities(capability_id),
     FOREIGN KEY(family_id) REFERENCES families(family_id),
     FOREIGN KEY(band_id) REFERENCES bands(band_id),
     FOREIGN KEY(parent_role_id) REFERENCES roles(role_id)
 );
 
+CREATE TABLE IF NOT EXISTS users(
+    user_id SMALLINT UNSIGNED PRIMARY KEY auto_increment,
+    user_password VARCHAR(100) NOT NULL,
+    user_email VARCHAR(100) NOT NULL,
+    role_id SMALLINT UNSIGNED,
+    user_admin BIT,
+    user_full_name VARCHAR(100),
+    FOREIGN KEY(role_id) REFERENCES roles(role_id)
+);
+
+CREATE TABLE IF NOT EXISTS capability_leads(
+    capability_lead_id SMALLINT UNSIGNED PRIMARY KEY auto_increment,
+    user_id SMALLINT UNSIGNED,
+    capability_lead_photo VARCHAR(300) NOT NULL,
+    capability_lead_message VARCHAR(500),
+    capability_id SMALLINT UNSIGNED,
+    FOREIGN KEY(user_id) REFERENCES users(user_id),
+    FOREIGN KEY(capability_id) REFERENCES capabilities(capability_id)
+);
