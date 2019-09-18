@@ -37,9 +37,8 @@ export class TreeComponent implements OnInit {
         this.switchboard.switchFamily(dataObject);
       }
       if(dataObject.type === "capability"){
-        this.capability = new Capability(dataObject.capability_id, dataObject.label, dataObject.family_id);
-        this.switchboard.switchCapability(this.capability);
-        this.switchboard.switchCapabilityLead(this.capability.capability_id);
+        this.switchboard.switchCapability(dataObject);
+        this.switchboard.switchCapabilityLead(dataObject.capability_id);
       }
       if(dataObject.type === "role"){
         this.switchboard.switchRole(dataObject.role_id);

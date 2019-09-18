@@ -165,7 +165,7 @@ insert into roles values (23, "People Manager","role spec", "Description", 11, 6
 
 -- users
 insert into users values (1, "password", "kyle.a@kainos.com", 7, 1, "Kyle Allen-Taylor");
-insert into users values (2, "123456", "ola.k@kainos.com", 7, 1, "Aleksandra Kondracka");
+insert into users values (2, "123456", "ola.k@kainos.com", 7, 1, "Ola Kondracka");
 insert into users values (3, "iamthepassword", "juliano.s@kainos.com", 7, 1, "Juliano Saunders");
 insert into users values (4, "ez123", "joe.z@kainos.com", 7, 1, "Joe Zazzaro-Francis");
 insert into users values (5, "pA55w0rd", "foysal.m@kainos.com", 7, 1, "Foysal Mohammed");

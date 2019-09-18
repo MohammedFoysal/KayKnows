@@ -216,7 +216,7 @@ right connector from last child*/
     /* Position the tooltip */
     position: absolute;
     z-index: 1000;
-    top: 2.5em;
+    top: 4em;
     left: 50%;
     transform: translateX(-50%) translateY(-2px);
 }
@@ -260,28 +260,7 @@ right connector from last child*/
     position: relative;
 }
 
-.tooltip-new::after {
-    opacity: 0;
-    visibility: hidden;
-    position: absolute;
-    content: attr(data-tooltip);
-    padding: 6px 10px;
-    top: 2.5em;
-    left: 50%;
-    transform: translateX(-50%) translateY(-2px);
-    background: grey;
-    color: white;
-    white-space: nowrap;
-    z-index: 2;
-    border-radius: 2px;
-}
 
-.tooltip-new:hover::after {
-    display: block;
-    opacity: 1;
-    visibility: visible;
-    transform: translateX(-50%) translateY(0);
-}
 
 .tooltip-sub {
     opacity: 0;
@@ -302,9 +281,4 @@ right connector from last child*/
     transform: translateX(-50%) translateY(0);
 }
 
-.tooltip-new:hover::after {
-    display: block;
-    opacity: 1;
-    visibility: visible;
-    transform: translateX(-50%) translateY(0);
-}
+

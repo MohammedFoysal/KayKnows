@@ -9,7 +9,7 @@
   <div class="detail" *ngIf="selected == 'capability'" [@EnterLeave]="'flyIn'">
     <div class="detailHeaderSectionCapability">
       <span class="hideButtonSection"><input class="hideButton" (click)="toggle()" type="image" src="https://icon-library.net/images/arrow-icon-transparent-background/arrow-icon-transparent-background-12.jpg"/></span>
-      <span class="detailTitle">{{capability.capability_name}}</span>
+      <span class="detailTitle">{{capability.label}}</span>
     </div>
     <div *ngIf="capability_lead">
       <div class="capabilityLeadTitle">
