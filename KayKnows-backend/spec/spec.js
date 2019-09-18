@@ -88,4 +88,39 @@ describe('get endpoints for base tables', () => {
       assert(json.length === 23);
     })
   });
+
+  it('should respond to /roles/role_id', () => {
+    return request(server)
+    .get('/roles/1')
+    .expect(200)
+    .then(res => {
+      let json = JSON.parse(res.text);
+      assert(json[0].role_id === 1);
+      assert(json.length === 1);
+    })
+  });
+
+  it('should respond to /capability-leads/capability_id', () => {
+    return request(server)
+    .get('/capability-leads/2')
+    .expect(200)
+    .then(res => {
+      let json = JSON.parse(res.text);
+      console.log(json);
+      assert(json[0].capability_lead_id === 1);
+      assert(json.length === 1);
+    })
+  });
+
+  it('should respond to /users/user_id', () => {
+    return request(server)
+    .get('/users/1')
+    .expect(200)
+    .then(res => {
+      let json = JSON.parse(res.text);
+      console.log(json);
+      assert(json[0].user_id === 1);
+      assert(json.length === 1);
+    })
+  });
 });

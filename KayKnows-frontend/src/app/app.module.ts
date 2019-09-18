@@ -7,17 +7,21 @@ import { AppComponent } from './app.component';
 import { DataService } from './data.service'
 import { TreeComponent } from './tree/tree.component';
 import { LogService } from './shared/log.service';
+import { MoreInformationComponent } from './more-information/more-information.component';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [
     AppComponent,
-    TreeComponent
+    TreeComponent,
+    MoreInformationComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    FormsModule
+    FormsModule,
+    BrowserAnimationsModule
   ],
   providers: [DataService,  LogService],
   bootstrap: [AppComponent]

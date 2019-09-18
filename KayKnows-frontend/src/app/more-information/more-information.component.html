@@ -1,0 +1,39 @@
+<ng-container *ngIf="show">
+  <div class="detail" *ngIf="selected == 'family'" [@EnterLeave]="'flyIn'">
+    <input class="hideButton" (click)="toggle()" type="image" src="https://icon-library.net/images/arrow-icon-transparent-background/arrow-icon-transparent-background-12.jpg"/>
+    <div>
+      {{family.family_name}}
+    </div>
+  </div>
+
+  <div class="detail" *ngIf="selected == 'capability'" [@EnterLeave]="'flyIn'">
+    <div class="detailHeaderSectionCapability">
+      <span class="hideButtonSection"><input class="hideButton" (click)="toggle()" type="image" src="https://icon-library.net/images/arrow-icon-transparent-background/arrow-icon-transparent-background-12.jpg"/></span>
+      <span class="detailTitle">{{capability.label}}</span>
+    </div>
+    <div *ngIf="capability_lead">
+      <div class="capabilityLeadTitle">
+        <h5>Lead</h5>
+      </div>
+      <hr class="line">
+      <div class="capabilityLeadProfile">
+        <img class="capabilityLeadPhoto" src="{{capability_lead.capability_lead_photo}}" alt="Capability Lead Photo"/>
+      <br>
+        <div class="capabilityLeadName">{{capability_lead.user_full_name}}</div>
+      </div>
+      <hr class="line"/>
+      <span class="description">{{capability_lead.capability_lead_message}}</span>
+    </div>
+  </div>
+
+  <div class="detailRole" *ngIf="selected == 'role'" [@EnterLeave]="'flyIn'">
+    <div class="detailHeaderSectionRole">
+      <span class="hideButtonSection"> <input class="hideButton" (click)="toggle()" type="image" src="https://icon-library.net/images/arrow-icon-transparent-background/arrow-icon-transparent-background-12.jpg"/> </span>
+      <span class="detailTitle"> {{role.role_name}}</span>
+    </div>
+    <hr class="line">
+    <span class="descriptionRole">{{role.role_description}}</span>
+    <hr class="line">
+    <span class="descriptionRole"> {{role.role_spec}}</span>
+  </div>
+</ng-container>

@@ -36,6 +36,25 @@ CREATE TABLE IF NOT EXISTS roles(
     FOREIGN KEY(parent_role_id) REFERENCES roles(role_id)
 );
 
+CREATE TABLE IF NOT EXISTS users(
+    user_id SMALLINT UNSIGNED PRIMARY KEY auto_increment,
+    user_password VARCHAR(100) NOT NULL,
+    user_email VARCHAR(100) NOT NULL,
+    role_id SMALLINT UNSIGNED,
+    user_admin BIT,
+    user_full_name VARCHAR(100),
+    FOREIGN KEY(role_id) REFERENCES roles(role_id)
+);
+
+CREATE TABLE IF NOT EXISTS capability_leads(
+    capability_lead_id SMALLINT UNSIGNED PRIMARY KEY auto_increment,
+    user_id SMALLINT UNSIGNED,
+    capability_lead_photo VARCHAR(300) NOT NULL,
+    capability_lead_message VARCHAR(500),
+    capability_id SMALLINT UNSIGNED,
+    FOREIGN KEY(user_id) REFERENCES users(user_id),
+    FOREIGN KEY(capability_id) REFERENCES capabilities(capability_id)
+);
 -- bands table
 INSERT INTO bands VALUES (1, "Executive");
 INSERT INTO bands VALUES (2, "Leadership Community");
