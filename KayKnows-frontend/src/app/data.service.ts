@@ -7,6 +7,7 @@ import { Role } from './role';
 import { Family } from './family';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { AuthResponse } from './auth-response';
+import { KayKnowsResponse } from './kay-knows-response';
 
 @Injectable({
   providedIn: 'root'
@@ -77,6 +78,13 @@ export class DataService {
 
   register(data): Observable<AuthResponse> {
     return this.http.post<AuthResponse>('/api/register', data);
+  }
+
+  removeCapability(capability_id): Observable<KayKnowsResponse> {
+    const token = `Bearer ${localStorage.getItem('token')}`
+    const headers = new HttpHeaders().set('Authorization', token);
+
+    return this.http.delete<KayKnowsResponse>('/api/capability/' + capability_id, {headers});
   }
 
   logout() {

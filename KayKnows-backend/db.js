@@ -123,6 +123,10 @@ exports.getFamilies = async () => {
   return await query("SELECT * FROM families");
 }
 
+exports.getRolesForCapabilityId = async (capability_id) => {
+  return await query("SELECT * FROM roles WHERE capability_id = ?", [capability_id]);
+};
+
 exports.getAsyncCapabilitiesByFamilyId = async (family_id) => {
   return await query("SELECT * FROM capabilities WHERE family_id = ?", [family_id]);
 }
@@ -149,5 +153,9 @@ exports.isUserAdmin = async(user_id) => {
 
 exports.storeUser = async (user_email, user_password, user_admin, role_id, user_full_name) => {
   return await query("INSERT INTO users (user_email, user_password, user_admin, role_id, user_full_name) VALUES (?, ?, ?, ?, ?)", [user_email, user_password, user_admin, role_id, user_full_name]); 
+}
+
+exports.removeCapability = async(capability_id) => {
+  return await query("DELETE FROM capabilities WHERE capability_id = ?", [capability_id]);
 }
 
