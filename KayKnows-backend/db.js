@@ -162,3 +162,7 @@ exports.removeCapability = async(capability_id) => {
 exports.removeRole = async(role_id) => {
   return await query("DELETE FROM roles WHERE role_id = ?", [role_id]);
 }
+
+exports.removeFamily = async(family_id) => {
+  return await query("DELETE FROM families WHERE family_id = ?", [family_id]);
+}

@@ -1,16 +1,21 @@
 <ng-container *ngIf="show">
-  <div class="detail" *ngIf="selected == 'family'" [@EnterLeave]="'flyIn'">
+  <div class="detailFamily" *ngIf="selected == 'family' && family" [@EnterLeave]="'flyIn'">
+    <div class="detailHeaderSectionFamily">
       <span class="hideButtonSection"><i class="hideButton material-icons" (click)="toggle()">arrow_forward</i>
       </span>
-    <div>
-      {{family.family_name}}
+      <span class="detailTitle"> {{family.label}}</span>
+    </div>
+
+    <div class="actions" *ngIf="dataService.isViewingAsAdmin">
+      <button id="deleteIcon" (click)="showRemoveFamilyDialog()" class="show"><i
+          class="material-icons">delete</i>Delete Family</button>
     </div>
   </div>
 
   <div class="detail" *ngIf="selected == 'capability' && capability" [@EnterLeave]="'flyIn'">
     <div class="detailHeaderSectionCapability">
-        <span class="hideButtonSection"><i class="hideButton material-icons" (click)="toggle()">arrow_forward</i>
-        </span>
+      <span class="hideButtonSection"><i class="hideButton material-icons" (click)="toggle()">arrow_forward</i>
+      </span>
       <span class="detailTitle">{{capability.label}}</span>
     </div>
 
@@ -34,7 +39,7 @@
     </div>
   </div>
 
-  <div class="detailRole" *ngIf="selected == 'role'" [@EnterLeave]="'flyIn'">
+  <div class="detailRole" *ngIf="selected == 'role' && role" [@EnterLeave]="'flyIn'">
     <div class="detailHeaderSectionRole">
       <span class="hideButtonSection"><i class="hideButton material-icons" (click)="toggle()">arrow_forward</i>
       </span>
@@ -42,8 +47,8 @@
     </div>
 
     <div class="actions" *ngIf="dataService.isViewingAsAdmin">
-      <button id="deleteIcon" (click)="showRemoveRoleDialog()" class="show"><i
-          class="material-icons">delete</i>Delete Role</button>
+      <button id="deleteIcon" (click)="showRemoveRoleDialog()" class="show"><i class="material-icons">delete</i>Delete
+        Role</button>
     </div>
 
     <div class="detailBody">
