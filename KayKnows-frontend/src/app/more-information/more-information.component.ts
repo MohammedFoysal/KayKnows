@@ -100,6 +100,18 @@ export class MoreInformationComponent implements OnInit, OnDestroy {
     });
   }
 
+  showRemoveRoleDialog() {
+    this.confirmDialogRef = this.dialog.open(ConfirmComponent, {hasBackdrop: true, data: {
+      title: 'Are you sure you want to delete the role?'
+    }});
+
+    this.confirmDialogRef.afterClosed().subscribe(data => {
+      if (data.confirmed) {
+        this.removeRole();
+      }
+    });
+  }
+
   removeCapability() {
     if (this.capability) {
       this.dataService.removeCapability(this.capability.capability_id).subscribe({
@@ -109,6 +121,31 @@ export class MoreInformationComponent implements OnInit, OnDestroy {
           this.dataService.getBands(); 
           this.toggle();
           this.capability = null;
+
+          this.snackBar.open(response.message, "OK", {
+            duration: 5000
+          });
+        },
+        error: error => {
+          this.snackBar.open(error.error.message, "OK", {
+            duration: 5000
+          });
+
+          console.log(error)
+        }
+      });
+    }
+  }
+
+  removeRole() {
+    if (this.role) {
+      this.dataService.removeRole(this.role.role_id).subscribe({
+        next: response => { 
+          this.dataService.getCheckboxData();
+          this.dataService.getTreeData();
+          this.dataService.getBands(); 
+          this.toggle();
+          this.role = null;
 
           this.snackBar.open(response.message, "OK", {
             duration: 5000

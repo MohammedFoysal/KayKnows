@@ -14,7 +14,7 @@
       <span class="detailTitle">{{capability.label}}</span>
     </div>
 
-    <div class="actions">
+    <div class="actions" *ngIf="dataService.isViewingAsAdmin">
       <button id="deleteIcon" (click)="showRemoveCapabilityDialog()" class="show"><i
           class="material-icons">delete</i>Delete Capability</button>
     </div>
@@ -40,6 +40,12 @@
       </span>
       <span class="detailTitle"> {{role.role_name}}</span>
     </div>
+
+    <div class="actions" *ngIf="dataService.isViewingAsAdmin">
+      <button id="deleteIcon" (click)="showRemoveRoleDialog()" class="show"><i
+          class="material-icons">delete</i>Delete Role</button>
+    </div>
+
     <hr class="line">
     <span class="descriptionRole">{{role.role_description}}</span>
     <hr class="line">

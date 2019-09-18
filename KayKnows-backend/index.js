@@ -31,7 +31,7 @@ const start = module.exports = function makeServer() {
 
     res.status(500).send({
       successful: false,
-      message: err.message
+      message: err.sqlMessage
     });
   }
 
@@ -262,6 +262,24 @@ const start = module.exports = function makeServer() {
         const result = await db.removeCapability(capability_id);
 
         res.send({ successful: true, message: 'Capability deleted'});
+      } else {
+        throw new Error('You are not authorised to change this resource');
+      }
+    } catch (err) {
+      return handleError(err, req, res);
+    }
+  });
+
+  app.delete('/role/:role_id', authMiddleware, async (req, res) => {
+    const role_id = req.params.role_id;
+    const userId = res.locals.userId;
+    const users = await db.getUser(userId);
+
+    try {
+      if (users && users[0].user_admin == 1) {
+        const result = await db.removeRole(role_id);
+
+        res.send({ successful: true, message: 'Role deleted'});
       } else {
         throw new Error('You are not authorised to change this resource');
       }

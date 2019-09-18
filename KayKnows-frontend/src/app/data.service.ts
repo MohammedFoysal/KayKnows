@@ -20,11 +20,16 @@ export class DataService {
   familyIds = [];
   capabilityIds = [];
   bands: Band[] = [];
+  isAdmin: Boolean = false;
+  isViewingAsAdmin: Boolean = false;
 
   constructor(private http: HttpClient) {
     this.getCheckboxData();
     this.getTreeData();
     this.getBands();
+
+    let localAdmin = localStorage.getItem('user_admin');
+    this.isAdmin = localAdmin != null && localAdmin == '1' ? true : false;
   }
 
   getTreeData(): void {
@@ -85,6 +90,13 @@ export class DataService {
     const headers = new HttpHeaders().set('Authorization', token);
 
     return this.http.delete<KayKnowsResponse>('/api/capability/' + capability_id, {headers});
+  }
+
+  removeRole(role_id): Observable<KayKnowsResponse> {
+    const token = `Bearer ${localStorage.getItem('token')}`
+    const headers = new HttpHeaders().set('Authorization', token);
+
+    return this.http.delete<KayKnowsResponse>('/api/role/' + role_id, {headers});
   }
 
   logout() {
