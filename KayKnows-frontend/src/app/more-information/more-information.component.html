@@ -31,18 +31,20 @@
       <span class="hideButtonSection"> <input class="hideButton" (click)="toggle()" type="image" src="https://icon-library.net/images/arrow-icon-transparent-background/arrow-icon-transparent-background-12.jpg"/> </span>
       <span class="detailTitle"> {{role.role_name}}</span>
     </div>
-    <div class="capabilityLeadTitle">
-    <h5 class="detailSubtitle">Responsibilities</h5>
-    </div>
-    <hr class="line">
-    <div class="roleDescription">
-      <ul>
-        <li *ngFor="let descriptionPoint of role_description">{{descriptionPoint}}</li>
-      </ul>
-    </div>
-    <hr class="line">
-    <div class="capabilityLeadTitle">
-      <span class="descriptionRole"> <a href="{{role.role_spec}}">{{role.role_name}} Specification</a></span>
+    <div class="detailBody">
+      <div class="capabilityLeadTitle">
+      <h5 class="detailSubtitle">Responsibilities</h5>
+      </div>
+      <hr class="line">
+      <div class="roleDescription">
+        <ul>
+          <li *ngFor="let descriptionPoint of role_description">{{descriptionPoint}}</li>
+        </ul>
+      </div>
+      <hr class="line">
+      <div class="capabilityLeadTitle" *ngIf="showRoleSpec">
+        <span class="descriptionRole"> <a href="{{role.role_spec}}">{{role.role_name}} Specification</a></span>
+      </div>
     </div>
   </div>
 </ng-container>

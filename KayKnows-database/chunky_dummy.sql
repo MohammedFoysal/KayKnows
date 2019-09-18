@@ -63,10 +63,22 @@ insert into roles values (5, "Lead Software Engineer","https://kainossoftwareltd
 |Actively identify and develop talent and highlight to your BU talent manager
 |Contribute to presales activities – completion of bids, presenting, tender qualification, bid management etc….
 |Provide constructive feedback and record it on Workday",2 , 2, 5, null);
-insert into roles values (6, "Software Engineer","role spec","Description",2 , 2, 6, null);
-insert into roles values (7, "Software Engineer","role spec","Description",2 , 2, 8, null);
-insert into roles values (24, "Software Engineer","role spec","Description",2 , 2, 7, null);
-insert into roles values (25, "Software Engineer","role spec","Description",2 , 2, 9, null);
+insert into roles values (6, "Software Engineer","https://kainossoftwareltd.sharepoint.com/people.old/Shared%20Documents/Forms/AllItems.aspx?id=%2Fpeople.old%2FShared%20Documents%2FJob%20Descriptions%2FSoftware%20Engineering%2FJob%20Specification%20-%20Senior%20Software%20Engineer%20-%20Senior%20Associate.pdf&parent=%2Fpeople.old%2FShared%20Documents%2FJob%20Descriptions%2FSoftware%20Engineering&embed=%7B%22o%22%3A%22https%3A%2F%2Fkainossoftwareltd.sharepoint.com%22%2C%22id%22%3A%225396a260-dd7d-201b-6ccb-41b66038ed6f%22%2C%22af%22%3Atrue%7D","Make your line manager aware if you think someone may be considering leaving the company
+|Help with recruitment activities",2 , 2, 6, null);
+insert into roles values (24, "Software Engineer","https://kainossoftwareltd.sharepoint.com/people.old/Shared%20Documents/Forms/AllItems.aspx?id=%2Fpeople.old%2FShared%20Documents%2FJob%20Descriptions%2FSoftware%20Engineering%2FJob%20Specification%20-%20Software%20Engineer%20-%20Associate.pdf&parent=%2Fpeople.old%2FShared%20Documents%2FJob%20Descriptions%2FSoftware%20Engineering&embed=%7B%22o%22%3A%22https%3A%2F%2Fkainossoftwareltd.sharepoint.com%22%2C%22id%22%3A%22f28d6f9e-af7d-54d1-3a48-ae3991e2cd76%22%2C%22af%22%3Atrue%7D","Mentor junior team members
+|Deliver your tasks within the timelines while adhering to the Kainos quality standards
+|Set professional self-development goals, including asking for training
+|Maintain a Kainos CV and store it in the correct location",2 , 2, 7, null);
+insert into roles values (7, "Software Engineer","https://kainossoftwareltd.sharepoint.com/people.old/Shared%20Documents/Forms/AllItems.aspx?id=%2Fpeople.old%2FShared%20Documents%2FJob%20Descriptions%2FSoftware%20Engineering%2FJob%20Specification%20-%20Software%20Engineer%20-%20Trainee.pdf&parent=%2Fpeople.old%2FShared%20Documents%2FJob%20Descriptions%2FSoftware%20Engineering&embed=%7B%22o%22%3A%22https%3A%2F%2Fkainossoftwareltd.sharepoint.com%22%2C%22id%22%3A%22709cc3d3-3d67-366d-0494-2294bd2efe82%22%2C%22af%22%3Atrue%7D","Represent Kainos at careers fairs or Kainos open evenings events if invited
+|Immediately tell your manager if your tasks are not going to be complete within the expected timeframe
+|Notify your line manager if there are dependencies that are impacting your work
+|Escalate to your line manager if you do not have appropriate project goals
+|Notify HR if you have not received your project review on time",2 , 2, 8, null);
+insert into roles values (25, "Software Engineer","","Carry out all professional administration (timesheets, keeping calendar and voicemail up-to-date)
+|Notify your manager if you are sick and cannot attend work
+|Be a representative at the Earn-As-You-Learn or Apprentice events if invited
+|Attend training courses when invited
+|Raise any concerns/issues/problems directly with your manager or your career coach",2 , 2, 9, null);
 
 -- Data Engineering
 insert into roles values (26, "Lead Data Engineer","role spec","Description",12 , 2, 5, null);

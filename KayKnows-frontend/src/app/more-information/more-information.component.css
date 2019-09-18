@@ -109,10 +109,16 @@
   text-align: left;
 }
 
+.detailBody{
+  margin-top: 10%;
+  margin-bottom: 25%;
+}
+
 .line{
   width: 75%;
   left: 12%;
   position: relative;
+  margin: 10px;
 }
 
 .detailTitle{
@@ -122,9 +128,8 @@
 
 .roleDescription{
   max-width: 86%;
-  overflow-wrap: normal;
-  font-size: 25px;
-  margin-left: 55px;
+  overflow-wrap: break-word;
+font-size: 20px;  margin-left: 55px;
 }
 
 .capabilityLeadTitle{

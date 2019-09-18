@@ -40,6 +40,7 @@ export class MoreInformationComponent implements OnInit, OnDestroy {
   capability_lead: CapabilityLead;
   role: Role;
   role_description: string[];
+  showRoleSpec: boolean = false;
   show: boolean;
   buttonName:string = 'Show';
 
@@ -70,6 +71,7 @@ export class MoreInformationComponent implements OnInit, OnDestroy {
       this.role = role;
       this.role_description = this.createBulletList(role.role_description);
       this.selected = "role";
+      this.showRoleSpec = role.role_spec.length != 0;
       console.log("role", this.role);
       this.show = true;
     })
