@@ -35,12 +35,12 @@ CREATE TABLE IF NOT EXISTS roles(
     FOREIGN KEY(parent_role_id) REFERENCES roles(role_id)
 );
 
-CREATE TABLE IF NOT EXISTS users(
+CREATE TABLE IF NOT EXISTS users (
     user_id SMALLINT UNSIGNED PRIMARY KEY auto_increment,
-    user_password VARCHAR(100) NOT NULL,
-    user_email VARCHAR(100) NOT NULL,
+    user_email VARCHAR(120) NOT NULL UNIQUE,
+    user_password VARCHAR(64) NOT NULL,
+    user_admin BOOLEAN,
     role_id SMALLINT UNSIGNED,
-    user_admin BIT,
     user_full_name VARCHAR(100),
     FOREIGN KEY(role_id) REFERENCES roles(role_id)
 );

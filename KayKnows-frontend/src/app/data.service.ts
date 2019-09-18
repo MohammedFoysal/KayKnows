@@ -1,11 +1,12 @@
 import {Injectable} from '@angular/core';
-import {Family} from './family';
-import {HttpClient} from '@angular/common/http';
 import { Band } from './band';
 import {CapabilityLead} from './capability-lead';
 import { User } from './user';
 import { Observable } from 'rxjs/internal/Observable';
 import { Role } from './role';
+import { Family } from './family';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { AuthResponse } from './auth-response';
 
 @Injectable({
   providedIn: 'root'
@@ -69,6 +70,29 @@ export class DataService {
 
     });
   }
+  
+  login(data): Observable<AuthResponse> {
+    return this.http.post<AuthResponse>('/api/login', data);
+  }
+
+  register(data): Observable<AuthResponse> {
+    return this.http.post<AuthResponse>('/api/register', data);
+  }
+
+  logout() {
+    localStorage.removeItem('token');
+    localStorage.removeItem('user_id');
+    localStorage.removeItem('user_email');
+    localStorage.removeItem('user_admin');
+    localStorage.removeItem('user_full_name');
+  }
+
+  getLoggedInUser(): Observable<User> {
+    const token = `Bearer ${localStorage.getItem('token')}`
+    const headers = new HttpHeaders().set('Authorization', token);
+
+    return this.http.get<User>('/api/me', {headers});
+  }
 
   refreshFilters() {
     var selectedFamilies = this.real_checkbox_data.filter(function (family) {
@@ -120,9 +144,6 @@ export class DataService {
       if (!this.roleExists(element, roles)) {
         roles.push(this.makeRole(element));
       }
-
-//       // Extract Users
-//       if()
     }
 
     capabilities.forEach(capability => {

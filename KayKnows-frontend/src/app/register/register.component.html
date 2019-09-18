@@ -1,0 +1,10 @@
+<input type="email" placeholder="email" [(ngModel)]="user.user_email"/> <br>
+<input type="password" placeholder="password" [(ngModel)]="user.user_password"/> <br>
+ <input type="text" placeholder="full name" [(ngModel)]="user.user_full_name"/> <br> 
+ <input type="number" placeholder="role id" [(ngModel)]="user.role_id"/> <br> 
+Admin: <input type="checkbox" name="admin" [(ngModel)]="user.user_admin"> <br><br>
+
+<button (click)="register()">Register</button>
+
+<div class="result" *ngIf="result">{{ result }}</div>
+
