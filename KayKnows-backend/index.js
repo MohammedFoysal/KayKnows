@@ -23,13 +23,15 @@ const start = module.exports = function makeServer() {
   function handleError(err, req, res) {
     if (err.errno === 3819) {
       err.code = "ER_CHECK_CONSTRAINT_VIOLATED";
+    } else if (err.errno == 1451) {
+      err.sqlMessage = 'Please delete the children before deleting this resource';
     }
 
     logger.error(err);
 
     res.status(500).send({
       successful: false,
-      message: err.sqlMessage
+      message: err.message
     });
   }
 
@@ -250,8 +252,22 @@ const start = module.exports = function makeServer() {
     res.send(users[0]);
   });
 
-  app.get('/test', async (req, res) => {
-    res.send(process.env.AUTH_SECRET);
+  app.delete('/capability/:capability_id', authMiddleware, async (req, res) => {
+    const capability_id = req.params.capability_id;
+    const userId = res.locals.userId;
+    const users = await db.getUser(userId);
+
+    try {
+      if (users && users[0].user_admin == 1) {
+        const result = await db.removeCapability(capability_id);
+
+        res.send({ successful: true, message: 'Capability deleted'});
+      } else {
+        throw new Error('You are not authorised to change this resource');
+      }
+    } catch (err) {
+      return handleError(err, req, res);
+    }
   });
 
 

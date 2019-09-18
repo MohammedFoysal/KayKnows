@@ -47,6 +47,18 @@
 	text-align: center;
 }
 
+.actions {
+  display: flex;
+  padding: 10px;
+  font-size: 14px;
+}
+
+.actions button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 5px;
+}
 
 .hideButton{
   height: 30px;
