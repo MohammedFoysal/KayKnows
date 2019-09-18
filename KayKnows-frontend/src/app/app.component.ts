@@ -16,18 +16,13 @@ import { SwitchboardService } from './switchboard.service';
 
 export class AppComponent {
   title = 'KayKnows-frontend';
-  dataService: DataService;
-  isAdmin: Boolean = false;
-  isViewingAsAdmin: Boolean = false;
 
-  constructor(dataService: DataService, private logger: LogService,  private route: ActivatedRoute, private router: Router, switchboard: SwitchboardService) { 
-    this.dataService = dataService;
+  constructor(private dataService: DataService, private logger: LogService,  private route: ActivatedRoute, private router: Router, switchboard: SwitchboardService) { 
     logger.info('AppComponent: Successful launch');
   }
 
   ngOnInit() {
-      let localAdmin = localStorage.getItem('user_admin');
-      this.isAdmin = localAdmin != null && localAdmin == '1' ? true : false;
+
   }
 
   checkboxChanged(event) {

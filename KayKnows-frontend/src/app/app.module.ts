@@ -15,6 +15,9 @@ import { RouterModule, Routes } from '@angular/router';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { RegisterComponent } from './register/register.component';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatSnackBarModule } from '@angular/material/snack-bar'
+import { ConfirmComponent } from './confirm/confirm.component';
 
 const appRoutes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -29,7 +32,8 @@ const appRoutes: Routes = [
     LandingComponent,
     LoginComponent,
     PageNotFoundComponent,
-    RegisterComponent
+    RegisterComponent,
+    ConfirmComponent
   ],
   imports: [
     BrowserModule,
@@ -37,9 +41,13 @@ const appRoutes: Routes = [
     HttpClientModule,
     FormsModule,
     BrowserAnimationsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    MatDialogModule,
+    MatSnackBarModule
   ],
+  exports: [ConfirmComponent],
   providers: [DataService,  LogService],
-  bootstrap: [LandingComponent]
+  bootstrap: [LandingComponent],
+  entryComponents: [ConfirmComponent],
 })
 export class AppModule { }

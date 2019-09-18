@@ -250,8 +250,25 @@ const start = module.exports = function makeServer() {
     res.send(users[0]);
   });
 
-  app.get('/test', async (req, res) => {
-    res.send(process.env.AUTH_SECRET);
+  app.delete('/capability/:capability_id', authMiddleware, async (req, res) => {
+    const capability_id = req.params.capability_id;
+    const userId = res.locals.userId;
+    const users = await db.getUser(userId);
+
+    try {
+      if (users && users[0].user_admin == 1) {
+        const result = await db.removeCapability(capability_id);
+
+        res.send({ successful: true, message: 'Capability deleted'});
+      } else {
+        throw new Error('You are not authorised to change this resource');
+      }
+    } catch (err) {
+      if (err.errno == 1451) {
+        err.sqlMessage = 'You must delete the roles associated with this capability before deleting it';
+      }
+      return handleError(err, req, res);
+    }
   });
 
 
