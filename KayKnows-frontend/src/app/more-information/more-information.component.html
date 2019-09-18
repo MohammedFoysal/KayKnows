@@ -36,7 +36,9 @@
     </div>
     <hr class="line">
     <div class="roleDescription">
-      {{role.role_description}}
+      <ul>
+        <li *ngFor="let descriptionPoint of role_description">{{descriptionPoint}}</li>
+      </ul>
     </div>
     <hr class="line">
     <div class="capabilityLeadTitle">

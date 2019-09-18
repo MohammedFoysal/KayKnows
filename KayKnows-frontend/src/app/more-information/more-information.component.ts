@@ -38,12 +38,17 @@ export class MoreInformationComponent implements OnInit, OnDestroy {
   family: Family;
   capability: Capability;
   capability_lead: CapabilityLead;
-  no_capability_lead = true;
   role: Role;
+  role_description: string[];
   show: boolean;
   buttonName:string = 'Show';
 
   constructor(switchboard: SwitchboardService) { this.switchboard = switchboard }
+
+  createBulletList(description: string): string[]{
+    console.log(description.split("|"));
+    return description.split("|");
+  }
 
   ngOnInit() : void {
     this.subFamily = this.switchboard.family$.subscribe((f) => {
@@ -60,10 +65,10 @@ export class MoreInformationComponent implements OnInit, OnDestroy {
     this.subCapabilityLead = this.switchboard.capability_lead$.subscribe((capability_lead) => {
       this.capability_lead = capability_lead;
       console.log(capability_lead);
-      console.log(this.no_capability_lead);
     });
     this.subRole = this.switchboard.role$.subscribe((role) => {
       this.role = role;
+      this.role_description = this.createBulletList(role.role_description);
       this.selected = "role";
       console.log("role", this.role);
       this.show = true;

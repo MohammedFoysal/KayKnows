@@ -23,8 +23,8 @@ CREATE TABLE IF NOT EXISTS bands(
 CREATE TABLE IF NOT EXISTS roles(
     role_id SMALLINT UNSIGNED PRIMARY KEY auto_increment,
     role_name VARCHAR(100) NOT NULL,
-    role_spec VARCHAR(300) NULL,
-    role_description VARCHAR(500) NULL,
+    role_spec VARCHAR(500) NULL,
+    role_description TEXT NULL,
     capability_id SMALLINT UNSIGNED,
     family_id SMALLINT UNSIGNED,
     band_id SMALLINT UNSIGNED,
@@ -40,7 +40,7 @@ CREATE TABLE IF NOT EXISTS users(
     user_password VARCHAR(100) NOT NULL,
     user_email VARCHAR(100) NOT NULL,
     role_id SMALLINT UNSIGNED,
-    user_admin BIT,
+    user_admin BOOLEAN,
     user_full_name VARCHAR(100),
     FOREIGN KEY(role_id) REFERENCES roles(role_id)
 );

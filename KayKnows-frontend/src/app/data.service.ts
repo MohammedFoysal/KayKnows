@@ -120,9 +120,6 @@ export class DataService {
       if (!this.roleExists(element, roles)) {
         roles.push(this.makeRole(element));
       }
-
-//       // Extract Users
-//       if()
     }
 
     capabilities.forEach(capability => {

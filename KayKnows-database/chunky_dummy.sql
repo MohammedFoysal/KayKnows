@@ -57,7 +57,12 @@ insert into roles values (4, "Sales Associate","role spec","Description", 1, 1, 
 
 
 -- Software Engineering
-insert into roles values (5, "Lead Software Engineer","role spec","Description",2 , 2, 5, null);
+insert into roles values (5, "Lead Software Engineer","https://kainossoftwareltd.sharepoint.com/people.old/Shared%20Documents/Forms/AllItems.aspx?id=%2Fpeople.old%2FShared%20Documents%2FJob%20Descriptions%2FSoftware%20Engineering%2FJob%20Specification%20-%20Lead%20Software%20Engineer%20-%20Consultant.pdf&parent=%2Fpeople.old%2FShared%20Documents%2FJob%20Descriptions%2FSoftware%20Engineering&embed=%7B%22o%22%3A%22https%3A%2F%2Fkainossoftwareltd.sharepoint.com%22%2C%22id%22%3A%222dd9b883-7e75-bf6c-a96a-cdf89e108a74%22%2C%22af%22%3Atrue%7D","Be an active career coach and to escalate to their line manager if stretch goals are not set for your coachees
+|Ensure that your coachee has received an appraisal and regular feedback and to escalate to HR if this is not the case
+|Visibly and regularly share knowledge
+|Actively identify and develop talent and highlight to your BU talent manager
+|Contribute to presales activities – completion of bids, presenting, tender qualification, bid management etc….
+|Provide constructive feedback and record it on Workday",2 , 2, 5, null);
 insert into roles values (6, "Software Engineer","role spec","Description",2 , 2, 6, null);
 insert into roles values (7, "Software Engineer","role spec","Description",2 , 2, 8, null);
 insert into roles values (24, "Software Engineer","role spec","Description",2 , 2, 7, null);
@@ -164,12 +169,12 @@ insert into roles values (23, "People Manager","role spec", "Description", 11, 6
 --    user_full_name VARCHAR(100),
 
 -- users
-insert into users values (1, "password", "kyle.a@kainos.com", 7, 1, "Kyle Allen-Taylor");
-insert into users values (2, "123456", "ola.k@kainos.com", 7, 1, "Ola Kondracka");
-insert into users values (3, "iamthepassword", "juliano.s@kainos.com", 7, 1, "Juliano Saunders");
-insert into users values (4, "ez123", "joe.z@kainos.com", 7, 1, "Joe Zazzaro-Francis");
-insert into users values (5, "pA55w0rd", "foysal.m@kainos.com", 7, 1, "Foysal Mohammed");
-insert into users values (6, "password54321", "dragos.a@kainos.com", 7, 1, "Dragos-Andrei Ilies");
+insert into users values (1, "kyle.a@kainos.com", "password", 1, 7, "Kyle Allen-Taylor");
+insert into users values (2, "ola.k@kainos.com", "123456", 1, 7, "Ola Kondracka");
+insert into users values (3, "juliano.s@kainos.com", "iamthepassword",  1, 7, "Juliano Saunders");
+insert into users values (4, "joe.z@kainos.com", "ez123", 1, 7, "Joe Zazzaro-Francis");
+insert into users values (5, "foysal.m@kainos.com", "pA55w0rd", 1, 7, "Foysal Mohammed");
+insert into users values (6, "dragos.a@kainos.com", "password54321", 1, 7, "Dragos-Andrei Ilies");
 
 -- CAPABILITY_LEADS capability_lead_id SMALLINT UNSIGNED PRIMARY KEY auto_increment, ----------------------------------
 --    user_id SMALLINT UNSIGNED,
