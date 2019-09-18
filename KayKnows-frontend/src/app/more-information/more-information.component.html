@@ -31,9 +31,16 @@
       <span class="hideButtonSection"> <input class="hideButton" (click)="toggle()" type="image" src="https://icon-library.net/images/arrow-icon-transparent-background/arrow-icon-transparent-background-12.jpg"/> </span>
       <span class="detailTitle"> {{role.role_name}}</span>
     </div>
+    <div class="capabilityLeadTitle">
+    <h5 class="detailSubtitle">Responsibilities</h5>
+    </div>
     <hr class="line">
-    <span class="descriptionRole">{{role.role_description}}</span>
+    <div class="roleDescription">
+      {{role.role_description}}
+    </div>
     <hr class="line">
-    <span class="descriptionRole"> {{role.role_spec}}</span>
+    <div class="capabilityLeadTitle">
+      <span class="descriptionRole"> <a href="{{role.role_spec}}">{{role.role_name}} Specification</a></span>
+    </div>
   </div>
 </ng-container>
