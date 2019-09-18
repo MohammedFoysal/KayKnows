@@ -78,12 +78,20 @@ exports.getBands = function (callback) {
 
 exports.getFamilies = async () => {
   return await query("SELECT * FROM families");
-}
+};
 
 exports.getAsyncCapabilitiesByFamilyId = async (family_id) => {
   return await query("SELECT * FROM capabilities WHERE family_id = ?", [family_id]);
-}
+};
 
+
+exports.addFamily = async (family_name) => {
+  return await query("INSERT INTO families (family_name) VALUES (?)", [family_name]);
+};
+
+exports.getFamilyNamesByFamilyName = async (family_name) => {
+  return await query("SELECT family_name FROM families WHERE family_name = ?", [family_name]);
+};
 
 
 
