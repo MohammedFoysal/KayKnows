@@ -10,6 +10,7 @@ import { trigger, state, style, transition, animate } from '@angular/animations'
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ConfirmComponent } from '../confirm/confirm.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { Band } from '../band';
 
 @Component({
   selector: 'app-more-information',
@@ -35,6 +36,7 @@ export class MoreInformationComponent implements OnInit, OnDestroy {
   subCapability: Subscription;
   subRole: Subscription;
   subCapabilityLead: Subscription;
+  subBand: Subscription;
   selected: string;
   family: Family;
   capability: Capability;
@@ -45,14 +47,27 @@ export class MoreInformationComponent implements OnInit, OnDestroy {
   show: boolean;
   buttonName:string = 'Show';
   confirmDialogRef: MatDialogRef<ConfirmComponent>;
+  band: Band;
+  band_competencies: string[];
+  band_responsibilities: string[];
+  sub_list_competencies: string[][];
 
   constructor(private dataService: DataService, switchboard: SwitchboardService, private dialog: MatDialog, private snackBar: MatSnackBar) { 
     this.switchboard = switchboard 
   }
 
   createBulletList(description: string): string[]{
-    console.log(description.split("|"));
     return description.split("|");
+  }
+
+  createSubBulletList(description: string): string[]{
+    let split = description.split(';');
+    split.shift(); // Remove the first element
+    return split;
+  }
+
+  createListTitle(description: string): string{
+    return description.split(';')[0];
   }
 
   ngOnInit() : void {
@@ -75,7 +90,14 @@ export class MoreInformationComponent implements OnInit, OnDestroy {
       this.selected = "role";
       this.showRoleSpec = role.role_spec.length != 0;
       this.show = true;
-    })
+    });
+    this.subBand = this.switchboard.band$.subscribe((band) =>{
+      this.band = band;
+      this.band_competencies = this.createBulletList(band.band_competencies);
+      this.band_responsibilities = this.createBulletList(band.band_responsibilities);
+      this.selected = "band";
+      this.show = true;
+    });
   }
 
   toggle(){
@@ -92,6 +114,7 @@ export class MoreInformationComponent implements OnInit, OnDestroy {
     this.subCapability.unsubscribe();
     this.subCapabilityLead.unsubscribe();
     this.subRole.unsubscribe();
+    this.subBand.unsubscribe();
   }
 
   showRemoveCapabilityDialog() {

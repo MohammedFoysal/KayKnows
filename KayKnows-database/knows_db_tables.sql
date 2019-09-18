@@ -18,7 +18,9 @@ CREATE TABLE IF NOT EXISTS capabilities(
 CREATE TABLE IF NOT EXISTS bands(
     band_id SMALLINT UNSIGNED PRIMARY KEY auto_increment,
     band_name VARCHAR(100) NOT NULL,
-    band_colour CHAR(7)
+    band_colour CHAR(7),
+    band_competencies TEXT NOT NULL,
+    band_responsibilities TEXT NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS roles(
@@ -38,7 +40,7 @@ CREATE TABLE IF NOT EXISTS roles(
 
 CREATE TABLE IF NOT EXISTS users (
     user_id SMALLINT UNSIGNED PRIMARY KEY auto_increment,
-    user_email VARCHAR(120) NOT NULL UNIQUE,
+    user_email VARCHAR(100) NOT NULL,
     user_password VARCHAR(64) NOT NULL,
     user_admin BOOLEAN,
     role_id SMALLINT UNSIGNED,

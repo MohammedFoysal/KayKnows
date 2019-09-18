@@ -32,6 +32,8 @@
     color: white;
     margin: 0px;
     padding: 10px;
+    z-index: 1000;
+    cursor: pointer;
 }
 
 .logout {

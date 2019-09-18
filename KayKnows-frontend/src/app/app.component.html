@@ -41,7 +41,8 @@
 
     <div class="tree-container">
         <div class="tree">
-            <ul app-tree *ngIf="dataService.familyIds.length > 0; else placeholder" [data]="dataService.nestedData"></ul>
+            <ul app-tree *ngIf="dataService.familyIds.length > 0; else placeholder" [data]="dataService.nestedData">
+            </ul>
         </div>
         <ng-template class="placeholder-container" #placeholder>
             <div class="placeholder">
@@ -59,11 +60,11 @@
         </ul>
         <ul class="legend">
             <li>BANDS</li>
-            <li class="band" *ngFor="let band of dataService.bands" [ngStyle]="{
-          'background-color': band.band_colour
-        }">
-                {{band.band_name}}</li>
+            <li class="band" *ngFor="let band of dataService.bands" (click)="onSelect(band)" [ngStyle]="{
+          'background-color': band.band_colour}">
+                {{band.band_name}}
+            </li>
+
         </ul>
     </div>
-
 </div>

@@ -1,27 +1,43 @@
-.detail{
+.detail {
   text-align: center;
   position: absolute;
   color: black;
   background-image: linear-gradient(white, #afafaf);
-  right:0;
+  right: 0;
   width: 30%;
   height: 100%;
   font-size: 40px;
-  z-index: 1;
+  z-index: 2;
   border-left: solid;
   border-color: #c3e0c3;
 }
 
-.detailRole{
+.detailBand {
+  text-align: center;
+  position: absolute;
+  color: black;
+  background-color: whitesmoke;
+  right: 0;
+  width: 40%;
+  height: 100%;
+  max-height: 100%;
+  font-size: 40px;
+  z-index: 2;
+  border-left: solid;
+  border-color: lightgray;
+  overflow: scroll;
+}
+
+.detailRole {
   text-align: left;
   position: absolute;
   color: black;
   background-image: linear-gradient(white, #afafaf);
-  right:0;
+  right: 0;
   width: 50%;
   height: 100%;
   font-size: 40px;
-  z-index: 1;
+  z-index: 2;
   border-left: solid;
   border-color: #e6445f;
 }
@@ -31,45 +47,55 @@
   position: absolute;
   color: black;
   background-image: linear-gradient(white, #afafaf);
-  right:0;
+  right: 0;
   width: 30%;
   height: 100%;
   font-size: 40px;
-  z-index: 1;
+  z-index: 2;
   border-left: solid;
   border-color: #e6445f;
 }
 
 .detailHeaderSectionCapability {
   color: white;
-	background-image: linear-gradient(#95C11F, #90C365);
-	display: inline-block;
-	width: 100%;
-	border-bottom: solid;
-	border-color: #75a76b;
-	margin-bottom: 5px;
+  background-image: linear-gradient(#95C11F, #90C365);
+  display: inline-block;
+  width: 100%;
+  border-bottom: solid;
+  border-color: #75a76b;
+  margin-bottom: 5px;
 }
 
 .detailHeaderSectionRole {
   color: white;
-	background-image: linear-gradient(#EB595E, #E64360);
-	display: inline-block;
-	width: 100%;
-	margin-bottom: 5px;
-	text-align: center;
+  background-image: linear-gradient(#EB595E, #E64360);
+  display: inline-block;
+  width: 100%;
+  margin-bottom: 5px;
+  text-align: center;
 }
 
 .detailHeaderSectionFamily {
   color: white;
-	background-image: linear-gradient(#417ABD, #00558C);
-	display: inline-block;
-	width: 100%;
-	border-bottom: solid;
-	margin-bottom: 5px;
-	text-align: center;
+  background-image: linear-gradient(#417ABD, #00558C);
+  display: inline-block;
+  width: 100%;
+  border-bottom: solid;
+  margin-bottom: 5px;
+  text-align: center;
 }
 
-.detailSubtitle{
+.detailHeaderSectionBand {
+  color: white;
+  display: inline-block;
+  width: 100%;
+  border-bottom: solid;
+  border-color: lightgray;
+  margin-bottom: 5px;
+  text-align: center;
+}
+
+.detailSubtitle {
   margin-left: 16px;
 }
 
@@ -91,7 +117,7 @@
   color: white;
 }
 
-.hideButton{
+.hideButton {
   height: 30px;
   width: 30px;
   cursor: pointer;
@@ -100,11 +126,11 @@
   padding-left: 10px;
 }
 
-.hideButtonSection{
-  float:left;
+.hideButtonSection {
+  float: left;
 }
 
-.capabilityLeadPhoto{
+.capabilityLeadPhoto {
   border-radius: 50%;
   width: 100px;
   height: 100px;
@@ -112,17 +138,17 @@
   left: 10px;
 }
 
-.description{
-	font-family: DINNextW01-Regular, arial, verdana, tahoma;
+.description {
+  font-family: DINNextW01-Regular, arial, verdana, tahoma;
   font-size: 20px;
-  margin:10px;
-  padding:15px;
-  text-align:left;
-  position:absolute;
+  margin: 10px;
+  padding: 15px;
+  text-align: left;
+  position: absolute;
   left: 0;
 }
 
-.descriptionRole{
+.descriptionRole {
   position: relative;
   font-family: DINNextW01-Regular, arial, verdana, tahoma;
   font-size: 20px;
@@ -133,46 +159,73 @@
   width: 90%;
 }
 
-.capabilityLeadProfile{
+.capabilityLeadProfile {
   padding-top: 10px;
   height: 100px;
   padding-bottom: 10px;
 }
 
-.capabilityLeadName{
-      position: relative;
-      bottom: 10px;
-      font-size: x-large;
+.capabilityLeadName {
+  position: relative;
+  bottom: 10px;
+  font-size: x-large;
 }
 
-.h5{
+.h5 {
   text-align: left;
 }
 
-.detailBody{
+.detailBody {
   margin-top: 10%;
   margin-bottom: 25%;
 }
 
-.line{
+.line {
   width: 75%;
   left: 12%;
   position: relative;
   margin: 10px;
 }
 
-.detailTitle{
+.detailTitle {
   position: relative;
   top: 5px;
 }
 
-.roleDescription{
+.descriptionBandCompetencies {
+  font-size: 20px;
+  margin: 10px;
+  padding: 15px;
+  text-align: left;
+  position: relative;
+  left: 0;
+}
+
+.descriptionBandResponsibilities {
+  font-size: 20px;
+  margin: 10px;
+  padding: 15px;
+  text-align: left;
+  position: absolute;
+  left: 0;
+}
+
+.subListCompetencies {
+  font-size: 18px;
+  margin-left: 10px;
+  padding: 15px;
+  text-align: left;
+  position: relative;
+  left: 0;
+}
+
+.roleDescription {
   max-width: 86%;
   overflow-wrap: break-word;
-font-size: 20px;  margin-left: 55px;
+  font-size: 20px;
+  margin-left: 55px;
 }
 
-.capabilityLeadTitle{
+.capabilityLeadTitle {
   text-align: center;
 }
-
