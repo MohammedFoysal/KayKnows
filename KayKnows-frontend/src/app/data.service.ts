@@ -360,6 +360,10 @@ export class DataService {
   }
 
   roleExists(role, roles) {
+    if (role.role_id === null) {
+      return true; // ignore me I'm a ghost role
+    }
+
     for (const r of roles) {
       if (r.role_id === role.role_id) {
         return true;
