@@ -2,12 +2,13 @@ import {Injectable} from '@angular/core';
 import { Band } from './band';
 import {CapabilityLead} from './capability-lead';
 import { User } from './user';
-import { Observable } from 'rxjs/internal/Observable';
 import { Role } from './role';
 import { Family } from './family';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 import { AuthResponse } from './auth-response';
 import { KayKnowsResponse } from './kay-knows-response';
+import {Observable, throwError} from 'rxjs';
+import {catchError} from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -24,6 +25,10 @@ export class DataService {
   isViewingAsAdmin: Boolean = false;
 
   constructor(private http: HttpClient) {
+    this.loadTree();
+  }
+
+  loadTree(): void {
     this.getCheckboxData();
     this.getTreeData();
     this.getBands();
@@ -119,6 +124,28 @@ export class DataService {
     const headers = new HttpHeaders().set('Authorization', token);
 
     return this.http.get<User>('/api/me', {headers});
+  }
+  
+  addFamily(newFamily: Family): Observable<Family> {
+    return this.http.post<Family>('/api/add-family', newFamily).pipe(catchError(this.handleError));
+  }
+
+  private handleError(error: HttpErrorResponse) {
+    const msg = {
+      code: undefined,
+      message: undefined
+    };
+    if (error.error instanceof ErrorEvent) {
+      // A client-side or network error occurred. Handle it accordingly.
+      msg.message = error.error.message;
+    } else {
+      // The backend returned an unsuccessful response code.
+      // The response body may contain clues as to what went wrong,
+      msg.code = error.status;
+      msg.message = error.error.message;
+    }
+    // return an observable with a user-facing error message
+    return throwError(msg);
   }
 
   refreshFilters() {

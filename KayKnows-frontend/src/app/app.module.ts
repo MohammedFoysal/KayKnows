@@ -1,7 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { DataService } from './data.service'
@@ -13,7 +13,6 @@ import { LandingComponent } from './landing/landing.component';
 import { LoginComponent } from './login/login.component';
 import { RouterModule, Routes } from '@angular/router';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
-import { ReactiveFormsModule } from '@angular/forms';
 import { RegisterComponent } from './register/register.component';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatSnackBarModule } from '@angular/material/snack-bar'
@@ -23,6 +22,8 @@ const appRoutes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'home', component: AppComponent },
 ];
+import { AddFormComponent } from './add-form/add-form.component';
+import {MatFormFieldModule, MatSelectModule, MatInputModule, MatButtonModule} from '@angular/material/';
 
 @NgModule({
   declarations: [
@@ -33,7 +34,8 @@ const appRoutes: Routes = [
     LoginComponent,
     PageNotFoundComponent,
     RegisterComponent,
-    ConfirmComponent
+    ConfirmComponent,
+    AddFormComponent
   ],
   imports: [
     BrowserModule,
@@ -43,11 +45,17 @@ const appRoutes: Routes = [
     BrowserAnimationsModule,
     ReactiveFormsModule,
     MatDialogModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    MatSelectModule,
+    MatFormFieldModule,
+    BrowserAnimationsModule,
+    MatInputModule,
+    ReactiveFormsModule,
+    MatButtonModule
   ],
   exports: [ConfirmComponent],
   providers: [DataService,  LogService],
   bootstrap: [LandingComponent],
-  entryComponents: [ConfirmComponent],
+  entryComponents: [ConfirmComponent, AddFormComponent],
 })
 export class AppModule { }

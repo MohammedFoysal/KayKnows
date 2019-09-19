@@ -4,7 +4,8 @@ USE knows_db;
 
 CREATE TABLE IF NOT EXISTS families(
     family_id SMALLINT UNSIGNED PRIMARY KEY auto_increment,
-    family_name VARCHAR(100) NOT NULL
+    family_name VARCHAR(100) NOT NULL UNIQUE,
+    CONSTRAINT `ck_fam_name_len` CHECK (LENGTH(family_name) > 0 && LENGTH(family_name) <=100)
 );
 
 CREATE TABLE IF NOT EXISTS capabilities(

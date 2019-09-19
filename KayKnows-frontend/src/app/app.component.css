@@ -35,7 +35,7 @@
 }
 
 .logout {
-    padding: 10px;
+    /*padding: 10px;*/
     margin-right: 10px;
 }
 
@@ -83,7 +83,7 @@
     position: absolute; top: 0; bottom: 0;
     right: 74px;
     border: 2px solid #999999; border-radius: 20px;
-    transition: all 0.3s ease-in 0s; 
+    transition: all 0.3s ease-in 0s;
 }
 
 .onoffswitch-checkbox:checked + .onoffswitch-label .onoffswitch-inner {
@@ -91,5 +91,5 @@
 }
 
 .onoffswitch-checkbox:checked + .onoffswitch-label .onoffswitch-switch {
-    right: 0px; 
+    right: 0px;
 }

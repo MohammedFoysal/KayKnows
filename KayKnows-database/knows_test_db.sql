@@ -55,7 +55,6 @@ CREATE TABLE IF NOT EXISTS capability_leads(
     FOREIGN KEY(user_id) REFERENCES users(user_id),
     FOREIGN KEY(capability_id) REFERENCES capabilities(capability_id)
 );
-
 -- bands table
 INSERT INTO bands VALUES (1, "Executive");
 INSERT INTO bands VALUES (2, "Leadership Community");
