@@ -51,13 +51,20 @@
       </div> -->
 
       <div *ngIf="selected === 'Capability'">
-        <form (ngSubmit)="addCapability(addForm)" #addForm="ngForm">
-          <br>
-          <strong><span style="color: red;" *ngIf="addForm.hasError('required', 'email')">*</span>Capability</strong>
-          <div><input [(ngModel)]="newFamily.family_name" name="name" placeholder="Name"></div>
-          <div style="color: red;" *ngIf="addForm.hasError('checkname', 'name')">Please input a valid Job Family name</div>
-          <br>
-          <input type="submit" for="modal-2" [disabled]="!addForm.valid">
+        <form (ngSubmit)="addCapability(addForm)" #addForm="ngForm" [formGroup]="capabilityForm">
+          <div>
+            <mat-form-field appearance="outline">
+              <mat-label>Capability Name</mat-label>
+              <input id="capName" matInput (input)="detectInput()" [(ngModel)]="newCapability.capability_name" placeholder="Name of capability"
+                     formControlName="capabilityName" required>
+              <mat-error *ngIf="capabilityForm.get('capabilityName').invalid">{{getCapabilityNameErrorMessage()}}</mat-error>
+            </mat-form-field>
+          </div>
+          <div>
+
+          </div>
+          <span class="error" *ngIf="serverError != ''">{{serverError}}</span>
+          <button mat-flat-button input type="submit" [disabled]="!capabilityForm.valid">Submit</button>
       </form>
       </div>
       <div *ngIf="selected === 'Job Family'">
@@ -66,13 +73,13 @@
             <mat-form-field appearance="outline">
               <mat-label>Job Family Name</mat-label>
               <input id="familyInput" matInput (input)="detectInput()" [(ngModel)]="newFamily.family_name" placeholder="Name of job family"
-                     [formControl]="family_name" required>
-              <mat-error *ngIf="family_name.invalid">{{getFamilyErrorMessage()}}</mat-error>
+                     [formControl]="familyName" required>
+              <mat-error *ngIf="familyName.invalid">{{getFamilyErrorMessage()}}</mat-error>
             </mat-form-field>
           </div>
           <span class="error" *ngIf="serverError != ''">{{serverError}}</span>
           <div>
-            <button mat-flat-button input type="submit" [disabled]="!family_name.valid">Submit
+            <button mat-flat-button input type="submit" [disabled]="!familyName.valid">Submit
             </button>
           </div>
         </form>

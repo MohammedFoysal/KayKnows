@@ -1,11 +1,11 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { Family } from '../family';
-import { DataService } from '../data.service';
-import { Role } from '../role';
-import { Capability } from '../capability';
-import { Band } from '../band';
-import { FormControl, NgForm, Validators } from '@angular/forms';
-import { animate, state, style, transition, trigger } from '@angular/animations';
+import {Component, OnInit, ViewChild} from '@angular/core';
+import {Family} from '../family';
+import {DataService} from '../data.service';
+import {Role} from '../role';
+import {Capability} from '../capability';
+import {Band} from '../band';
+import {FormControl, FormGroup, NgForm, Validators} from '@angular/forms';
+import {animate, state, style, transition, trigger} from '@angular/animations';
 
 
 @Component({
@@ -17,7 +17,7 @@ import { animate, state, style, transition, trigger } from '@angular/animations'
       opacity: 0
     })),
     transition('void <=> *', animate(1000)),
-  ]), ]
+  ]),]
 
 })
 export class AddFormComponent implements OnInit {
@@ -33,7 +33,13 @@ export class AddFormComponent implements OnInit {
   // Will store and provide the binding for any errors from the database
   serverError: '';
 
-  family_name = new FormControl('', [Validators.required, Validators.maxLength(100)]);
+  familyName = new FormControl('', [Validators.required, Validators.maxLength(100)]);
+
+  // Capability Form Controls
+  capabilityForm = new FormGroup({
+    capabilityName: new FormControl('', [Validators.required, Validators.maxLength(100)])
+    // familyId = new FormControl(); // Tie this into the family ids
+  });
 
   constructor(private dataService: DataService) {
   }
@@ -43,13 +49,15 @@ export class AddFormComponent implements OnInit {
   }
 
   getFamilyErrorMessage() {
-    return this.family_name.hasError('required') ? 'Please enter a job family name' :
-      this.family_name.hasError('maxlength') ? 'Job family name must be less than 100 characters' :
+    return this.familyName.hasError('required') ? 'Please enter a job family name' :
+      this.familyName.hasError('maxlength') ? 'Job family name must be less than 100 characters' :
         '';
   }
 
-  getCapabilityErrorMessage() {
-    return '';
+  getCapabilityNameErrorMessage() {
+    return this.capabilityForm.get('capabilityName').hasError('required') ? 'Please enter a capability name' :
+      this.capabilityForm.get('capabilityName').hasError('maxlength') ? 'Capability name must be less than 100 characters'
+        : '';
   }
 
   detectInput() {
@@ -57,7 +65,7 @@ export class AddFormComponent implements OnInit {
   }
 
   onSuccess() {
-    this.family_name.reset();
+    this.familyName.reset();
     this.form.resetForm();
     this.showSuccess = true;
     this.FadeOutLink();
