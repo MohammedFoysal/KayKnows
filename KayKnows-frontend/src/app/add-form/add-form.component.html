@@ -64,7 +64,7 @@
           </div>
           <div>
             <mat-form-field>
-              <mat-label>Select an Family</mat-label>
+              <mat-label>Select a Family</mat-label>
               <mat-select id="famId" [(value)]="newCapability.family_id" matNativeControl formControlName="familyId" required>
                 <mat-option [value]="family.family_id"
                             *ngFor="let family of families">{{family.family_name}}</mat-option>

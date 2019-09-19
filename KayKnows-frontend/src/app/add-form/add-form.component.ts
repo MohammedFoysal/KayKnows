@@ -76,8 +76,9 @@ export class AddFormComponent implements OnInit {
     this.serverError = '';
   }
 
-  onSuccess(control: FormGroup) {
+  onSuccess(control: FormGroup, form: NgForm) {
     control.reset();
+    form.resetForm();
     this.showSuccess = true;
     this.FadeOutLink();
   }
@@ -94,7 +95,7 @@ export class AddFormComponent implements OnInit {
       this.dataService.addFamily(familyToAdd).subscribe({
           next: res => {
             this.dataService.loadTree();
-            this.onSuccess(this.capabilityForm);
+            this.onSuccess(this.capabilityForm, addForm);
             this.newFamily = new Family();
           },
           error: err => {
@@ -113,7 +114,7 @@ export class AddFormComponent implements OnInit {
       this.dataService.addCapability(capabilityToAdd).subscribe({
         next: res => {
           this.dataService.loadTree();
-          this.onSuccess(this.capabilityForm);
+          this.onSuccess(this.capabilityForm, addForm);
           this.newCapability = new Capability();
         },
         error: err => {

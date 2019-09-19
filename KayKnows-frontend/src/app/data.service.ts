@@ -99,7 +99,7 @@ export class DataService {
   }
 
   removeRole(role_id): Observable<KayKnowsResponse> {
-    const token = `Bearer ${localStorage.getItem('token')}`
+    const token = `Bearer ${localStorage.getItem('token')}`;
     const headers = new HttpHeaders().set('Authorization', token);
 
     return this.http.delete<KayKnowsResponse>('/api/role/' + role_id, {headers});
@@ -210,7 +210,10 @@ export class DataService {
     }
 
     capabilities.forEach(capability => {
-      capability.children = this.getRolesForCapability(capability.capability_id, roles);
+      const children = this.getRolesForCapability(capability.capability_id, roles);
+      if (children[0] !== undefined) {
+        capability.children = children;
+      }
     });
 
     families.forEach(family => {
