@@ -1,3 +1,5 @@
+import { Role } from './role';
+
 export class User {
   user_id: number;
   user_password: string;
@@ -5,4 +7,5 @@ export class User {
   role_id: number;
   user_admin: number;
   user_full_name: string;
+  role: Role;
 }

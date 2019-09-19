@@ -156,6 +156,10 @@ exports.isUserAdmin = async (user_id) => {
     return await query("SELECT user_id, user_email, user_admin, role_id, user_full_name FROM users WHERE user_id = ? AND user_admin = 1", [user_id]);
 }
 
+exports.getAsyncRoleById = async (role_id) => {
+    return await query("SELECT * FROM roles WHERE role_id = ?", [role_id]);
+}
+
 exports.removeCapability = async (capability_id) => {
     return await query("DELETE FROM capabilities WHERE capability_id = ?", [capability_id]);
 }

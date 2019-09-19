@@ -180,19 +180,33 @@ const start = module.exports = function makeServer() {
     })
   });
 
-  app.get('/family-filters', async (req, res) => {
+  app.get('/family-filters', authMiddleware, async (req, res) => {
+    const userId = res.locals.userId;
+    const users = await db.getUser(userId);
+    const userRole = await db.getAsyncRoleById(users[0].role_id);
+
     try {
-      const families = await db.getFamilies();
+      let families = await db.getFamilies();
 
       for (family of families) {
-        const capabilities = await db.getAsyncCapabilitiesByFamilyId(family.family_id);
+        let capabilities = await db.getAsyncCapabilitiesByFamilyId(family.family_id);
 
         family.isSelected = false;
-        family.capabilities = capabilities;
+
+        if (family.family_id == userRole[0].family_id) {
+          family.isSelected = true;
+        }
+
 
         for (capability of capabilities) {
           capability.isSelected = false;
+
+          if (capability.capability_id == userRole[0].capability_id) {
+            capability.isSelected = true;
+          }
         }
+
+        family.capabilities = capabilities;
       }
 
       res.send(families);
@@ -262,6 +276,8 @@ const start = module.exports = function makeServer() {
   app.get('/me', authMiddleware, async (req, res) => {
     const userId = res.locals.userId;
     const users = await db.getUser(userId);
+    const roles = await db.getAsyncRoleById(users[0].role_id)
+    users[0].role = roles[0];
 
     res.send(users[0]);
   });

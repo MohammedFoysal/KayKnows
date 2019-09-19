@@ -26,6 +26,7 @@ export class AppComponent {
     let localAdmin = localStorage.getItem('user_admin');
     this.dataService.isAdmin = localAdmin != null && localAdmin == '1' ? true : false;
     this.user_full_name = localStorage.getItem('user_full_name');
+    this.dataService.logged_user_role_id = localStorage.getItem('user_role_id');
   }
 
   ngOnInit() {
