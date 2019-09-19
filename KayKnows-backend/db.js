@@ -192,3 +192,12 @@ exports.addCapability = async(capability) => {
 exports.getCapabilitiesByFamIdAndCapName = async(family_id, capability_name) => {
   return await query("SELECT * FROM capabilities WHERE family_id = ? AND capability_name = ?", [family_id, capability_name]);
 };
+
+
+exports.getCapabilitiesById = async(id) => {
+  return await query("SELECT * FROM capabilities WHERE capability_id = ?", [id])
+};
+
+exports.getBandsById = async(id) => {
+    return await query("SELECT * FROM bands WHERE band_id = ?", [id])
+}

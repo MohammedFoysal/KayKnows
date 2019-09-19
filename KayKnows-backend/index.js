@@ -362,23 +362,59 @@ const start = module.exports = function makeServer() {
 
 
     app.post('/add-role', [
+      check('role_description') // optional
+      .custom(value => {
+        if (value) {
+          return value.length <= 65535 ? Promise.resolve() : Promise.reject();
+        } else {
+          return Promise.resolve(); // not needed handle nicely
+        }
+      }).withMessage('Description is too long'),
+      check('role_spec')
+      .custom(value => {
+        if (value) {
+          return value.length <= 500 ? Promise.resolve() : Promise.reject();
+        } else {
+          return Promise.resolve();
+        }
+      }).withMessage('Specification is too long'),
+      check('capability_id')
+      .exists().withMessage('Capability is required')
+      .custom(async value => {
+        if (value) {
+          let res = await db.getCapabilitiesById(value);
+          return res.length === 1 ? Promise.resolve() : Promise.reject();
+        } else if (value < 1) { // 1 is minimum value
+          return Promise.reject();
+        } else {
+          return Promise.resolve(); // Doesn't exist so will have been caught be the previous check
+        }
+  
+      }).withMessage('Capability must exist'),
+      check('band_id')
+      .exists().withMessage('Band is required')
+      .custom(async value => {
+        if (value) {
+          let res = await db.getBandsById(value);
+          return res.length === 1 ? Promise.resolve() : Promise.reject();
+        } else if (value < 1) { // 1 is minimum value
+          return Promise.reject();
+        } else {
+          return Promise.resolve(); // Doesn't exist so will have been caught be the previous check
+        }
+      }).withMessage('Band must exist'),
       check('role_name')
         .exists().withMessage('Role name should be present')
         .custom(value => {
           if (value) {
-            return value.length <= 100 && value.length > 0;
+            return value.length > 0 && value.length <= 100 ? Promise.resolve() : Promise.reject();
+          } else if (value.length === 0) { // captures an empty field
+            return Promise.reject();
+          } else {
+            return Promise.resolve(); // Doesn't exist so will have been caught be the previous check
           }
         }).withMessage(
-          'Role name should be between 1 and 100 characters (inclusive)')
-        .custom(async value => {
-          if (value) {
-            // let res = await db.getFamilyNamesByFamilyName(value);
-            // console.log("families: " + res.length);
-            // return res.length === 0 ? Promise.resolve() : Promise.reject();
-          } else {
-            return Promise.resolve(); // Value doesn't exist so just resolve it, the previous checks will show that there are errors.
-          }
-        }).withMessage('Role name is already in use'),
+          'Role name should be between 1 and 100 characters (inclusive)'),
         body().custom( async value => {
           if(value) {
             let res = await db.getRolesByCapabilityAndBand(value.capability_id, value.band_id);
@@ -394,14 +430,11 @@ const start = module.exports = function makeServer() {
       if (!errors.isEmpty()) {
         return handleError(errors, req, res);
       }
-
       // No errors add the role
       try {
         const result = await db.addRole(req.body);
         const role = req.body;
         role.role_id = result.insertId;
-        console.log(role);
-
         logger.info(`Adding new role: ${role}`);
 
         res.send(role);
