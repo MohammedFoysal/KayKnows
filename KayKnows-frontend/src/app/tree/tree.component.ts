@@ -1,11 +1,10 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { DataService } from '../data.service';
 import { SwitchboardService } from '../switchboard.service';
-import { Family } from '../family';
-import { CapabilityLead } from '../capability-lead';
-import { Capability } from '../capability';
-import { runInThisContext } from 'vm';
-import { User } from '../user';
+// import { Family } from '../family';
+// import { CapabilityLead } from '../capability-lead';
+// import { Capability } from '../capability';
+// import { User } from '../user';
 
 @Component({
     selector: '[app-tree]',
@@ -17,11 +16,11 @@ export class TreeComponent implements OnInit {
     static highlighted: number = -1;
     dataService: DataService;
     switchboard: SwitchboardService;
-    family: Family;
-    capability_lead: CapabilityLead;
-    capabilityLeadJson : string;
-    capability: Capability;
-    user: User;
+    // family: Family;
+    // capability_lead: CapabilityLead;
+    // capabilityLeadJson : string;
+    // capability: Capability;
+    // user: User;
 
     @Input() data;
 

@@ -7,8 +7,8 @@
     </div>
 
     <div class="actions" *ngIf="dataService.isViewingAsAdmin">
-      <button id="deleteIcon" (click)="showRemoveFamilyDialog()" class="show"><i
-          class="material-icons">delete</i>Delete Family</button>
+      <button id="deleteIcon" (click)="showRemoveFamilyDialog()" class="show"><i class="material-icons">delete</i>Delete
+        Family</button>
     </div>
   </div>
 
@@ -53,7 +53,7 @@
 
     <div class="detailBody">
       <div class="capabilityLeadTitle">
-      <h5 class="detailSubtitle">Responsibilities</h5>
+        <h5 class="detailSubtitle">Responsibilities</h5>
       </div>
       <hr class="line">
       <div class="roleDescription">
@@ -72,4 +72,43 @@
     <hr class="line">
     <span class="descriptionRole"> {{role.role_spec}}</span>
   </div>
+
+  <div class="detailBand" *ngIf="selected == 'band' && band" [@EnterLeave]="'flyIn'">
+      <div class="detailHeaderSectionBand" [ngStyle]="{
+        'background-color': band.band_colour}">
+        <span class="hideButtonSection"> <input class="hideButton" (click)="toggle()" type="image"
+            src="https://icon-library.net/images/arrow-icon-transparent-background/arrow-icon-transparent-background-12.jpg" />
+        </span>
+        <span class="detailTitle"> {{band.band_name}}</span>
+      </div>
+      <div class="capabilityLeadTitle">
+        <h5 class="detailSubtitle">Competencies</h5>
+      </div>
+      <hr class="line">
+      <div class="descriptionBandCompetencies">
+        <ul>
+          <li *ngFor="let competenciesPoint of band_competencies">{{createListTitle(competenciesPoint)}}
+            <ul class="subListCompetencies">
+              <li *ngFor="let competencySubPoint of createSubBulletList(competenciesPoint)">{{competencySubPoint}}
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+      <div class="capabilityLeadTitle">
+        <h5 class="detailSubtitle">Responsibilities</h5>
+      </div>
+      <hr class="line">
+      <div class="descriptionBandResponsibilities">
+        <ul>
+          <li *ngFor="let responsibilitiesPoint of band_responsibilities">{{createListTitle(responsibilitiesPoint)}}
+            <ul class="subListCompetencies">
+              <li *ngFor="let responsibilitySubPoint of createSubBulletList(responsibilitiesPoint)">
+                {{responsibilitySubPoint}}
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+    </div>
 </ng-container>

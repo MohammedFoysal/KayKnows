@@ -173,7 +173,7 @@ right connector from last child*/
 }
 
 .legendcontainer {
-    z-index: -1;
+    z-index: 1;
 }
 
 .legend {

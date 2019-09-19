@@ -5,6 +5,7 @@ import { CapabilityLead } from './capability-lead';
 import { DataService } from './data.service';
 import { Capability } from './capability';
 import { Role } from './role';
+import { Band } from './band';
 
 @Injectable({
   providedIn: 'root'
@@ -13,11 +14,14 @@ export class SwitchboardService {
   private family_watcher = new Subject<Family>();
   private capability_watcher = new Subject<Capability>();
   private capability_lead_watcher = new Subject<CapabilityLead>();
+  private bands_watcher = new Subject<Band>();
+
   private role_watcher = new Subject<Role>();
   public family$ = this.family_watcher.asObservable();
   public capability$ = this.capability_watcher.asObservable();
   public capability_lead$ = this.capability_lead_watcher.asObservable();
   public role$ = this.role_watcher.asObservable();
+  public band$ = this.bands_watcher.asObservable();
 
   dataService: DataService;
   constructor(dataService: DataService) {
@@ -30,6 +34,10 @@ export class SwitchboardService {
 
   public switchCapability(capability: Capability){
     this.capability_watcher.next(capability);
+  }
+
+  public switchBand(band: Band){
+    this.bands_watcher.next(band);
   }
 
   public switchCapabilityLead(capability_id: number){

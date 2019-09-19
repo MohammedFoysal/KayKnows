@@ -7,6 +7,8 @@ import { triggerAsyncId } from 'async_hooks';
 import { Capabilities } from 'protractor';
 import { getLocaleExtraDayPeriodRules } from '@angular/common';
 import { SwitchboardService } from './switchboard.service';
+import { Band } from './band';
+import { TreeComponent } from './tree/tree.component';
 
 @Component({
   selector: 'app-root',
@@ -16,14 +18,20 @@ import { SwitchboardService } from './switchboard.service';
 
 export class AppComponent {
   title = 'KayKnows-frontend';
+  band: Band;
 
-  constructor(private dataService: DataService, private logger: LogService,  private route: ActivatedRoute, private router: Router, switchboard: SwitchboardService) { 
+  constructor(private dataService: DataService, private logger: LogService,  private route: ActivatedRoute, private router: Router, private switchboard: SwitchboardService) { 
     logger.info('AppComponent: Successful launch');
     let localAdmin = localStorage.getItem('user_admin');
     this.dataService.isAdmin = localAdmin != null && localAdmin == '1' ? true : false;
   }
 
   ngOnInit() {
+  }
+
+  onSelect(band: Band): void {
+    this.band = band;
+    this.switchboard.switchBand(this.band);
   }
 
   checkboxChanged(event) {
@@ -38,7 +46,5 @@ export class AppComponent {
   printData() {
     console.log(JSON.stringify(this.dataService.nestedData))
   }
-
-  
 
 }

@@ -71,6 +71,10 @@ export class DataService {
     });
   }
 
+  // getBands(): Observable<Band[]>{
+  //   return this.http.get<Band[]>('/api/bands')
+  // }
+
   getBands() {
     this.http.get<Band[]>('/api/bands').subscribe(res => {
       if (res[0] == null) {
