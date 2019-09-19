@@ -83,11 +83,9 @@
     color: #9d9d9d;
 }
 
-
 /*We will use ::before and ::after to draw the connectors*/
 
-.tree li::before,
-.tree li::after {
+.tree li::before, .tree li::after {
     content: '';
     position: absolute;
     top: 0;
@@ -103,15 +101,12 @@
     border-left: 1px solid #ccc;
 }
 
-
 /*We need to remove left-right connectors from elements without
 any siblings*/
 
-.tree li:only-child::after,
-.tree li:only-child::before {
+.tree li:only-child::after, .tree li:only-child::before {
     display: none;
 }
-
 
 /*Remove space from the top of single children*/
 
@@ -119,15 +114,12 @@ any siblings*/
     padding-top: 0;
 }
 
-
 /*Remove left connector from first child and
 right connector from last child*/
 
-.tree li:first-child::before,
-.tree li:last-child::after {
+.tree li:first-child::before, .tree li:last-child::after {
     border: 0 none;
 }
-
 
 /*Adding back the vertical connector to the last nodes*/
 
@@ -143,7 +135,6 @@ right connector from last child*/
     -webkit-border-radius: 5px 0 0 0;
     -moz-border-radius: 5px 0 0 0;
 }
-
 
 /*Time to add downward connectors from parents*/
 
@@ -200,7 +191,8 @@ right connector from last child*/
 }
 
 .legend .family {
-    background-image: linear-gradient(#417ABD, #00558C);
+    background-image: linear-gradient(rgb(161, 205, 255), rgb(104, 182, 235));
+    color: #000;
 }
 
 .legend .capability {
@@ -229,8 +221,8 @@ right connector from last child*/
 }
 
 .tree li a.family {
-    background-image: linear-gradient(#417ABD, #00558C);
-    color: #FFFFFF;
+    background-image: linear-gradient(rgb(161, 205, 255), rgb(104, 182, 235));
+    color: #000;
     border: 1px solid #94a0b4;
 }
 
@@ -244,13 +236,9 @@ right connector from last child*/
     background-image: white;
 }
 
-
 /*Connector styles on hover*/
 
-.tree li a:hover+ul li::after,
-.tree li a:hover+ul li::before,
-.tree li a:hover+ul::before,
-.tree li a:hover+ul ul::before {
+.tree li a:hover+ul li::after, .tree li a:hover+ul li::before, .tree li a:hover+ul::before, .tree li a:hover+ul ul::before {
     border-color: rgba(0, 0, 0, 0.493);
     border-width: 3px;
 }

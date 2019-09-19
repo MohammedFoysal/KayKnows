@@ -19,11 +19,13 @@ import { TreeComponent } from './tree/tree.component';
 export class AppComponent {
   title = 'KayKnows-frontend';
   band: Band;
+  user_full_name: String = '';
 
   constructor(private dataService: DataService, private logger: LogService,  private route: ActivatedRoute, private router: Router, private switchboard: SwitchboardService) { 
     logger.info('AppComponent: Successful launch');
     let localAdmin = localStorage.getItem('user_admin');
     this.dataService.isAdmin = localAdmin != null && localAdmin == '1' ? true : false;
+    this.user_full_name = localStorage.getItem('user_full_name');
   }
 
   ngOnInit() {
