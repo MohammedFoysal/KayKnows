@@ -42,7 +42,7 @@ describe('AddFormComponent', () => {
   });
 
   it('should be invalid when the form is empty', () => {
-    expect(component.family_name.invalid).toBeTruthy();
+    expect(component.familyName.invalid).toBeTruthy();
   });
 
   it('should display the family input on selection', () => {
@@ -55,18 +55,18 @@ describe('AddFormComponent', () => {
   it('should update the value in the control', () => {
     component.selected = 'Job Family';
     fixture.detectChanges();
-    component.family_name.setValue(validName);
+    component.familyName.setValue(validName);
     const input = fixture.nativeElement.querySelector('#familyInput');
     expect(input.value).toBe(validName);
   });
 
   it('should be valid when there is a valid name', () => {
-    component.family_name.setValue(validName);
-    expect(component.family_name.valid).toBeTruthy();
+    component.familyName.setValue(validName);
+    expect(component.familyName.valid).toBeTruthy();
   });
 
   it('should not be valid when there is a name that is to long', () => {
-    component.family_name.setValue(validName.repeat(30));
-    expect(component.family_name.invalid).toBeTruthy();
+    component.familyName.setValue(validName.repeat(30));
+    expect(component.familyName.invalid).toBeTruthy();
   });
 });

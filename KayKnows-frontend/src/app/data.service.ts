@@ -9,6 +9,7 @@ import { AuthResponse } from './auth-response';
 import { KayKnowsResponse } from './kay-knows-response';
 import {Observable, throwError} from 'rxjs';
 import {catchError} from 'rxjs/operators';
+import { Capability } from './capability';
 
 @Injectable({
   providedIn: 'root'
@@ -85,7 +86,7 @@ export class DataService {
 
     });
   }
-  
+
   login(data): Observable<AuthResponse> {
     return this.http.post<AuthResponse>('/api/login', data);
   }
@@ -102,7 +103,7 @@ export class DataService {
   }
 
   removeRole(role_id): Observable<KayKnowsResponse> {
-    const token = `Bearer ${localStorage.getItem('token')}`
+    const token = `Bearer ${localStorage.getItem('token')}`;
     const headers = new HttpHeaders().set('Authorization', token);
 
     return this.http.delete<KayKnowsResponse>('/api/role/' + role_id, {headers});
@@ -136,12 +137,32 @@ export class DataService {
 
     return this.http.get<User>('/api/me', {headers});
   }
-  
+
+  getFamilies(): Observable<Family[]> {
+    return this.http.get<Family[]>('/api/families').pipe(catchError(this.handleError));
+  }
+
   addFamily(newFamily: Family): Observable<Family> {
     const token = `Bearer ${localStorage.getItem('token')}`
     const headers = new HttpHeaders().set('Authorization', token);
 
     return this.http.post<Family>('/api/add-family', newFamily, {headers}).pipe(catchError(this.handleError));
+  }
+
+  addRole(newRole: Role): Observable<Role> {
+    return this.http.post<Role>('/api/add-role', newRole).pipe(catchError(this.handleError));
+  }
+
+  getCapabilities(): Observable<Capability[]> {
+    return this.http.get<Capability[]>('/api/capabilities').pipe(catchError(this.handleError));
+  }
+
+  getBandNames(): Observable<Band[]> {
+    return this.http.get<Band[]>('/api/bands').pipe(catchError(this.handleError));
+  }
+  
+  addCapability(capability: Capability): Observable<Capability> {
+    return this.http.post<Capability>('/api/add-capability', capability).pipe(catchError(this.handleError));
   }
 
   private handleError(error: HttpErrorResponse) {
@@ -215,7 +236,10 @@ export class DataService {
     }
 
     capabilities.forEach(capability => {
-      capability.children = this.getRolesForCapability(capability.capability_id, roles);
+      const children = this.getRolesForCapability(capability.capability_id, roles);
+      if (children[0] !== undefined) {
+        capability.children = children;
+      }
     });
 
     families.forEach(family => {
@@ -363,6 +387,10 @@ export class DataService {
   }
 
   roleExists(role, roles) {
+    if (role.role_id === null) {
+      return true; // ignore me I'm a ghost role
+    }
+
     for (const r of roles) {
       if (r.role_id === role.role_id) {
         return true;
