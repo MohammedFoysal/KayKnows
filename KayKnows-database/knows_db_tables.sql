@@ -12,7 +12,9 @@ CREATE TABLE IF NOT EXISTS capabilities(
     capability_id SMALLINT UNSIGNED PRIMARY KEY auto_increment,
     capability_name VARCHAR(100) NOT NULL,
     family_id SMALLINT UNSIGNED,
-    FOREIGN KEY(family_id) REFERENCES families(family_id)
+    FOREIGN KEY(family_id) REFERENCES families(family_id),
+    CONSTRAINT `ck_cap_name_len` CHECK (LENGTH(capability_name) > 0 && LENGTH(capability_name) <= 100),
+    UNIQUE KEY `cap_fam_uq` (capability_name, family_id)
 );
 
 CREATE TABLE IF NOT EXISTS bands(
@@ -29,11 +31,9 @@ CREATE TABLE IF NOT EXISTS roles(
     capability_id SMALLINT UNSIGNED,
     family_id SMALLINT UNSIGNED,
     band_id SMALLINT UNSIGNED,
-    parent_role_id SMALLINT UNSIGNED NULL,
     FOREIGN KEY(capability_id) REFERENCES capabilities(capability_id),
     FOREIGN KEY(family_id) REFERENCES families(family_id),
-    FOREIGN KEY(band_id) REFERENCES bands(band_id),
-    FOREIGN KEY(parent_role_id) REFERENCES roles(role_id)
+    FOREIGN KEY(band_id) REFERENCES bands(band_id)
 );
 
 CREATE TABLE IF NOT EXISTS users (
