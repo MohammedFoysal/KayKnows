@@ -366,4 +366,11 @@ export class DataService {
     return false;
   }
 
+  updateFamily(updatedFamily: Family) {
+    this.http.put<Role>('/api/edit/family', updatedFamily).subscribe(res => {
+      if (res[0] == null) {
+        console.error(res);
+      }
+    });
+  }
 }

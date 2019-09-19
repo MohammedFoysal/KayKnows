@@ -180,3 +180,7 @@ exports.removeFamily = async(family_id) => {
 exports.updateRole = async (role_id, role_name, role_spec, role_description, capability_id, family_id, band_id) => {
   return await query("UPDATE roles SET role_name = ?, role_spec = ?, role_description = ?, capability_id = ?, family_id = ?, band_id = ? WHERE role_id = ?", [role_name, role_spec, role_description, capability_id, family_id, band_id, role_id]);
 }
+
+exports.updateFamily = async(family_id, family_name) => {
+  return await query("UPDATE families SET family_name = ? WHERE family_id = ?", [family_name, family_id]);
+}
