@@ -10,6 +10,7 @@ import { trigger, state, style, transition, animate } from '@angular/animations'
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ConfirmComponent } from '../confirm/confirm.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-more-information',
@@ -43,9 +44,21 @@ export class MoreInformationComponent implements OnInit, OnDestroy {
   role_description: string[];
   showRoleSpec: boolean = false;
   show: boolean;
+  editFields: boolean = false;
   buttonName:string = 'Show';
   confirmDialogRef: MatDialogRef<ConfirmComponent>;
-
+  role_model = { role_id: -1, role_name: '', role_spec: '', role_description: '', capability_id: -1, family_id: -1, band_id: -1};
+  editRoleForm = new FormGroup({
+    role_name: new FormControl('', [
+      Validators.required,
+      Validators.maxLength(100)
+    ]),
+    role_description: new FormControl('', [
+    ]),
+    role_spec: new FormControl('', [
+      Validators.maxLength(500)
+    ])
+   });
   constructor(private dataService: DataService, switchboard: SwitchboardService, private dialog: MatDialog, private snackBar: MatSnackBar) { 
     this.switchboard = switchboard 
   }
@@ -71,7 +84,14 @@ export class MoreInformationComponent implements OnInit, OnDestroy {
     });
     this.subRole = this.switchboard.role$.subscribe((role) => {
       this.role = role;
-      this.role_description = this.createBulletList(role.role_description);
+      this.role_model.role_id = role.role_id;
+      this.role_model.role_name = this.role.role_name;
+      this.role_model.role_description = this.role.role_description;
+      this.role_model.role_spec = this.role.role_spec;
+      this.role_model.capability_id = this.role.capability_id;
+      this.role_model.family_id = this.role.family_id;
+      this.role_model.band_id = this.role.band_id;
+      this.role_description = this.createBulletList(this.role_model.role_description);
       this.selected = "role";
       this.showRoleSpec = role.role_spec.length != 0;
       this.show = true;
@@ -116,6 +136,16 @@ export class MoreInformationComponent implements OnInit, OnDestroy {
         this.removeRole();
       }
     });
+  }
+
+  showEditFields(){
+    this.editFields = !this.editFields;
+  }
+
+  updateRole(){
+    console.log(this.role_model);
+    this.dataService.updateRole(this.role_model);
+    this.role_description = this.createBulletList(this.role_model.role_description);
   }
 
   showRemoveFamilyDialog() {

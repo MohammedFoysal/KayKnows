@@ -91,6 +91,32 @@
   color: white;
 }
 
+button#submitRole{
+  background-color: green;
+  color:white;
+}
+
+.actions button#editIcon {
+  background-color: #ffd700;
+  color: black;
+}
+
+#editRoleName{
+  font-size: inherit;
+  width: 83%;
+  text-align: center;
+}
+
+.actionButtons {
+  display: flex;
+}
+
+textarea {
+  width: 100%;
+  height: -webkit-fill-available;
+  font-size: smaller;
+}
+
 .hideButton{
   height: 30px;
   width: 30px;

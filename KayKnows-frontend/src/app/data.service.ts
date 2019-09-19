@@ -81,6 +81,15 @@ export class DataService {
 
     });
   }
+
+  updateRole(updatedRole: Role): void{
+    console.log(updatedRole);
+    this.http.put<Role>('/api/edit/role', updatedRole).subscribe(res => {
+      if (res[0] == null) {
+        console.error(res);
+      }
+    });
+  }
   
   login(data): Observable<AuthResponse> {
     return this.http.post<AuthResponse>('/api/login', data);
