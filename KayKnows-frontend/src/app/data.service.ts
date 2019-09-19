@@ -115,6 +115,13 @@ export class DataService {
     return this.http.delete<KayKnowsResponse>('/api/family/' + family_id, {headers});
   }
 
+  removeBand(band_id): Observable<KayKnowsResponse> {
+    const token = `Bearer ${localStorage.getItem('token')}`
+    const headers = new HttpHeaders().set('Authorization', token);
+
+    return this.http.delete<KayKnowsResponse>('/api/band/' + band_id, {headers});
+  }
+
   logout() {
     localStorage.removeItem('token');
     localStorage.removeItem('user_id');
@@ -255,6 +262,7 @@ export class DataService {
       band_id: data.band_id,
       band_name: data.band_name,
       band_colour: data.band_colour,
+      band_order: data.band_order,
       capability_id: data.capability_id,
       family_id: data.family_id,
       type: 'role',
@@ -297,8 +305,11 @@ export class DataService {
     const sortedRoles = roles.filter(role => {
       return role.capability_id === capabilityId;
     }).sort((role, roleTwo) => {
-      return role.band_id - roleTwo.band_id;
+      return role.band_order - roleTwo.band_order;
     });
+
+    console.log('sorted')
+    console.log(sortedRoles)
 
     // now make the roles children of each other
     const top = [sortedRoles[0]];

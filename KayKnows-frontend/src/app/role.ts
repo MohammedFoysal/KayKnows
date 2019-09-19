@@ -4,6 +4,7 @@ export class Role {
   capability_id: number;
   family_id: number;
   band_id: number;
+  band_order: number;
   role_spec: string;
   role_description: string;
 }
