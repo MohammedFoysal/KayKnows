@@ -103,6 +103,8 @@
                 <mat-option [value]="family.family_id"
                             *ngFor="let family of families">{{family.family_name}}</mat-option>
               </mat-select>
+              <mat-error
+              *ngIf="capabilityForm.get('familyId').invalid">{{getCapabilityFamilyIdErrorMessage()}}</mat-error>
             </mat-form-field>
           </div>
           <span class="error" *ngIf="serverError != ''">{{serverError}}</span>

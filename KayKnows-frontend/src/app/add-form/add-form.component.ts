@@ -113,6 +113,11 @@ export class AddFormComponent implements OnInit {
         : '';
   }
 
+  getCapabilityFamilyIdErrorMessage() {
+    return this.capabilityForm.get('familyId').hasError('required') ? 'Please select a family' :
+      '';
+}
+
   detectInput() {
     this.serverError = '';
   }
