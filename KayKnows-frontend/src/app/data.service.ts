@@ -9,6 +9,7 @@ import { AuthResponse } from './auth-response';
 import { KayKnowsResponse } from './kay-knows-response';
 import {Observable, throwError} from 'rxjs';
 import {catchError} from 'rxjs/operators';
+import { Capability } from './capability';
 
 @Injectable({
   providedIn: 'root'
@@ -128,6 +129,18 @@ export class DataService {
   
   addFamily(newFamily: Family): Observable<Family> {
     return this.http.post<Family>('/api/add-family', newFamily).pipe(catchError(this.handleError));
+  }
+
+  addRole(newRole: Role): Observable<Role> {
+    return this.http.post<Role>('/api/add-role', newRole).pipe(catchError(this.handleError));
+  }
+
+  getCapabilities(): Observable<Capability[]> {
+    return this.http.get<Capability[]>('/api/capabilities').pipe(catchError(this.handleError));
+  }
+
+  getBandNames(): Observable<Band[]> {
+    return this.http.get<Band[]>('/api/bands').pipe(catchError(this.handleError));
   }
 
   private handleError(error: HttpErrorResponse) {

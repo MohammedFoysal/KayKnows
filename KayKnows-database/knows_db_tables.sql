@@ -30,10 +30,11 @@ CREATE TABLE IF NOT EXISTS roles(
     family_id SMALLINT UNSIGNED,
     band_id SMALLINT UNSIGNED,
     parent_role_id SMALLINT UNSIGNED NULL,
+    UNIQUE KEY `capability_band_unique` (capability_id, band_id)
     FOREIGN KEY(capability_id) REFERENCES capabilities(capability_id),
     FOREIGN KEY(family_id) REFERENCES families(family_id),
     FOREIGN KEY(band_id) REFERENCES bands(band_id),
-    FOREIGN KEY(parent_role_id) REFERENCES roles(role_id)
+    FOREIGN KEY(parent_role_id) REFERENCES roles(role_id),
 );
 
 CREATE TABLE IF NOT EXISTS users (

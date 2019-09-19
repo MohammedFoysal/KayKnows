@@ -329,6 +329,56 @@ const start = module.exports = function makeServer() {
         }
     });
 
+
+    app.post('/add-role', [
+      check('role_name')
+        .exists().withMessage('Role name should be present')
+        .custom(value => {
+          if (value) {
+            return value.length <= 100 && value.length > 0;
+          }
+        }).withMessage(
+          'Role name should be between 1 and 100 characters (inclusive)')
+        .custom(async value => {
+          if (value) {
+            // let res = await db.getFamilyNamesByFamilyName(value);
+            // console.log("families: " + res.length);
+            // return res.length === 0 ? Promise.resolve() : Promise.reject();
+          } else {
+            return Promise.resolve(); // Value doesn't exist so just resolve it, the previous checks will show that there are errors.
+          }
+        }).withMessage('Role name is already in use'),
+        body().custom( async value => {
+          if(value) {
+            let res = await db.getRolesByCapabilityAndBand(value.capability_id, value.band_id);
+            return res.length === 0 ? Promise.resolve() : Promise.reject();
+          }
+          else {
+            return Promise.resolve();
+          }
+        }).withMessage(
+          'A role already exists in this capability with this band')
+    ], async (req, res) => {
+      const errors = validationResult(req);
+      if (!errors.isEmpty()) {
+        return handleError(errors, req, res);
+      }
+
+      // No errors add the role
+      try {
+        const result = await db.addRole(req.body);
+        const role = req.body;
+        role.role_id = result.insertId;
+        console.log(role);
+
+        logger.info(`Adding new role: ${role}`);
+
+        res.send(role);
+      } catch (err) {
+        return handleError(err, req, res);
+      }
+    });
+
   app.delete('/role/:role_id', authMiddleware, async (req, res) => {
     const role_id = req.params.role_id;
     const userId = res.locals.userId;

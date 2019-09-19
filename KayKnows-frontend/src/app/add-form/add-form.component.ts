@@ -4,7 +4,7 @@ import { DataService } from '../data.service';
 import { Role } from '../role';
 import { Capability } from '../capability';
 import { Band } from '../band';
-import { FormControl, NgForm, Validators } from '@angular/forms';
+import { FormControl, NgForm, Validators, FormGroup } from '@angular/forms';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 
 
@@ -21,40 +21,86 @@ import { animate, state, style, transition, trigger } from '@angular/animations'
 
 })
 export class AddFormComponent implements OnInit {
-  @ViewChild(NgForm, {static: false}) form: NgForm;
 
   selected = '';
   options = ['Role', 'Capability', 'Band', 'Job Family'];
-  public newRole: Role;
-  public newCapability: Capability;
-  public newBand: Band;
+  capabilities: Capability[];
+  bands: Band[];
+  newRole: Role;
+  newCapability: Capability;
+  newBand: Band;
   newFamily: Family;
   showSuccess = false;
   // Will store and provide the binding for any errors from the database
   serverError: '';
 
-  family_name = new FormControl('', [Validators.required, Validators.maxLength(100)]);
+  familyForm = new FormGroup({
+    familyName:new FormControl('', [Validators.required, Validators.maxLength(100)])
+  })
+  
+  roleForm = new FormGroup({
+    roleName: new FormControl('', [Validators.required, Validators.maxLength(100)]),
+    capabilityId: new FormControl('', [Validators.required]),
+    bandId: new FormControl('', [Validators.required]),
+    roleSpec: new FormControl('', [Validators.maxLength(500)]),
+    roleDescription: new FormControl('', [ Validators.maxLength(65000)])
+  });
+
+  //role_name = new FormControl('', [Validators.required, Validators.maxLength(100)]);
 
   constructor(private dataService: DataService) {
+    dataService.getCapabilities().subscribe(res => {
+      console.log(res);
+      this.capabilities = res;
+    })
+
+    dataService.getBandNames().subscribe(res => {
+      console.log(res);
+      this.bands = res;
+    })
   }
 
   ngOnInit() {
     this.newFamily = new Family();
+    this.newRole = new Role();
   }
 
-  getErrorMessage() {
-    return this.family_name.hasError('required') ? 'Please enter a job family name' :
-      this.family_name.hasError('maxlength') ? 'Job family name must be less than 100 characters' :
+  getFamilyErrorMessage() {
+    return this.familyForm.get('familyName').hasError('required') ? 'Please enter a job family name' :
+      this.familyForm.get('familyName').hasError('maxlength') ? 'Job family name must be less than 100 characters' :
         '';
   }
 
+  getRoleNameErrorMessage() {
+    return this.roleForm.get('roleName').hasError('required') ? 'Please enter a role name' :
+      this.roleForm.get('roleName').hasError('maxlength') ? 'Role name must be less than 100 characters' :
+        '';
+  }
+
+  getRoleSpecErrorMessage() {
+      return this.roleForm.get('roleSpec').hasError('maxlength') ? 'Role specification must be less than 500 characters' :
+        '';
+  
+  }
+
+  getRoleCapabilityErrorMessage() {
+      return this.roleForm.get('capabilityId').hasError('required') ? 'Please select a capability' :
+        '';
+  }
+
+  getRoleBandErrorMessage() {
+      return this.roleForm.get('bandId').hasError('required') ? 'Please select a band' :
+       '';
+
+  }
+ 
   detectInput() {
     this.serverError = '';
   }
 
-  onSuccess() {
-    this.family_name.reset();
-    this.form.resetForm();
+  onSuccess(control: FormGroup, form: NgForm) {
+    control.reset();
+    form.resetForm();
     this.showSuccess = true;
     this.FadeOutLink();
   }
@@ -71,7 +117,7 @@ export class AddFormComponent implements OnInit {
       this.dataService.addFamily(familyToAdd).subscribe({
           next: res => {
             this.dataService.loadTree();
-            this.onSuccess();
+            this.onSuccess(this.familyForm, addForm);
             this.newFamily = new Family();
           },
           error: err => {
@@ -81,6 +127,25 @@ export class AddFormComponent implements OnInit {
       );
     } else {
       console.error('Add Family form is in an invalid state');
+    }
+  }
+
+  addRole(addForm): void {
+    if (addForm.valid) {
+      const roleToAdd = this.newRole;
+      this.dataService.addRole(roleToAdd).subscribe({
+          next: res => {
+            this.dataService.loadTree();
+            this.onSuccess(this.roleForm, addForm);
+            this.newRole = new Role();
+          },
+          error: err => {
+            this.serverError = err.message;
+          }
+        }
+      );
+    } else {
+      console.error('Add Role form is in an invalid state');
     }
   }
 

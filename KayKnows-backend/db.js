@@ -46,6 +46,7 @@ exports.getCapabilities = function(callback) {
         })
 };
 
+
 exports.getCapabilitiesByFamilyId = function(family_id, callback) {
     db.query('SELECT * FROM capabilities WHERE family_id = ?', [family_id],
         (error, rows) => {
@@ -144,9 +145,17 @@ exports.addFamily = async(family_name) => {
     return await query("INSERT INTO families (family_name) VALUES (?)", [family_name]);
 };
 
+exports.addRole = async(data) => {
+    return await query("INSERT INTO roles SET ?", [data]);
+};
+
 exports.getFamilyNamesByFamilyName = async(family_name) => {
     return await query("SELECT family_name FROM families WHERE family_name = ?", [family_name]);
 };
+
+exports.getRolesByCapabilityAndBand = async(capability_id, band_id) => {
+    return await query("SELECT capability_id, band_id FROM roles WHERE capability_id = ? AND band_id = ?", [capability_id, band_id])
+}
 
 exports.getUserByEmailWithPassword = async(email) => {
     return await query("SELECT user_id, user_password, user_email, user_admin, role_id, user_full_name FROM users WHERE user_email = ?", [email]);
@@ -165,10 +174,9 @@ exports.storeUser = async(user_email, user_password, user_admin, role_id, user_f
 }
 
 exports.removeRole = async(role_id) => {
-  return await query("DELETE FROM roles WHERE role_id = ?", [role_id]);
+    return await query("DELETE FROM roles WHERE role_id = ?", [role_id]);
 }
 
 exports.removeFamily = async(family_id) => {
-  return await query("DELETE FROM families WHERE family_id = ?", [family_id]);
+    return await query("DELETE FROM families WHERE family_id = ?", [family_id]);
 }
-
