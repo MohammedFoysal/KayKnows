@@ -1,15 +1,29 @@
 <ng-container *ngIf="show">
   <div class="detailFamily" *ngIf="selected == 'family' && family" [@EnterLeave]="'flyIn'">
-    <div class="detailHeaderSectionFamily">
-      <span class="hideButtonSection"><i class="hideButton material-icons" (click)="toggle()">arrow_forward</i>
-      </span>
-      <span class="detailTitle"> {{family.label}}</span>
-    </div>
+    <form [formGroup]="editFamilyForm" (ngSubmit)="editFamilyForm.valid && updateFamily()" id="editRoleForm">
 
-    <div class="actions" *ngIf="dataService.isViewingAsAdmin">
-      <button id="deleteIcon" (click)="showRemoveFamilyDialog()" class="show"><i
-          class="material-icons">delete</i>Delete Family</button>
-    </div>
+      <div class="detailHeaderSectionFamily">
+        <span class="hideButtonSection"><i class="hideButton material-icons" (click)="toggle()">arrow_forward</i>
+        </span>
+        <span class="detailTitle" *ngIf="!editFields || !dataService.isViewingAsAdmin"> {{family_model.family_name}}</span>
+        <span class="detailTitle" *ngIf="editFields && dataService.isViewingAsAdmin"><input id="editRoleName" type="text" placeholder="Family Name" formControlName="family_name" [(ngModel)]="family_model.family_name" name="family_name" required/></span>
+      </div>
+      <div class="actionButtons">
+        <div class="actions" *ngIf="dataService.isViewingAsAdmin">
+          <button id="deleteIcon" type="button" (click)="showRemoveRoleDialog()" class="show"><i class="material-icons">delete</i>Delete
+            Family</button>
+        </div>
+
+        <div class="actions" *ngIf="dataService.isViewingAsAdmin">
+          <button id="editIcon" type="button" (click)="showEditFields()" class="show"><i class="material-icons">edit</i>Edit
+            Family</button>
+        </div>
+        <div class="actions" *ngIf="dataService.isViewingAsAdmin">
+            <button id="submitIcon" type="submit" alt="Submit Button" class="submit" id="submitRole" (ngSubmit)="updateFamily()">Save</button>
+        </div>
+      </div>
+    </form>
+
   </div>
 
   <div class="detail" *ngIf="selected == 'capability' && capability" [@EnterLeave]="'flyIn'">
@@ -53,16 +67,16 @@
       </div>
       <div class="actionButtons">
         <div class="actions" *ngIf="dataService.isViewingAsAdmin">
-          <button id="deleteIcon" (click)="showRemoveRoleDialog()" class="show"><i class="material-icons">delete</i>Delete
+          <button id="deleteIcon" type="button" (click)="showRemoveRoleDialog()" class="show"><i class="material-icons">delete</i>Delete
             Role</button>
         </div>
 
         <div class="actions" *ngIf="dataService.isViewingAsAdmin">
-          <button id="editIcon" (click)="showEditFields()" class="show"><i class="material-icons">edit</i>Edit
+          <button id="editIcon" type="button" (click)="showEditFields()" class="show"><i class="material-icons">edit</i>Edit
             Role</button>
         </div>
         <div class="actions" *ngIf="dataService.isViewingAsAdmin">
-            <button id="submitIcon" type="submit" alt="Submit Button" class="submit" id="submitRole" (ngSubmit)="updateRole()">Submit</button>
+            <button id="submitIcon" type="submit" alt="Submit Button" class="submit" id="submitRole" (ngSubmit)="updateRole()">Save</button>
         </div>
       </div>
       <div class="capabilityLeadTitle">

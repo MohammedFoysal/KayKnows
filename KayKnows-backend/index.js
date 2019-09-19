@@ -384,6 +384,18 @@ const start = module.exports = function makeServer() {
     }
   })
 
+  app.put('/edit/family/', async (req, res) =>{
+    try{
+      var body = req.body;
+      console.log(req);
+      const role = db.updateFamily(body.family_id, body.family_name);
+      res.send({ successful: true, message: 'Family updated'});
+    }
+    catch (err) {
+      return handleError(err, req, res);
+    }
+  })
+
     return server;
 };
 

@@ -48,6 +48,7 @@ export class MoreInformationComponent implements OnInit, OnDestroy {
   buttonName:string = 'Show';
   confirmDialogRef: MatDialogRef<ConfirmComponent>;
   role_model = { role_id: -1, role_name: '', role_spec: '', role_description: '', capability_id: -1, family_id: -1, band_id: -1};
+  family_model = { family_id: -1, family_name: ''};
   editRoleForm = new FormGroup({
     role_name: new FormControl('', [
       Validators.required,
@@ -57,6 +58,12 @@ export class MoreInformationComponent implements OnInit, OnDestroy {
     ]),
     role_spec: new FormControl('', [
       Validators.maxLength(500)
+    ])
+   });
+   editFamilyForm = new FormGroup({
+    family_name: new FormControl('', [
+      Validators.required,
+      Validators.maxLength(100)
     ])
    });
   constructor(private dataService: DataService, switchboard: SwitchboardService, private dialog: MatDialog, private snackBar: MatSnackBar) { 
@@ -71,8 +78,11 @@ export class MoreInformationComponent implements OnInit, OnDestroy {
   ngOnInit() : void {
     this.subFamily = this.switchboard.family$.subscribe((f) => {
       this.family = f;
+      console.log(this.family);
       this.selected = "family";
       this.show = true;
+      this.family_model.family_id = this.family.family_id;
+      this.family_model.family_name = f.label;
     });
     this.subCapability = this.switchboard.capability$.subscribe((c) => {
       this.capability = c;
@@ -146,6 +156,15 @@ export class MoreInformationComponent implements OnInit, OnDestroy {
     console.log(this.role_model);
     this.dataService.updateRole(this.role_model);
     this.role_description = this.createBulletList(this.role_model.role_description);
+    this.dataService.loadTree();
+    this.editFields = false;
+  }
+
+  updateFamily(){
+    console.log("this shouldn't happen!");
+    this.dataService.updateFamily(this.family_model);
+    this.dataService.loadTree();
+    this.editFields = false;
   }
 
   showRemoveFamilyDialog() {
