@@ -47,24 +47,6 @@ const start = module.exports = function makeServer() {
     });
   }
 
-  app.get('/families', async (req, res) => {
-    try {
-      const families = await db.getFamilies();
-      res.send(families);
-    } catch (err) {
-      return handleError(err, req, res);
-    }
-  });
-
-  app.get('/capabilities', (req, res) => {
-    db.getCapabilities((error, rows) => {
-      if (error) {
-        return handleError(error, req, res);
-      }
-      res.send(rows)
-    })
-  });
-
   let authMiddleware = (req, res, next) => {
     var token = req.headers.authorization;
 
@@ -76,7 +58,7 @@ const start = module.exports = function makeServer() {
       }
     }
 
-    jwt.verify(token, jwtOptions.secretOrKey, function (err, decoded) {
+    jwt.verify(token, jwtOptions.secretOrKey, function(err, decoded) {
       const msg = { successful: false, message: 'Failed to authenticate token.' };
       if (err) {
         res.status(500).send(msg);
@@ -90,13 +72,14 @@ const start = module.exports = function makeServer() {
     logger.info('express started on port 8002');
   });
 
-  app.get('/families', (req, res) => {
-    db.getFamilies((error, rows) => {
-      if (error) {
-        return handleError(error, req, res);
-      }
-      res.send(rows)
-    })
+  app.get('/families', async (req, res) => {
+    try {
+      const families = await db.getFamilies();
+
+      res.send(families);
+    } catch (err) {
+      return handleError(err, req, res);
+    }
   });
 
   app.get('/capabilities', (req, res) => {
@@ -211,7 +194,7 @@ const start = module.exports = function makeServer() {
     }
   });
 
-  app.get('/user/:user_id', async (req, res) => {
+  app.get('/user/:user_id', async(req, res) => {
     try {
       const users = await db.getUser(req.params.user_id);
 
@@ -221,7 +204,14 @@ const start = module.exports = function makeServer() {
     }
   });
 
-  app.post('/register', async (req, res) => {
+  app.get('/me', authMiddleware, async(req, res) => {
+    const userId = res.locals.userId;
+    const users = await db.getUser(userId);
+
+    res.send(users[0]);
+  });
+
+  app.post('/register', async(req, res) => {
     const { user_email, user_password, user_admin, role_id, user_full_name } = req.body;
     const hashedPassword = await utils.hashPassword(user_password);
 
@@ -236,7 +226,7 @@ const start = module.exports = function makeServer() {
     }
   });
 
-  app.post('/login', async (req, res) => {
+  app.post('/login', async(req, res) => {
     const { user_email, user_password } = req.body;
 
     if (user_email && user_password) {
@@ -298,18 +288,19 @@ const start = module.exports = function makeServer() {
       .custom(value => {
         if (value) {
           return value.length <= 100 && value.length > 0;
+        } else {
+          return value.length === 0 ? Promise.reject() : Promise.resolve();
         }
-      }).withMessage(
+        }).withMessage(
         'Family name should be between 1 and 100 characters (inclusive)')
       .custom(async value => {
         if (value) {
           let res = await db.getFamilyNamesByFamilyName(value);
-          console.log("families: " + res.length);
           return res.length === 0 ? Promise.resolve() : Promise.reject();
         } else {
           return Promise.resolve(); // Value doesn't exist so just resolve it, the previous checks will show that there are errors.
         }
-      }).withMessage('Family name is already in use')
+        }).withMessage('Family name is already in use')
   ], async (req, res) => {
     // Handle validator errors
     const errors = validationResult(req);
@@ -335,6 +326,161 @@ const start = module.exports = function makeServer() {
       return handleError(err, req, res);
     }
   });
+
+  app.post('/add-capability', [
+    check('family_id')
+    .exists().withMessage('A capability must have a family associated with it')
+    .custom(async value => {
+      if (value) {
+        let res = await db.getFamilyById(value);
+        return res.length === 1 ? Promise.resolve() : Promise.reject();
+      } else if (value < 1) { // 1 is minimum value
+        return Promise.reject();
+      } else {
+        return Promise.resolve(); // Doesn't exist so will have been caught be the previous check
+      }
+    }).withMessage("The attached family must already exist"),
+    check('capability_name')
+    .exists().withMessage('A capability must have a name')
+    .custom(async value => {
+      if (value) {
+        return value.length > 0 && value.length <= 100 ? Promise.resolve() : Promise.reject();
+      } else if (value.length === 0) { // captures an empty field
+        return Promise.reject();
+      } else {
+        return Promise.resolve(); // Doesn't exist so will have been caught be the previous check
+      }
+    }).withMessage('Capability name should be between 1 and 100 characters (inclusive)'),
+    body().custom(async value => {
+      if (value) {
+        let res = await db.getCapabilitiesByFamIdAndCapName(value.family_id, value.capability_name);
+        return res.length === 0 ? Promise.resolve() : Promise.reject();
+      } else {
+        return Promise.resolve(); // Doesn't exist so will have been caught be the previous check
+      }
+    }).withMessage('Capability with the same name in the family already exists')
+  ], async (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return handleError(errors, req, res);
+    }
+
+    try {
+      const result = await db.addCapability(req.body);
+      const capability = req.body;
+      capability.capability_id = result.insertId;
+
+      logger.info(`Added capability: ${capability}`);
+
+      res.send(capability);
+    } catch (err) {
+      return handleError(err, req, res);
+    }
+  });
+
+  app.delete('/capability/:capability_id', authMiddleware, async(req, res) => {
+    const capability_id = req.params.capability_id;
+    const userId = res.locals.userId;
+    const users = await db.getUser(userId);
+
+    try {
+      if (users && users[0].user_admin == 1) {
+        const result = await db.removeCapability(capability_id);
+
+        res.send({ successful: true, message: 'Capability deleted' });
+      } else {
+        throw new Error('You are not authorised to change this resource');
+      }
+    } catch (err) {
+      if (err.errno == 1451) {
+        err.sqlMessage = 'You must delete the roles associated with this capability before deleting it';
+      }
+      return handleError(err, req, res);
+    }
+  });
+
+
+    app.post('/add-role', [
+      check('role_description') // optional
+      .custom(value => {
+        if (value) {
+          return value.length <= 65535 ? Promise.resolve() : Promise.reject();
+        } else {
+          return Promise.resolve(); // not needed handle nicely
+        }
+      }).withMessage('Description is too long'),
+      check('role_spec')
+      .custom(value => {
+        if (value) {
+          return value.length <= 500 ? Promise.resolve() : Promise.reject();
+        } else {
+          return Promise.resolve();
+        }
+      }).withMessage('Specification is too long'),
+      check('capability_id')
+      .exists().withMessage('Capability is required')
+      .custom(async value => {
+        if (value) {
+          let res = await db.getCapabilitiesById(value);
+          return res.length === 1 ? Promise.resolve() : Promise.reject();
+        } else if (value < 1) { // 1 is minimum value
+          return Promise.reject();
+        } else {
+          return Promise.resolve(); // Doesn't exist so will have been caught be the previous check
+        }
+  
+      }).withMessage('Capability must exist'),
+      check('band_id')
+      .exists().withMessage('Band is required')
+      .custom(async value => {
+        if (value) {
+          let res = await db.getBandsById(value);
+          return res.length === 1 ? Promise.resolve() : Promise.reject();
+        } else if (value < 1) { // 1 is minimum value
+          return Promise.reject();
+        } else {
+          return Promise.resolve(); // Doesn't exist so will have been caught be the previous check
+        }
+      }).withMessage('Band must exist'),
+      check('role_name')
+        .exists().withMessage('Role name should be present')
+        .custom(value => {
+          if (value) {
+            return value.length > 0 && value.length <= 100 ? Promise.resolve() : Promise.reject();
+          } else if (value.length === 0) { // captures an empty field
+            return Promise.reject();
+          } else {
+            return Promise.resolve(); // Doesn't exist so will have been caught be the previous check
+          }
+        }).withMessage(
+          'Role name should be between 1 and 100 characters (inclusive)'),
+        body().custom( async value => {
+          if(value) {
+            let res = await db.getRolesByCapabilityAndBand(value.capability_id, value.band_id);
+            return res.length === 0 ? Promise.resolve() : Promise.reject();
+          }
+          else {
+            return Promise.resolve();
+          }
+        }).withMessage(
+          'A role already exists in this capability with this band')
+    ], async (req, res) => {
+      const errors = validationResult(req);
+      if (!errors.isEmpty()) {
+        return handleError(errors, req, res);
+      }
+      // No errors add the role
+      try {
+        const result = await db.addRole(req.body);
+        const role = req.body;
+        role.role_id = result.insertId;
+        logger.info(`Adding new role: ${role}`);
+
+        res.send(role);
+      } catch (err) {
+        return handleError(err, req, res);
+      }
+    });
 
   app.delete('/role/:role_id', authMiddleware, async (req, res) => {
     const role_id = req.params.role_id;

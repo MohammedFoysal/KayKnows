@@ -320,10 +320,10 @@ insert into capabilities values (11, "People", 6);
 
 
 -- Sales
-insert into roles values (1, "Sales Director","role spec","Description", 1, 1, 2, null);
-insert into roles values (2, "Sales Executive","role spec","Description", 1, 1, 4, null);
-insert into roles values (3, "Sales Executive","role spec","Description", 1, 1, 5, null);
-insert into roles values (4, "Sales Associate","role spec","Description", 1, 1, 7, null);
+insert into roles values (1, "Sales Director","role spec","Description", 1, 1, 2);
+insert into roles values (2, "Sales Executive","role spec","Description", 1, 1, 4);
+insert into roles values (3, "Sales Executive","role spec","Description", 1, 1, 5);
+insert into roles values (4, "Sales Associate","role spec","Description", 1, 1, 7);
 
 
 -- Software Engineering
@@ -332,116 +332,116 @@ insert into roles values (5, "Lead Software Engineer","https://kainossoftwareltd
 |Visibly and regularly share knowledge
 |Actively identify and develop talent and highlight to your BU talent manager
 |Contribute to presales activities – completion of bids, presenting, tender qualification, bid management etc….
-|Provide constructive feedback and record it on Workday",2 , 2, 5, null);
+|Provide constructive feedback and record it on Workday",2 , 2, 5);
 insert into roles values (6, "Software Engineer","https://kainossoftwareltd.sharepoint.com/people.old/Shared%20Documents/Forms/AllItems.aspx?id=%2Fpeople.old%2FShared%20Documents%2FJob%20Descriptions%2FSoftware%20Engineering%2FJob%20Specification%20-%20Senior%20Software%20Engineer%20-%20Senior%20Associate.pdf&parent=%2Fpeople.old%2FShared%20Documents%2FJob%20Descriptions%2FSoftware%20Engineering&embed=%7B%22o%22%3A%22https%3A%2F%2Fkainossoftwareltd.sharepoint.com%22%2C%22id%22%3A%225396a260-dd7d-201b-6ccb-41b66038ed6f%22%2C%22af%22%3Atrue%7D","Make your line manager aware if you think someone may be considering leaving the company
-|Help with recruitment activities",2 , 2, 6, null);
+|Help with recruitment activities",2 , 2, 6);
 insert into roles values (24, "Software Engineer","https://kainossoftwareltd.sharepoint.com/people.old/Shared%20Documents/Forms/AllItems.aspx?id=%2Fpeople.old%2FShared%20Documents%2FJob%20Descriptions%2FSoftware%20Engineering%2FJob%20Specification%20-%20Software%20Engineer%20-%20Associate.pdf&parent=%2Fpeople.old%2FShared%20Documents%2FJob%20Descriptions%2FSoftware%20Engineering&embed=%7B%22o%22%3A%22https%3A%2F%2Fkainossoftwareltd.sharepoint.com%22%2C%22id%22%3A%22f28d6f9e-af7d-54d1-3a48-ae3991e2cd76%22%2C%22af%22%3Atrue%7D","Mentor junior team members
 |Deliver your tasks within the timelines while adhering to the Kainos quality standards
 |Set professional self-development goals, including asking for training
-|Maintain a Kainos CV and store it in the correct location",2 , 2, 7, null);
+|Maintain a Kainos CV and store it in the correct location",2 , 2, 7);
 insert into roles values (7, "Software Engineer","https://kainossoftwareltd.sharepoint.com/people.old/Shared%20Documents/Forms/AllItems.aspx?id=%2Fpeople.old%2FShared%20Documents%2FJob%20Descriptions%2FSoftware%20Engineering%2FJob%20Specification%20-%20Software%20Engineer%20-%20Trainee.pdf&parent=%2Fpeople.old%2FShared%20Documents%2FJob%20Descriptions%2FSoftware%20Engineering&embed=%7B%22o%22%3A%22https%3A%2F%2Fkainossoftwareltd.sharepoint.com%22%2C%22id%22%3A%22709cc3d3-3d67-366d-0494-2294bd2efe82%22%2C%22af%22%3Atrue%7D","Represent Kainos at careers fairs or Kainos open evenings events if invited
 |Immediately tell your manager if your tasks are not going to be complete within the expected timeframe
 |Notify your line manager if there are dependencies that are impacting your work
 |Escalate to your line manager if you do not have appropriate project goals
-|Notify HR if you have not received your project review on time",2 , 2, 8, null);
+|Notify HR if you have not received your project review on time",2 , 2, 8);
 insert into roles values (25, "Software Engineer","","Carry out all professional administration (timesheets, keeping calendar and voicemail up-to-date)
 |Notify your manager if you are sick and cannot attend work
 |Be a representative at the Earn-As-You-Learn or Apprentice events if invited
 |Attend training courses when invited
-|Raise any concerns/issues/problems directly with your manager or your career coach",2 , 2, 9, null);
+|Raise any concerns/issues/problems directly with your manager or your career coach",2 , 2, 9);
 
 -- Data Engineering
-insert into roles values (26, "Lead Data Engineer","role spec","Description",12 , 2, 5, null);
-insert into roles values (27, "Data Engineer","role spec","Description",12 , 2, 6, null);
-insert into roles values (28, "Data Engineer","role spec","Description",12 , 2, 7, null);
-insert into roles values (29, "Data Engineer","role spec","Description",12 , 2, 8, null);
+insert into roles values (26, "Lead Data Engineer","role spec","Description",12 , 2, 5);
+insert into roles values (27, "Data Engineer","role spec","Description",12 , 2, 6);
+insert into roles values (28, "Data Engineer","role spec","Description",12 , 2, 7);
+insert into roles values (29, "Data Engineer","role spec","Description",12 , 2, 8);
 
 -- Cyber Security
-insert into roles values (8, "Senior Security Architect","role spec","Description",7 , 2, 4, null);
-insert into roles values (9, "Security Architect","role spec","Description",7 , 2, 5, null);
-insert into roles values (10, "Security Engineer","role spec","Description",7 , 2, 6, null);
+insert into roles values (8, "Senior Security Architect","role spec","Description",7 , 2, 4);
+insert into roles values (9, "Security Architect","role spec","Description",7 , 2, 5);
+insert into roles values (10, "Security Engineer","role spec","Description",7 , 2, 6);
 
 -- Architect
-insert into roles values (30, "Chief Technology Officer","role spec","Description",14 , 2, 1, null);
-insert into roles values (31, "Technology Leader","role spec","Description",14 , 2, 2, null);
-insert into roles values (32, "Principal Architect","role spec","Description", 14, 2, 3, null);
-insert into roles values (33, "Solution Architect","role spec","Description", 14, 2, 4, null);
-insert into roles values (34, "Technical Architect","role spec","Description", 14, 2, 5, null);
+insert into roles values (30, "Chief Technology Officer","role spec","Description",14 , 2, 1);
+insert into roles values (31, "Technology Leader","role spec","Description",14 , 2, 2);
+insert into roles values (32, "Principal Architect","role spec","Description", 14, 2, 3);
+insert into roles values (33, "Solution Architect","role spec","Description", 14, 2, 4);
+insert into roles values (34, "Technical Architect","role spec","Description", 14, 2, 5);
 
 -- Ops
-insert into roles values (35, "Leads Ops Engineer","role spec","Description", 15, 2, 5, null);
-insert into roles values (36, "Ops Engineer","role spec","Description", 15, 2, 6, null);
-insert into roles values (37, "Ops Engineer","role spec","Description", 15, 2, 7, null);
-insert into roles values (38, "Ops Engineer","role spec","Description", 15, 2, 8, null);
+insert into roles values (35, "Leads Ops Engineer","role spec","Description", 15, 2, 5);
+insert into roles values (36, "Ops Engineer","role spec","Description", 15, 2, 6);
+insert into roles values (37, "Ops Engineer","role spec","Description", 15, 2, 7);
+insert into roles values (38, "Ops Engineer","role spec","Description", 15, 2, 8);
 
 -- Infrastructure
-insert into roles values (39, "Infrastructure Leader","role spec","Description", 16, 2, 2, null);
-insert into roles values (40, "Infrastructure Consultant","role spec","Description", 16, 2, 5, null);
-insert into roles values (41, "Infrastructure Engineer","role spec","Description", 16, 2, 6, null);
-insert into roles values (42, "Infrastructure Engineer","role spec","Description", 16, 2, 7, null);
-insert into roles values (43, "Infrastructure Engineer","role spec","Description", 16, 2, 8, null);
-insert into roles values (44, "Infrastructure Engineer","role spec","Description", 16, 2, 9, null);
+insert into roles values (39, "Infrastructure Leader","role spec","Description", 16, 2, 2);
+insert into roles values (40, "Infrastructure Consultant","role spec","Description", 16, 2, 5);
+insert into roles values (41, "Infrastructure Engineer","role spec","Description", 16, 2, 6);
+insert into roles values (42, "Infrastructure Engineer","role spec","Description", 16, 2, 7);
+insert into roles values (43, "Infrastructure Engineer","role spec","Description", 16, 2, 8);
+insert into roles values (44, "Infrastructure Engineer","role spec","Description", 16, 2, 9);
 
 -- Testing
-insert into roles values (45, "Test Manager","role spec","Description", 17, 2, 4, null);
-insert into roles values (46, "Lead Test Engineer","role spec","Description", 17, 2, 5, null);
-insert into roles values (47, "Test Engineer","role spec","Description", 17, 2, 6, null);
-insert into roles values (48, "Test Engineer","role spec","Description", 17, 2, 7, null);
-insert into roles values (49, "Test Engineer","role spec","Description", 17, 2, 8, null);
-insert into roles values (50, "Test Engineer","role spec","Description", 17, 2, 9, null);
+insert into roles values (45, "Test Manager","role spec","Description", 17, 2, 4);
+insert into roles values (46, "Lead Test Engineer","role spec","Description", 17, 2, 5);
+insert into roles values (47, "Test Engineer","role spec","Description", 17, 2, 6);
+insert into roles values (48, "Test Engineer","role spec","Description", 17, 2, 7);
+insert into roles values (49, "Test Engineer","role spec","Description", 17, 2, 8);
+insert into roles values (50, "Test Engineer","role spec","Description", 17, 2, 9);
 
 -- Analytics
-insert into roles values (51, "Principal Data Consultant","role spec","Description", 18, 2, 3, null);
-insert into roles values (52, "Data Architect","role spec","Description", 18, 2, 4, null);
-insert into roles values (53, "Data Scientist","role spec","Description", 18, 2, 5, null);
-insert into roles values (54, "Data Scientist","role spec","Description", 18, 2, 6, null);
-insert into roles values (55, "Data Consultant","role spec","Description", 18, 2, 7, null);
-insert into roles values (71, "Data Scientist","role spec","Description", 18, 2, 8, null);
+insert into roles values (51, "Principal Data Consultant","role spec","Description", 18, 2, 3);
+insert into roles values (52, "Data Architect","role spec","Description", 18, 2, 4);
+insert into roles values (53, "Data Scientist","role spec","Description", 18, 2, 5);
+insert into roles values (54, "Data Scientist","role spec","Description", 18, 2, 6);
+insert into roles values (55, "Data Consultant","role spec","Description", 18, 2, 7);
+insert into roles values (71, "Data Scientist","role spec","Description", 18, 2, 8);
 
 -- Integration
-insert into roles values (56, "Lead Integration Consultant","role spec","Description", 19, 2, 4, null);
-insert into roles values (57, "Integration Consultant","role spec","Description", 19, 2, 5, null);
-insert into roles values (58, "Integration Consultant","role spec","Description", 19, 2, 6, null);
-insert into roles values (59, "Integration Consultant","role spec","Description", 19, 2, 7, null);
-insert into roles values (60, "Integration Consultant","role spec","Description", 19, 2, 8, null);
+insert into roles values (56, "Lead Integration Consultant","role spec","Description", 19, 2, 4);
+insert into roles values (57, "Integration Consultant","role spec","Description", 19, 2, 5);
+insert into roles values (58, "Integration Consultant","role spec","Description", 19, 2, 6);
+insert into roles values (59, "Integration Consultant","role spec","Description", 19, 2, 7);
+insert into roles values (60, "Integration Consultant","role spec","Description", 19, 2, 8);
 
 -- Product Specialist
-insert into roles values (61, "Lead Product Specialist","role spec","Description", 20, 2, 5, null);
-insert into roles values (62, "Product Specialist","role spec","Description", 20, 2, 6, null);
-insert into roles values (63, "Product Specialist","role spec","Description", 20, 2, 7, null);
-insert into roles values (64, "Product Specialist","role spec","Description", 20, 2, 8, null);
+insert into roles values (61, "Lead Product Specialist","role spec","Description", 20, 2, 5);
+insert into roles values (62, "Product Specialist","role spec","Description", 20, 2, 6);
+insert into roles values (63, "Product Specialist","role spec","Description", 20, 2, 7);
+insert into roles values (64, "Product Specialist","role spec","Description", 20, 2, 8);
 
 -- Product Support
-insert into roles values (65, "Product Support Engineer","role spec","Description", 21, 2, 6, null);
-insert into roles values (66, "Product Support Engineer","role spec","Description", 21, 2, 7, null);
-insert into roles values (67, "Product Support Engineer","role spec","Description", 21, 2, 8, null);
+insert into roles values (65, "Product Support Engineer","role spec","Description", 21, 2, 6);
+insert into roles values (66, "Product Support Engineer","role spec","Description", 21, 2, 7);
+insert into roles values (67, "Product Support Engineer","role spec","Description", 21, 2, 8);
 
 -- Technical Specialist
-insert into roles values (68, "Technical Consultant","role spec","Description", 22, 2, 4, null);
-insert into roles values (69, "Technical Consultant","role spec","Description", 22, 2, 5, null);
-insert into roles values (70, "Technical Consultant","role spec","Description", 22, 2, 6, null);
+insert into roles values (68, "Technical Consultant","role spec","Description", 22, 2, 4);
+insert into roles values (69, "Technical Consultant","role spec","Description", 22, 2, 5);
+insert into roles values (70, "Technical Consultant","role spec","Description", 22, 2, 6);
 
-insert into roles values (11, "Agile Lead", "role spec","Description",3, 3, 4, null);
+insert into roles values (11, "Agile Lead", "role spec","Description",3, 3, 4);
 
-insert into roles values (12, "Product Principle", "role spec","Description",8, 3, 3, null);
-insert into roles values (13, "Product Consultant", "role spec","Description",8, 3, 5, null);
+insert into roles values (12, "Product Principle", "role spec","Description",8, 3, 3);
+insert into roles values (13, "Product Consultant", "role spec","Description",8, 3, 5);
 
-insert into roles values (14, "User Researcher","role spec","Description", 4, 4, 7, null);
+insert into roles values (14, "User Researcher","role spec","Description", 4, 4, 7);
 
-insert into roles values (15, "Design Lead","role spec","Description", 9, 4, 4, null);
-insert into roles values (16, "Design Consultant","role spec","Description", 9, 4, 5, null);
+insert into roles values (15, "Design Lead","role spec","Description", 9, 4, 4);
+insert into roles values (16, "Design Consultant","role spec","Description", 9, 4, 5);
 
-insert into roles values (17, "Art Director","role spec","Description", 10, 4, 4, null);
-insert into roles values (18, "Design Consultant","role spec","Description", 10, 4, 5, null);
+insert into roles values (17, "Art Director","role spec","Description", 10, 4, 4);
+insert into roles values (18, "Design Consultant","role spec","Description", 10, 4, 5);
 
 
-insert into roles values (19, "Team Leader","role spec","Description", 5, 5, 5, null);
+insert into roles values (19, "Team Leader","role spec","Description", 5, 5, 5);
 
-insert into roles values (20, "Travel Associate","role spec","Description", 6, 6, 7, null);
+insert into roles values (20, "Travel Associate","role spec","Description", 6, 6, 7);
 
-insert into roles values (21, "Head of People & Talent Development","role spec", "Description", 11, 6, 1, null);
-insert into roles values (22, "People Manager","role spec", "Description", 11, 6, 3, null);
-insert into roles values (23, "People Manager","role spec", "Description", 11, 6, 4, null);
+insert into roles values (21, "Head of People & Talent Development","role spec", "Description", 11, 6, 1);
+insert into roles values (22, "People Manager","role spec", "Description", 11, 6, 3);
+insert into roles values (23, "People Manager","role spec", "Description", 11, 6, 4);
 
 
 -- USERS user_id SMALLINT UNSIGNED PRIMARY KEY auto_increment, --------------------------------------------------------
