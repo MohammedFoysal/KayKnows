@@ -1,11 +1,11 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { Family } from '../family';
-import { DataService } from '../data.service';
-import { Role } from '../role';
-import { Capability } from '../capability';
-import { Band } from '../band';
-import { FormControl, NgForm, Validators } from '@angular/forms';
-import { animate, state, style, transition, trigger } from '@angular/animations';
+import {Component, OnInit, ViewChild} from '@angular/core';
+import {Family} from '../family';
+import {DataService} from '../data.service';
+import {Role} from '../role';
+import {Capability} from '../capability';
+import {Band} from '../band';
+import {FormControl, FormGroup, NgForm, Validators} from '@angular/forms';
+import {animate, state, style, transition, trigger} from '@angular/animations';
 
 
 @Component({
@@ -21,40 +21,64 @@ import { animate, state, style, transition, trigger } from '@angular/animations'
 
 })
 export class AddFormComponent implements OnInit {
-  @ViewChild(NgForm, {static: false}) form: NgForm;
 
   selected = '';
   options = ['Role', 'Capability', 'Band', 'Job Family'];
   public newRole: Role;
-  public newCapability: Capability;
+  newCapability: Capability;
   public newBand: Band;
   newFamily: Family;
   showSuccess = false;
   // Will store and provide the binding for any errors from the database
   serverError: '';
 
-  family_name = new FormControl('', [Validators.required, Validators.maxLength(100)]);
+  families: Family[];
+
+  familyForm = new FormGroup({
+    familyName: new FormControl('', [Validators.required, Validators.maxLength(100)])
+  });
+
+  // Capability Form Controls
+  capabilityForm = new FormGroup({
+    capabilityName: new FormControl('', [Validators.required, Validators.maxLength(100)]),
+    familyId: new FormControl('', [Validators.required]) // Tie this into the family ids
+  });
 
   constructor(private dataService: DataService) {
+    dataService.getFamilies().subscribe({
+      next: res => {
+        this.families = res;
+      },
+      error: err => {
+        this.serverError = err.message;
+      }
+    });
   }
 
   ngOnInit() {
     this.newFamily = new Family();
+    this.newCapability = new Capability();
   }
 
-  getErrorMessage() {
-    return this.family_name.hasError('required') ? 'Please enter a job family name' :
-      this.family_name.hasError('maxlength') ? 'Job family name must be less than 100 characters' :
+  getFamilyErrorMessage() {
+    return this.familyForm.get('familyName').hasError('required') ? 'Please enter a job family name' :
+      this.familyForm.get('familyName').hasError('maxlength') ? 'Job family name must be less than 100 characters' :
         '';
+  }
+
+  getCapabilityNameErrorMessage() {
+    return this.capabilityForm.get('capabilityName').hasError('required') ? 'Please enter a capability name' :
+      this.capabilityForm.get('capabilityName').hasError('maxlength') ? 'Capability name must be less than 100 characters'
+        : '';
   }
 
   detectInput() {
     this.serverError = '';
   }
 
-  onSuccess() {
-    this.family_name.reset();
-    this.form.resetForm();
+  onSuccess(control: FormGroup, form: NgForm) {
+    control.reset();
+    form.resetForm();
     this.showSuccess = true;
     this.FadeOutLink();
   }
@@ -71,7 +95,7 @@ export class AddFormComponent implements OnInit {
       this.dataService.addFamily(familyToAdd).subscribe({
           next: res => {
             this.dataService.loadTree();
-            this.onSuccess();
+            this.onSuccess(this.capabilityForm, addForm);
             this.newFamily = new Family();
           },
           error: err => {
@@ -81,6 +105,24 @@ export class AddFormComponent implements OnInit {
       );
     } else {
       console.error('Add Family form is in an invalid state');
+    }
+  }
+
+  addCapability(addForm): void {
+    if (addForm.valid) {
+      const capabilityToAdd = this.newCapability;
+      this.dataService.addCapability(capabilityToAdd).subscribe({
+        next: res => {
+          this.dataService.loadTree();
+          this.onSuccess(this.capabilityForm, addForm);
+          this.newCapability = new Capability();
+        },
+        error: err => {
+          this.serverError = err.message;
+        }
+      });
+    } else {
+      console.error('Add Capability form is in an invalid state');
     }
   }
 
@@ -106,18 +148,6 @@ export class AddFormComponent implements OnInit {
       //this.data.getTreeData();    How do we reload the page!?!?
     } else {
       console.error("Add Band form is in an invalid state");
-    }
-  }
-
-  addCapability(addForm): void {
-    if (addForm.valid) {
-      var capabilityToAdd = this.newCapability;
-      this.newCapability = new Capability();
-      this.data.addCapability(capabilityToAdd);
-      window.location.reload();
-      //this.data.getTreeData();    How do we reload the page!?!?
-    } else {
-      console.error("Add Capability form is in an invalid state");
     }
   }
   */

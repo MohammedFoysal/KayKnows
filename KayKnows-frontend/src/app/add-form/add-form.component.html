@@ -48,32 +48,50 @@
                       <input type="submit" for="modal-2" [disabled]="!addForm.valid">
 
                   </form>
-      </div>
+      </div> -->
 
       <div *ngIf="selected === 'Capability'">
-              <form (ngSubmit)="addFamily(addForm)" #addForm="ngForm">
-                      <br>
-                      <strong><span style="color: red;" *ngIf="addForm.hasError('required', 'email')">*</span>Capability</strong>
-                      <div><input [(ngModel)]="newFamily.family_name" name="name" placeholder="Name"></div>
-                      <div style="color: red;" *ngIf="addForm.hasError('checkname', 'name')">Please input a valid Job Family name</div>
-                      <br>
-                      <input type="submit" for="modal-2" [disabled]="!addForm.valid">
-
-                  </form>
-      </div> -->
-      <div *ngIf="selected === 'Job Family'">
-        <form (ngSubmit)="addFamily(addForm)" #addForm="ngForm">
+        <form (ngSubmit)="addCapability(addForm)" #addForm="ngForm" [formGroup]="capabilityForm">
           <div>
             <mat-form-field appearance="outline">
-              <mat-label>Job Family Name</mat-label>
-              <input id="familyInput" matInput (input)="detectInput()" [(ngModel)]="newFamily.family_name" placeholder="Name of job family"
-                     [formControl]="family_name" required>
-              <mat-error *ngIf="family_name.invalid">{{getErrorMessage()}}</mat-error>
+              <mat-label>Capability Name</mat-label>
+              <input id="capName" matInput (input)="detectInput()"
+                     [(ngModel)]="newCapability.capability_name" placeholder="Name of capability"
+                     formControlName="capabilityName" required>
+              <mat-error
+                *ngIf="capabilityForm.get('capabilityName').invalid">{{getCapabilityNameErrorMessage()}}</mat-error>
+            </mat-form-field>
+          </div>
+          <div>
+            <mat-form-field>
+              <mat-label>Select a Family</mat-label>
+              <mat-select id="famId" [(value)]="newCapability.family_id" matNativeControl formControlName="familyId" required>
+                <mat-option [value]="family.family_id"
+                            *ngFor="let family of families">{{family.family_name}}</mat-option>
+              </mat-select>
             </mat-form-field>
           </div>
           <span class="error" *ngIf="serverError != ''">{{serverError}}</span>
           <div>
-            <button mat-flat-button input type="submit" [disabled]="!family_name.valid">Submit
+            <button mat-flat-button input type="submit" [disabled]="!capabilityForm.valid">Submit
+            </button>
+          </div>
+        </form>
+      </div>
+      <div *ngIf="selected === 'Job Family'">
+        <form (ngSubmit)="addFamily(addForm)" #addForm="ngForm" [formGroup]="familyForm">
+          <div>
+            <mat-form-field appearance="outline">
+              <mat-label>Job Family Name</mat-label>
+              <input id="familyInput" matInput (input)="detectInput()"
+                     [(ngModel)]="newFamily.family_name" placeholder="Name of job family"
+                     formControlName="familyName" required>
+              <mat-error *ngIf="familyForm.get('familyName').invalid">{{getFamilyErrorMessage()}}</mat-error>
+            </mat-form-field>
+          </div>
+          <span class="error" *ngIf="serverError != ''">{{serverError}}</span>
+          <div>
+            <button mat-flat-button input type="submit" [disabled]="!familyForm.valid">Submit
             </button>
           </div>
         </form>
