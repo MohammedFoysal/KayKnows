@@ -2,8 +2,8 @@
   <div class="logo"><img src="assets/Kainos-logo-neg.png" alt="Kainos Logo" /></div>
   <button (click)="logout()" class="logout">Logout</button>
 
-  <div class="onoffswitch" *ngIf="isAdmin">
-    <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" [(ngModel)]="isViewingAsAdmin"
+  <div class="onoffswitch" *ngIf="dataService.isAdmin">
+    <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" [(ngModel)]="dataService.isViewingAsAdmin"
       id="myonoffswitch">
     <label class="onoffswitch-label" for="myonoffswitch">
       <span class="onoffswitch-inner"></span>
@@ -37,7 +37,7 @@
       </li>
     </ul>
 
-    <div *ngIf="isViewingAsAdmin" class="admin-container">
+    <div *ngIf="dataService.isViewingAsAdmin" class="admin-container">
       <!-- TODO - Add admin content here -->
       Admin actions...
 

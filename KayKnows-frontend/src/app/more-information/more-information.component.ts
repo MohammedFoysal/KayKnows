@@ -5,9 +5,11 @@ import { Subscription } from 'rxjs';
 import { Family } from '../family';
 import { Capability } from '../capability';
 import { CapabilityLead } from '../capability-lead';
-import { User } from '../user';
 import { Role } from '../role';
 import { trigger, state, style, transition, animate } from '@angular/animations';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { ConfirmComponent } from '../confirm/confirm.component';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-more-information',
@@ -27,7 +29,6 @@ import { trigger, state, style, transition, animate } from '@angular/animations'
   ]
 })
 
-
 export class MoreInformationComponent implements OnInit, OnDestroy {
   switchboard: SwitchboardService;
   subFamily: Subscription;
@@ -43,8 +44,11 @@ export class MoreInformationComponent implements OnInit, OnDestroy {
   showRoleSpec: boolean = false;
   show: boolean;
   buttonName:string = 'Show';
+  confirmDialogRef: MatDialogRef<ConfirmComponent>;
 
-  constructor(switchboard: SwitchboardService) { this.switchboard = switchboard }
+  constructor(private dataService: DataService, switchboard: SwitchboardService, private dialog: MatDialog, private snackBar: MatSnackBar) { 
+    this.switchboard = switchboard 
+  }
 
   createBulletList(description: string): string[]{
     console.log(description.split("|"));
@@ -59,20 +63,17 @@ export class MoreInformationComponent implements OnInit, OnDestroy {
     });
     this.subCapability = this.switchboard.capability$.subscribe((c) => {
       this.capability = c;
-      console.log(c);
       this.selected = "capability";
       this.show = true;
     });
     this.subCapabilityLead = this.switchboard.capability_lead$.subscribe((capability_lead) => {
       this.capability_lead = capability_lead;
-      console.log(capability_lead);
     });
     this.subRole = this.switchboard.role$.subscribe((role) => {
       this.role = role;
       this.role_description = this.createBulletList(role.role_description);
       this.selected = "role";
       this.showRoleSpec = role.role_spec.length != 0;
-      console.log("role", this.role);
       this.show = true;
     })
   }
@@ -91,5 +92,42 @@ export class MoreInformationComponent implements OnInit, OnDestroy {
     this.subCapability.unsubscribe();
     this.subCapabilityLead.unsubscribe();
     this.subRole.unsubscribe();
+  }
+
+  showRemoveCapabilityDialog() {
+    this.confirmDialogRef = this.dialog.open(ConfirmComponent, {hasBackdrop: true, data: {
+      title: 'Are you sure you want to delete the capability?'
+    }});
+
+    this.confirmDialogRef.afterClosed().subscribe(data => {
+      if (data.confirmed) {
+        this.removeCapability();
+      }
+    });
+  }
+
+  removeCapability() {
+    if (this.capability) {
+      this.dataService.removeCapability(this.capability.capability_id).subscribe({
+        next: response => { 
+          this.dataService.getCheckboxData();
+          this.dataService.getTreeData();
+          this.dataService.getBands(); 
+          this.toggle();
+          this.capability = null;
+
+          this.snackBar.open(response.message, "OK", {
+            duration: 5000
+          });
+        },
+        error: error => {
+          this.snackBar.open(error.error.message, "OK", {
+            duration: 5000
+          });
+
+          console.log(error)
+        }
+      });
+    }
   }
 }

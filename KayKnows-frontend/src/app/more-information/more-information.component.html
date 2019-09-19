@@ -1,34 +1,43 @@
 <ng-container *ngIf="show">
   <div class="detail" *ngIf="selected == 'family'" [@EnterLeave]="'flyIn'">
-    <input class="hideButton" (click)="toggle()" type="image" src="https://icon-library.net/images/arrow-icon-transparent-background/arrow-icon-transparent-background-12.jpg"/>
+      <span class="hideButtonSection"><i class="hideButton material-icons" (click)="toggle()">arrow_forward</i>
+      </span>
     <div>
       {{family.family_name}}
     </div>
   </div>
 
-  <div class="detail" *ngIf="selected == 'capability'" [@EnterLeave]="'flyIn'">
+  <div class="detail" *ngIf="selected == 'capability' && capability" [@EnterLeave]="'flyIn'">
     <div class="detailHeaderSectionCapability">
-      <span class="hideButtonSection"><input class="hideButton" (click)="toggle()" type="image" src="https://icon-library.net/images/arrow-icon-transparent-background/arrow-icon-transparent-background-12.jpg"/></span>
+        <span class="hideButtonSection"><i class="hideButton material-icons" (click)="toggle()">arrow_forward</i>
+        </span>
       <span class="detailTitle">{{capability.label}}</span>
     </div>
+
+    <div class="actions" *ngIf="dataService.isViewingAsAdmin">
+      <button id="deleteIcon" (click)="showRemoveCapabilityDialog()" class="show"><i
+          class="material-icons">delete</i>Delete Capability</button>
+    </div>
+
     <div *ngIf="capability_lead">
       <div class="capabilityLeadTitle">
         <h5>Lead</h5>
       </div>
       <hr class="line">
       <div class="capabilityLeadProfile">
-        <img class="capabilityLeadPhoto" src="{{capability_lead.capability_lead_photo}}" alt="Capability Lead Photo"/>
-      <br>
+        <img class="capabilityLeadPhoto" src="{{capability_lead.capability_lead_photo}}" alt="Capability Lead Photo" />
+        <br>
         <div class="capabilityLeadName">{{capability_lead.user_full_name}}</div>
       </div>
-      <hr class="line"/>
+      <hr class="line" />
       <span class="description">{{capability_lead.capability_lead_message}}</span>
     </div>
   </div>
 
   <div class="detailRole" *ngIf="selected == 'role'" [@EnterLeave]="'flyIn'">
     <div class="detailHeaderSectionRole">
-      <span class="hideButtonSection"> <input class="hideButton" (click)="toggle()" type="image" src="https://icon-library.net/images/arrow-icon-transparent-background/arrow-icon-transparent-background-12.jpg"/> </span>
+      <span class="hideButtonSection"><i class="hideButton material-icons" (click)="toggle()">arrow_forward</i>
+      </span>
       <span class="detailTitle"> {{role.role_name}}</span>
     </div>
     <div class="detailBody">
