@@ -18,7 +18,7 @@
   color: black;
   background-image: linear-gradient(white, #afafaf);
   right:0;
-  width: 30%;
+  width: 50%;
   height: 100%;
   font-size: 40px;
   z-index: 1;
@@ -47,6 +47,9 @@
 	text-align: center;
 }
 
+.detailSubtitle{
+  margin-left: 16px;
+}
 
 .hideButton{
   height: 30px;
@@ -106,14 +109,30 @@
   text-align: left;
 }
 
+.detailBody{
+  margin-top: 10%;
+  margin-bottom: 25%;
+}
+
 .line{
   width: 75%;
   left: 12%;
   position: relative;
+  margin: 10px;
 }
 
 .detailTitle{
   position: relative;
   top: 5px;
+}
+
+.roleDescription{
+  max-width: 86%;
+  overflow-wrap: break-word;
+font-size: 20px;  margin-left: 55px;
+}
+
+.capabilityLeadTitle{
+  text-align: center;
 }
 
