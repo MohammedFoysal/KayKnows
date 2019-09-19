@@ -565,8 +565,21 @@ const start = module.exports = function makeServer() {
   app.put('/edit/role/', async (req, res) =>{
     try{
       var body = req.body;
+      console.log(req);
       const role = db.updateRole(body.role_id, body.role_name, body.role_spec, body.role_description, body.capability_id, body.family_id, body.band_id);
-      res.send("Role updated successfully");
+      res.send({ successful: true, message: 'Role updated'});
+    }
+    catch (err) {
+      return handleError(err, req, res);
+    }
+  })
+
+  app.put('/edit/family/', async (req, res) =>{
+    try{
+      var body = req.body;
+      console.log(req);
+      const role = db.updateFamily(body.family_id, body.family_name);
+      res.send({ successful: true, message: 'Family updated'});
     }
     catch (err) {
       return handleError(err, req, res);
