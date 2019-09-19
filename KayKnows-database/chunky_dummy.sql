@@ -181,12 +181,12 @@ insert into roles values (23, "People Manager","role spec", "Description", 11, 6
 --    user_full_name VARCHAR(100),
 
 -- users
-insert into users values (1, "kyle.a@kainos.com", "password", 1, 7, "Kyle Allen-Taylor");
-insert into users values (2, "ola.k@kainos.com", "123456", 1, 7, "Ola Kondracka");
-insert into users values (3, "juliano.s@kainos.com", "iamthepassword",  1, 7, "Juliano Saunders");
-insert into users values (4, "joe.z@kainos.com", "ez123", 1, 7, "Joe Zazzaro-Francis");
-insert into users values (5, "foysal.m@kainos.com", "pA55w0rd", 1, 7, "Foysal Mohammed");
-insert into users values (6, "dragos.a@kainos.com", "password54321", 1, 7, "Dragos-Andrei Ilies");
+insert into users values (1, "kyle.a@kainos.com", "password", 7, 1, "Kyle Allen-Taylor");
+insert into users values (2, "ola.k@kainos.com", "123456", 7, 1, "Ola Kondracka");
+insert into users values (3, "juliano.s@kainos.com", "iamthepassword", 7, 1, "Juliano Saunders");
+insert into users values (4, "joe.z@kainos.com", "ez123", 7, 1, "Joe Zazzaro-Francis");
+insert into users values (5, "foysal.m@kainos.com", "pA55w0rd", 7, 0, "Foysal Mohammed");
+insert into users values (6, "dragos.a@kainos.com", "password54321", 7, 1, "Dragos-Andrei Ilies");
 
 -- CAPABILITY_LEADS capability_lead_id SMALLINT UNSIGNED PRIMARY KEY auto_increment, ----------------------------------
 --    user_id SMALLINT UNSIGNED,
@@ -201,3 +201,5 @@ insert into capability_leads values (2, 2, "https://scontent-lhr3-1.cdninstagram
 "UX design is fundamental to what we do at Kainos! At the end of the day the User's experience is the most important aspect to the work that we produce.", 9);
 insert into capability_leads values (3, 3, "https://scontent-lhr3-1.xx.fbcdn.net/v/t1.0-9/54236957_2530272617002755_1423110093242630144_o.jpg?_nc_cat=107&_nc_oc=AQl7QYG4Wt5xD_j0rXevzLJBEqRQh9i2JxiaXQ5dLyn-ptsOaJxGtYIWCCyNCPZgcRM&_nc_ht=scontent-lhr3-1.xx&oh=fe3c17a1b0d888964cf97b21468f12d6&oe=5DFFBE94",
 "Testing is a critical aspect to everything produced by Kainos. It ensures that our clients can trust the amazing work that we produce", 17);
+
+
