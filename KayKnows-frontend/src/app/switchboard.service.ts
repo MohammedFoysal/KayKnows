@@ -25,11 +25,10 @@ export class SwitchboardService {
   }
 
   public switchFamily(family: Family){
-    console.log(family.family_id);
     this.family_watcher.next(family);
   }
 
-  public switchCapability(capability: Capability){ //, capabilityLead : CapabilityLead){
+  public switchCapability(capability: Capability){
     this.capability_watcher.next(capability);
   }
 
@@ -39,7 +38,6 @@ export class SwitchboardService {
        console.error(res);
        this.capability_lead_watcher.next();
      } else {
-        console.log("CapabilityLead");
         this.capability_lead_watcher.next(res[0]);
      }});
   }
@@ -49,7 +47,6 @@ export class SwitchboardService {
       if (res[0] == null) {
        console.error(res);
      } else {
-        console.log("Roles", res[0]);
        this.role_watcher.next(res[0]);
      }});
   }
