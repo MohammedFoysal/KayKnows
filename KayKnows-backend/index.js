@@ -292,7 +292,7 @@ const start = module.exports = function makeServer() {
     }
   });
 
-  app.post('/add-family', [
+  app.post('/add-family', authMiddleware, [
     check('family_name')
       .exists().withMessage('Family name should be present')
       .custom(value => {
@@ -317,13 +317,20 @@ const start = module.exports = function makeServer() {
       return handleError(errors, req, res);
     }
 
-    // No errors add the families
     try {
-      const result = await db.addFamily(req.body.family_name);
-      res.send({
-        family_id: result.insertId,
-        family_name: req.body.family_name
-      });
+      const userId = res.locals.userId;
+      const users = await db.getUser(userId);
+
+      if (users && users[0].user_admin == 1) {
+        const result = await db.addFamily(req.body.family_name);
+
+        res.send({
+          family_id: result.insertId,
+          family_name: req.body.family_name
+        });
+      } else {
+        throw new Error('You are not authorised to change this resource');
+      }
     } catch (err) {
       return handleError(err, req, res);
     }
@@ -382,7 +389,7 @@ const start = module.exports = function makeServer() {
       if (users && users[0].user_admin == 1) {
         const result = await db.removeBand(band_id);
 
-        res.send({ successful: true, message: 'Band deleted'});
+        res.send({ successful: true, message: 'Band deleted' });
       } else {
         throw new Error('You are not authorised to change this resource');
       }

@@ -138,7 +138,10 @@ export class DataService {
   }
   
   addFamily(newFamily: Family): Observable<Family> {
-    return this.http.post<Family>('/api/add-family', newFamily).pipe(catchError(this.handleError));
+    const token = `Bearer ${localStorage.getItem('token')}`
+    const headers = new HttpHeaders().set('Authorization', token);
+
+    return this.http.post<Family>('/api/add-family', newFamily, {headers}).pipe(catchError(this.handleError));
   }
 
   private handleError(error: HttpErrorResponse) {
@@ -307,9 +310,6 @@ export class DataService {
     }).sort((role, roleTwo) => {
       return role.band_order - roleTwo.band_order;
     });
-
-    console.log('sorted')
-    console.log(sortedRoles)
 
     // now make the roles children of each other
     const top = [sortedRoles[0]];
