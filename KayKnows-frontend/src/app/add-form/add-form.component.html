@@ -48,19 +48,18 @@
                       <input type="submit" for="modal-2" [disabled]="!addForm.valid">
 
                   </form>
-      </div>
+      </div> -->
 
       <div *ngIf="selected === 'Capability'">
-              <form (ngSubmit)="addFamily(addForm)" #addForm="ngForm">
-                      <br>
-                      <strong><span style="color: red;" *ngIf="addForm.hasError('required', 'email')">*</span>Capability</strong>
-                      <div><input [(ngModel)]="newFamily.family_name" name="name" placeholder="Name"></div>
-                      <div style="color: red;" *ngIf="addForm.hasError('checkname', 'name')">Please input a valid Job Family name</div>
-                      <br>
-                      <input type="submit" for="modal-2" [disabled]="!addForm.valid">
-
-                  </form>
-      </div> -->
+        <form (ngSubmit)="addCapability(addForm)" #addForm="ngForm">
+          <br>
+          <strong><span style="color: red;" *ngIf="addForm.hasError('required', 'email')">*</span>Capability</strong>
+          <div><input [(ngModel)]="newFamily.family_name" name="name" placeholder="Name"></div>
+          <div style="color: red;" *ngIf="addForm.hasError('checkname', 'name')">Please input a valid Job Family name</div>
+          <br>
+          <input type="submit" for="modal-2" [disabled]="!addForm.valid">
+      </form>
+      </div>
       <div *ngIf="selected === 'Job Family'">
         <form (ngSubmit)="addFamily(addForm)" #addForm="ngForm">
           <div>
@@ -68,7 +67,7 @@
               <mat-label>Job Family Name</mat-label>
               <input id="familyInput" matInput (input)="detectInput()" [(ngModel)]="newFamily.family_name" placeholder="Name of job family"
                      [formControl]="family_name" required>
-              <mat-error *ngIf="family_name.invalid">{{getErrorMessage()}}</mat-error>
+              <mat-error *ngIf="family_name.invalid">{{getFamilyErrorMessage()}}</mat-error>
             </mat-form-field>
           </div>
           <span class="error" *ngIf="serverError != ''">{{serverError}}</span>

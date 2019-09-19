@@ -42,10 +42,14 @@ export class AddFormComponent implements OnInit {
     this.newFamily = new Family();
   }
 
-  getErrorMessage() {
+  getFamilyErrorMessage() {
     return this.family_name.hasError('required') ? 'Please enter a job family name' :
       this.family_name.hasError('maxlength') ? 'Job family name must be less than 100 characters' :
         '';
+  }
+
+  getCapabilityErrorMessage() {
+    return '';
   }
 
   detectInput() {
@@ -84,6 +88,24 @@ export class AddFormComponent implements OnInit {
     }
   }
 
+  addCapability(addForm): void {
+    if (addForm.valid) {
+      const capabilityToAdd = this.newCapability;
+      this.dataService.addCapability(capabilityToAdd).subscribe({
+        next: res => {
+          this.dataService.loadTree();
+          this.onSuccess();
+          this.newCapability = new Capability();
+        },
+        error: err => {
+          this.serverError = err.message;
+        }
+      });
+    } else {
+      console.error('Add Capability form is in an invalid state');
+    }
+  }
+
   /*
   addRole(addForm): void {
     if (addForm.valid) {
@@ -106,18 +128,6 @@ export class AddFormComponent implements OnInit {
       //this.data.getTreeData();    How do we reload the page!?!?
     } else {
       console.error("Add Band form is in an invalid state");
-    }
-  }
-
-  addCapability(addForm): void {
-    if (addForm.valid) {
-      var capabilityToAdd = this.newCapability;
-      this.newCapability = new Capability();
-      this.data.addCapability(capabilityToAdd);
-      window.location.reload();
-      //this.data.getTreeData();    How do we reload the page!?!?
-    } else {
-      console.error("Add Capability form is in an invalid state");
     }
   }
   */
