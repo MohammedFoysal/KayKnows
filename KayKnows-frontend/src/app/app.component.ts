@@ -19,6 +19,8 @@ export class AppComponent {
 
   constructor(private dataService: DataService, private logger: LogService,  private route: ActivatedRoute, private router: Router, switchboard: SwitchboardService) { 
     logger.info('AppComponent: Successful launch');
+    let localAdmin = localStorage.getItem('user_admin');
+    this.dataService.isAdmin = localAdmin != null && localAdmin == '1' ? true : false;
   }
 
   ngOnInit() {
