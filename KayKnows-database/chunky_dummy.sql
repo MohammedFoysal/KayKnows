@@ -2,7 +2,7 @@
 USE knows_db;
 
 -- bands table
-INSERT INTO bands VALUES (1, "Executive", "#5C2684", "Commercial Awareness
+INSERT INTO bands VALUES (1, "Executive", 1, "#5C2684", "Commercial Awareness
 ;Anticipates changes in the Kainos marketplace when budgeting for the future
 |Communicating & Teamwork
 ;Creates successful alignment between diverse teams across the organisation
@@ -17,8 +17,8 @@ INSERT INTO bands VALUES (1, "Executive", "#5C2684", "Commercial Awareness
 ;Sets a clear sense of direction, forward thinking and responsibly shapes the future", "Deliver training as part of MAP
 |Encourage collaboration across BUs
 |Identify and actively develop talent at all levels within your area of responsibility");
-INSERT INTO bands VALUES (2, "Leadership Community", "#56B6B1", "Competency framework doesn't directly apply at this Job Level.", "Responsibility framework doesn't directly apply at this Job Level.");
-INSERT INTO bands VALUES (3, "Principle", "#417ABD","Commercial Awareness
+INSERT INTO bands VALUES (2, "Leadership Community", 2, "#56B6B1", "Competency framework doesn't directly apply at this Job Level.", "Responsibility framework doesn't directly apply at this Job Level.");
+INSERT INTO bands VALUES (3, "Principle", 3, "#417ABD", "Commercial Awareness
 ;You take a balanced view of wider impact on the organisation when making significant changes
 ;You strive to add measurable and significant value to the longer term growth of Kainos and take calculated risks in order to do so.
 ;You influence and negotiate creating commercial strategies that maximise return, reduce cost and drive improvement in quality
@@ -55,7 +55,7 @@ INSERT INTO bands VALUES (3, "Principle", "#417ABD","Commercial Awareness
 |Actively participate in thought leadership activities
 |Develop external networks and actively promote Kainos outside the company
 |Recommend and drive improvement initiatives that will aid the company’s growth");
-INSERT INTO bands VALUES (4, "Manager", "#EF7DA9", "Commercial Awareness
+INSERT INTO bands VALUES (4, "Manager", 4, "#EF7DA9", "Commercial Awareness
 ;You put forward sound business cases to gain support for new and more effective methods of working
 ;You prioritise actions to minimise costs and maximise advantage across the organisation
 ;You understand the need to demonstrate a return on investment in activities and identify opportunities for generating income
@@ -112,7 +112,7 @@ INSERT INTO bands VALUES (4, "Manager", "#EF7DA9", "Commercial Awareness
 |Be prepared to deliver an element of training in the Discover/Explore training schools
 |Actively lead a pre-sales bid through commercial review
 |Assess and review the appraisals created by people that you manage");
-INSERT INTO bands VALUES (5, "Consultant", "#F7BE00", "Commercial Awareness
+INSERT INTO bands VALUES (5, "Consultant", 5, "#F7BE00", "Commercial Awareness
 ;You look beyond immediate problems/issues to see the impact on the bigger picture
 ;You use financial information to find pragmatic new ways of saving cost/effort without reducing throughput
 ;You manage people and your resources effectively and efficiently
@@ -164,7 +164,7 @@ INSERT INTO bands VALUES (5, "Consultant", "#F7BE00", "Commercial Awareness
 |Actively identify and develop talent and highlight to your BU talent manager
 |Contribute to presales activities – completion of bids, presenting, tender qualification, bid management etc….
 |Provide constructive feedback and record it on Workday");
-INSERT INTO bands VALUES (6, "Senior Associate", "#707271", "Commercial Awareness
+INSERT INTO bands VALUES (6, "Senior Associate", 6, "#707271", "Commercial Awareness
 ;You understand how the company makes profit and how your role affects profitability of the company
 ;You create honest time estimates and are determined to deliver upon these
 ;You question actions where appropriate and identify cost-effective approaches
@@ -203,7 +203,7 @@ INSERT INTO bands VALUES (6, "Senior Associate", "#707271", "Commercial Awarenes
 ;You demonstrate an active interest in enhancing current skills and learning new ones
 ;You demonstrate a good level of accomplishment in job performance","Make your line manager aware if you think someone may be considering leaving the company
 |Help with recruitment activities");
-INSERT INTO bands VALUES (7, "Associate", "#446b23", "Commercial Awareness
+INSERT INTO bands VALUES (7, "Associate", 7, "#446b23", "Commercial Awareness
 ;You understand the contribution your role makes to the success of the business, consistently delivering to task deadlines
 ;You understand and the need for the business to generate additional income and respect that costs need to be managed
 ;You know what you have to do to manage costs within the business
@@ -244,7 +244,7 @@ INSERT INTO bands VALUES (7, "Associate", "#446b23", "Commercial Awareness
 |Deliver your tasks within the timelines while adhering to the Kainos quality standards
 |Set professional self-development goals, including asking for training
 |Maintain a Kainos CV and store it in the correct location");
-INSERT INTO bands VALUES (8, "Trainee", "#115E67", "Commercial Awareness
+INSERT INTO bands VALUES (8, "Trainee", 8, "#115E67", "Commercial Awareness
 ;You consistently cooperate with the business processes completing accurately and honestly e.g. timesheets/EOY review/travel requests
 ;You willingly cooperate by volunteering to take on additional tasks that will benefit the business e.g. Recruitment events such as University careers fairs, EAYL open evening, Work experience mentoring
 ;You understand how the business generates income
@@ -275,7 +275,7 @@ INSERT INTO bands VALUES (8, "Trainee", "#115E67", "Commercial Awareness
 |Notify your line manager if there are dependencies that are impacting your work
 |Escalate to your line manager if you do not have appropriate project goals
 |Notify HR if you have not received your project review on time");
-INSERT INTO bands VALUES (9, "Apprentice", "#ed8941", "Competency framework doesn't directly apply at this Job Level for now. Please see Associate to assist with your career planning.", 
+INSERT INTO bands VALUES (9, "Apprentice", 9, "#ed8941", "Competency framework doesn't directly apply at this Job Level for now. Please see Associate to assist with your career planning.", 
 "Carry out all professional administration (timesheets, keeping calendar and voicemail up-to-date)
 |Notify your manager if you are sick and cannot attend work
 |Be a representative at the Earn-As-You-Learn or Apprentice events if invited

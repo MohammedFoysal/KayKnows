@@ -25,9 +25,9 @@ db.connect(err => {
     logger.info("Connected to MySQL");
 });
 
-exports.getAll = function(callback) {
+exports.getAll = function (callback) {
     db.query(
-        'SELECT families.family_id, family_name, capability_id, capability_name, role_id, role_name, band_id, band_name, band_colour FROM families LEFT JOIN capabilities USING(family_id) LEFT JOIN roles USING(capability_id) LEFT JOIN bands USING(band_id)',
+        'SELECT families.family_id, family_name, capability_id, capability_name, role_id, role_name, band_id, band_name, band_order, band_colour FROM families LEFT JOIN capabilities USING(family_id) LEFT JOIN roles USING(capability_id) LEFT JOIN bands USING(band_id)',
         (error, rows) => {
             if (error) {
                 return callback(error, null);
@@ -36,7 +36,7 @@ exports.getAll = function(callback) {
         })
 };
 
-exports.getCapabilities = function(callback) {
+exports.getCapabilities = function (callback) {
     db.query('SELECT * FROM capabilities',
         (error, rows) => {
             if (error) {
@@ -46,7 +46,7 @@ exports.getCapabilities = function(callback) {
         })
 };
 
-exports.getCapabilitiesByFamilyId = function(family_id, callback) {
+exports.getCapabilitiesByFamilyId = function (family_id, callback) {
     db.query('SELECT * FROM capabilities WHERE family_id = ?', [family_id],
         (error, rows) => {
             if (error) {
@@ -56,7 +56,7 @@ exports.getCapabilitiesByFamilyId = function(family_id, callback) {
         })
 };
 
-exports.getRoles = function(callback) {
+exports.getRoles = function (callback) {
     db.query('SELECT * FROM roles',
         (error, rows) => {
             if (error) {
@@ -66,7 +66,7 @@ exports.getRoles = function(callback) {
         })
 };
 
-exports.getCapabilityLeads = function(callback) {
+exports.getCapabilityLeads = function (callback) {
     db.query('SELECT * FROM capability_leads',
         (error, rows) => {
             if (error) {
@@ -76,7 +76,7 @@ exports.getCapabilityLeads = function(callback) {
         })
 };
 
-exports.getCapabilityLeadByCapabilityId = function(capability_id, callback) {
+exports.getCapabilityLeadByCapabilityId = function (capability_id, callback) {
     db.query('SELECT capability_lead_id, user_id, user_full_name, capability_lead_photo, capability_lead_message FROM capability_leads LEFT JOIN capabilities USING(capability_id) LEFT JOIN users USING(user_id) WHERE capability_id = ?', [capability_id],
         (error, rows) => {
             if (error) {
@@ -86,7 +86,7 @@ exports.getCapabilityLeadByCapabilityId = function(capability_id, callback) {
         })
 };
 
-exports.getUserById = function(user_id, callback) {
+exports.getUserById = function (user_id, callback) {
     db.query('SELECT user_id, user_password, user_email, role_id, user_admin, user_full_name FROM users WHERE user_id = ?', [user_id],
         (error, rows) => {
             if (error) {
@@ -96,7 +96,7 @@ exports.getUserById = function(user_id, callback) {
         })
 };
 
-exports.getRoleById = function(role_id, callback) {
+exports.getRoleById = function (role_id, callback) {
     db.query('SELECT role_id, role_name, capability_id, family_id, band_id, role_spec, role_description from roles WHERE role_id = ?', [role_id],
         (error, rows) => {
             if (error) {
@@ -106,8 +106,8 @@ exports.getRoleById = function(role_id, callback) {
         })
 };
 
-exports.getBands = function(callback) {
-    db.query('SELECT * FROM bands',
+exports.getBands = function (callback) {
+    db.query('SELECT * FROM bands ORDER BY band_order',
         (error, rows) => {
             if (error) {
                 return callback(error, null);
@@ -116,59 +116,62 @@ exports.getBands = function(callback) {
         })
 };
 
-exports.getFamilies = async() => {
+exports.getFamilies = async () => {
     return await query("SELECT * FROM families");
 };
 
-exports.getRolesForCapabilityId = async(capability_id) => {
+exports.getRolesForCapabilityId = async (capability_id) => {
     return await query("SELECT * FROM roles WHERE capability_id = ?", [capability_id]);
 };
 
-exports.getAsyncCapabilitiesByFamilyId = async(family_id) => {
+exports.getAsyncCapabilitiesByFamilyId = async (family_id) => {
     return await query("SELECT * FROM capabilities WHERE family_id = ?", [family_id]);
 }
 
 
-exports.getUsers = async() => {
+exports.getUsers = async () => {
     return await query("SELECT user_id, user_email, user_admin, role_id, user_full_name FROM users");
 }
 
-exports.getUser = async(user_id) => {
+exports.getUser = async (user_id) => {
     return await query("SELECT user_id, user_email, user_admin, role_id, user_full_name FROM users WHERE user_id = ?", [user_id]);
 }
 
-exports.getUserByEmail = async(email) => {
+exports.getUserByEmail = async (email) => {
     return await query("SELECT user_id, user_email, user_admin, role_id, user_full_name FROM users WHERE user_email = ?", [email]);
 }
-exports.addFamily = async(family_name) => {
+exports.addFamily = async (family_name) => {
     return await query("INSERT INTO families (family_name) VALUES (?)", [family_name]);
 };
 
-exports.getFamilyNamesByFamilyName = async(family_name) => {
+exports.getFamilyNamesByFamilyName = async (family_name) => {
     return await query("SELECT family_name FROM families WHERE family_name = ?", [family_name]);
 };
 
-exports.getUserByEmailWithPassword = async(email) => {
+exports.getUserByEmailWithPassword = async (email) => {
     return await query("SELECT user_id, user_password, user_email, user_admin, role_id, user_full_name FROM users WHERE user_email = ?", [email]);
 }
 
-exports.isUserAdmin = async(user_id) => {
+exports.isUserAdmin = async (user_id) => {
     return await query("SELECT user_id, user_email, user_admin, role_id, user_full_name FROM users WHERE user_id = ? AND user_admin = 1", [user_id]);
 }
 
-exports.removeCapability = async(capability_id) => {
+exports.removeCapability = async (capability_id) => {
     return await query("DELETE FROM capabilities WHERE capability_id = ?", [capability_id]);
 }
 
-exports.storeUser = async(user_email, user_password, user_admin, role_id, user_full_name) => {
+exports.storeUser = async (user_email, user_password, user_admin, role_id, user_full_name) => {
     return await query("INSERT INTO users (user_email, user_password, user_admin, role_id, user_full_name) VALUES (?, ?, ?, ?, ?)", [user_email, user_password, user_admin, role_id, user_full_name]);
 }
 
-exports.removeRole = async(role_id) => {
-  return await query("DELETE FROM roles WHERE role_id = ?", [role_id]);
+exports.removeRole = async (role_id) => {
+    return await query("DELETE FROM roles WHERE role_id = ?", [role_id]);
 }
 
-exports.removeFamily = async(family_id) => {
-  return await query("DELETE FROM families WHERE family_id = ?", [family_id]);
+exports.removeFamily = async (family_id) => {
+    return await query("DELETE FROM families WHERE family_id = ?", [family_id]);
 }
 
+exports.removeBand = async (band_id) => {
+    return await query("DELETE FROM bands WHERE band_id = ?", [band_id]);
+}
