@@ -7,7 +7,6 @@ import { Band } from '../band';
 import { FormControl, NgForm, Validators, FormGroup } from '@angular/forms';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 
-
 @Component({
   selector: 'app-add-form',
   templateUrl: './add-form.component.html',
@@ -24,6 +23,7 @@ export class AddFormComponent implements OnInit {
 
   selected = '';
   options = ['Role', 'Capability', 'Band', 'Job Family'];
+  families: Family[];
   capabilities: Capability[];
   bands: Band[];
   newRole: Role;
@@ -33,10 +33,6 @@ export class AddFormComponent implements OnInit {
   showSuccess = false;
   // Will store and provide the binding for any errors from the database
   serverError: '';
-
-  familyForm = new FormGroup({
-    familyName:new FormControl('', [Validators.required, Validators.maxLength(100)])
-  })
   
   roleForm = new FormGroup({
     roleName: new FormControl('', [Validators.required, Validators.maxLength(100)]),
@@ -46,23 +42,40 @@ export class AddFormComponent implements OnInit {
     roleDescription: new FormControl('', [ Validators.maxLength(65000)])
   });
 
-  //role_name = new FormControl('', [Validators.required, Validators.maxLength(100)]);
+  familyForm = new FormGroup({
+    familyName: new FormControl('', [Validators.required, Validators.maxLength(100)])
+  });
+
+  // Capability Form Controls
+  capabilityForm = new FormGroup({
+    capabilityName: new FormControl('', [Validators.required, Validators.maxLength(100)]),
+    familyId: new FormControl('', [Validators.required]) // Tie this into the family ids
+  });
 
   constructor(private dataService: DataService) {
     dataService.getCapabilities().subscribe(res => {
-      console.log(res);
       this.capabilities = res;
     })
 
     dataService.getBandNames().subscribe(res => {
-      console.log(res);
       this.bands = res;
     })
+    
+    dataService.getFamilies().subscribe({
+      next: res => {
+        this.families = res;
+      },
+      error: err => {
+        this.serverError = err.message;
+      }
+    });
+
   }
 
   ngOnInit() {
     this.newFamily = new Family();
     this.newRole = new Role();
+    this.newCapability = new Capability();
   }
 
   getFamilyErrorMessage() {
@@ -93,7 +106,13 @@ export class AddFormComponent implements OnInit {
        '';
 
   }
- 
+
+  getCapabilityNameErrorMessage() {
+    return this.capabilityForm.get('capabilityName').hasError('required') ? 'Please enter a capability name' :
+      this.capabilityForm.get('capabilityName').hasError('maxlength') ? 'Capability name must be less than 100 characters'
+        : '';
+  }
+
   detectInput() {
     this.serverError = '';
   }
@@ -148,42 +167,22 @@ export class AddFormComponent implements OnInit {
       console.error('Add Role form is in an invalid state');
     }
   }
-
-  /*
-  addRole(addForm): void {
-    if (addForm.valid) {
-      var roleToAdd = this.newRole;
-      this.newRole = new Role();
-      this.data.addRole(roleToAdd);
-      window.location.reload();
-      //this.data.getTreeData();    How do we reload the page!?!?
-    } else {
-      console.error("Add Role form is in an invalid state");
-    }
-  }
-
-  addBand(addForm): void {
-    if (addForm.valid) {
-      var bandToAdd = this.newBand;
-      this.newBand = new Band();
-      this.data.addBand(bandToAdd);
-      window.location.reload();
-      //this.data.getTreeData();    How do we reload the page!?!?
-    } else {
-      console.error("Add Band form is in an invalid state");
-    }
-  }
-
+  
   addCapability(addForm): void {
     if (addForm.valid) {
-      var capabilityToAdd = this.newCapability;
-      this.newCapability = new Capability();
-      this.data.addCapability(capabilityToAdd);
-      window.location.reload();
-      //this.data.getTreeData();    How do we reload the page!?!?
+      const capabilityToAdd = this.newCapability;
+      this.dataService.addCapability(capabilityToAdd).subscribe({
+        next: res => {
+          this.dataService.loadTree();
+          this.onSuccess(this.capabilityForm, addForm);
+          this.newCapability = new Capability();
+        },
+        error: err => {
+          this.serverError = err.message;
+        }
+      });
     } else {
-      console.error("Add Capability form is in an invalid state");
+      console.error('Add Capability form is in an invalid state');
     }
   }
-  */
 }
