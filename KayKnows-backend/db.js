@@ -212,3 +212,11 @@ exports.getCapabilitiesById = async(id) => {
 exports.getBandsById = async(id) => {
     return await query("SELECT * FROM bands WHERE band_id = ?", [id])
 }
+// role_description TEXT NULL,
+//     capability_id SMALLINT UNSIGNED,
+//     family_id SMALLINT UNSIGNED,
+//     band_id SMALLINT UNSIGNED,
+
+exports.updateRole = async (role_id, role_name, role_spec, role_description, capability_id, family_id, band_id) => {
+  return await query("UPDATE roles SET role_name = ?, role_spec = ?, role_description = ?, capability_id = ?, family_id = ?, band_id = ? WHERE role_id = ?", [role_name, role_spec, role_description, capability_id, family_id, band_id, role_id]);
+}
