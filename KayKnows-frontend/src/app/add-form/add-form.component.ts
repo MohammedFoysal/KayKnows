@@ -17,40 +17,52 @@ import {animate, state, style, transition, trigger} from '@angular/animations';
       opacity: 0
     })),
     transition('void <=> *', animate(1000)),
-  ]),]
+  ]), ]
 
 })
 export class AddFormComponent implements OnInit {
-  @ViewChild(NgForm, {static: false}) form: NgForm;
 
   selected = '';
   options = ['Role', 'Capability', 'Band', 'Job Family'];
   public newRole: Role;
-  public newCapability: Capability;
+  newCapability: Capability;
   public newBand: Band;
   newFamily: Family;
   showSuccess = false;
   // Will store and provide the binding for any errors from the database
   serverError: '';
 
-  familyName = new FormControl('', [Validators.required, Validators.maxLength(100)]);
+  families: Family[];
+
+  familyForm = new FormGroup({
+    familyName: new FormControl('', [Validators.required, Validators.maxLength(100)])
+  });
 
   // Capability Form Controls
   capabilityForm = new FormGroup({
-    capabilityName: new FormControl('', [Validators.required, Validators.maxLength(100)])
-    // familyId = new FormControl(); // Tie this into the family ids
+    capabilityName: new FormControl('', [Validators.required, Validators.maxLength(100)]),
+    familyId: new FormControl('', [Validators.required]) // Tie this into the family ids
   });
 
   constructor(private dataService: DataService) {
+    dataService.getFamilies().subscribe({
+      next: res => {
+        this.families = res;
+      },
+      error: err => {
+        this.serverError = err.message;
+      }
+    });
   }
 
   ngOnInit() {
     this.newFamily = new Family();
+    this.newCapability = new Capability();
   }
 
   getFamilyErrorMessage() {
-    return this.familyName.hasError('required') ? 'Please enter a job family name' :
-      this.familyName.hasError('maxlength') ? 'Job family name must be less than 100 characters' :
+    return this.familyForm.get('familyName').hasError('required') ? 'Please enter a job family name' :
+      this.familyForm.get('familyName').hasError('maxlength') ? 'Job family name must be less than 100 characters' :
         '';
   }
 
@@ -64,9 +76,8 @@ export class AddFormComponent implements OnInit {
     this.serverError = '';
   }
 
-  onSuccess() {
-    this.familyName.reset();
-    this.form.resetForm();
+  onSuccess(control: FormGroup) {
+    control.reset();
     this.showSuccess = true;
     this.FadeOutLink();
   }
@@ -83,7 +94,7 @@ export class AddFormComponent implements OnInit {
       this.dataService.addFamily(familyToAdd).subscribe({
           next: res => {
             this.dataService.loadTree();
-            this.onSuccess();
+            this.onSuccess(this.capabilityForm);
             this.newFamily = new Family();
           },
           error: err => {
@@ -102,7 +113,7 @@ export class AddFormComponent implements OnInit {
       this.dataService.addCapability(capabilityToAdd).subscribe({
         next: res => {
           this.dataService.loadTree();
-          this.onSuccess();
+          this.onSuccess(this.capabilityForm);
           this.newCapability = new Capability();
         },
         error: err => {

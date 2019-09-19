@@ -9,7 +9,7 @@ import { AuthResponse } from './auth-response';
 import { KayKnowsResponse } from './kay-knows-response';
 import {Observable, throwError} from 'rxjs';
 import {catchError} from 'rxjs/operators';
-import {Capability} from "./capability";
+import {Capability} from './capability';
 
 @Injectable({
   providedIn: 'root'
@@ -125,6 +125,10 @@ export class DataService {
     const headers = new HttpHeaders().set('Authorization', token);
 
     return this.http.get<User>('/api/me', {headers});
+  }
+
+  getFamilies(): Observable<Family[]> {
+    return this.http.get<Family[]>('/api/families').pipe(catchError(this.handleError));
   }
 
   addFamily(newFamily: Family): Observable<Family> {
