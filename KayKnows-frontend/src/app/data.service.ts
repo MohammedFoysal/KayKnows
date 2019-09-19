@@ -20,23 +20,25 @@ export class DataService {
   nestedData = [];
   familyIds = [];
   capabilityIds = [];
+  searchQuery = '';
   bands: Band[] = [];
   isAdmin: Boolean = false;
   logged_user_role_id;
   isViewingAsAdmin: Boolean = false;
 
   constructor(private http: HttpClient) {
-    this.loadTree();
+
   }
 
   loadTree(): void {
+    let localAdmin = localStorage.getItem('user_admin');
+    let token = localStorage.getItem('token');
+    this.isAdmin = localAdmin != null && localAdmin == '1' ? true : false;
+    this.logged_user_role_id = localStorage.getItem('user_role_id');
+
     this.getCheckboxData();
     this.getTreeData();
     this.getBands();
-
-    let localAdmin = localStorage.getItem('user_admin');
-    this.isAdmin = localAdmin != null && localAdmin == '1' ? true : false;
-    this.logged_user_role_id = localStorage.getItem('user_role_id');
   }
 
   getTreeData(): void {
@@ -65,8 +67,13 @@ export class DataService {
   getCheckboxData() {
     const token = `Bearer ${localStorage.getItem('token')}`
     const headers = new HttpHeaders().set('Authorization', token);
+    
+    let query = '';
+    if (this.searchQuery) {
+      query = this.searchQuery;
+    }
 
-    this.http.get<Family[]>('/api/family-filters', {headers}).subscribe(res => {
+    this.http.get<Family[]>('/api/family-filters/' + query, {headers}).subscribe(res => {
       if (res[0] == null) {
         console.error(res);
       } else {

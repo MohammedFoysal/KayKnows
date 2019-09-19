@@ -180,10 +180,15 @@ const start = module.exports = function makeServer() {
     })
   });
 
-  app.get('/family-filters', authMiddleware, async (req, res) => {
+  app.get('/family-filters/:search?', authMiddleware, async (req, res) => {
     const userId = res.locals.userId;
     const users = await db.getUser(userId);
     const userRole = await db.getAsyncRoleById(users[0].role_id);
+    let searchedRoles = [];
+
+    if (req.params.search) {
+      searchedRoles = await db.searchRolesByQuery(req.params.search);
+    }
 
     try {
       let families = await db.getFamilies();
@@ -197,12 +202,25 @@ const start = module.exports = function makeServer() {
           family.isSelected = true;
         }
 
+        for (searchedRole of searchedRoles) {
+          if (searchedRole.family_id == family.family_id) {
+            family.isSelected = true;
+            break;
+          }
+        }
 
         for (capability of capabilities) {
           capability.isSelected = false;
 
           if (capability.capability_id == userRole[0].capability_id) {
             capability.isSelected = true;
+          }
+
+          for (searchedRole of searchedRoles) {
+            if (searchedRole.capability_id == capability.capability_id) {
+              capability.isSelected = true;
+              break;
+            }
           }
         }
 
@@ -282,10 +300,15 @@ const start = module.exports = function makeServer() {
     res.send(users[0]);
   });
 
-  app.get('/test', async (req, res) => {
-    res.send(process.env.AUTH_SECRET);
-  });
+  app.get('/search-roles/:query', async (req, res) => {
+    try {
+      const results = await db.searchRolesByQuery(req.params.query);
 
+      res.send(results);
+    } catch (err) {
+      return handleError(err, req, res);
+    }
+  });
 
   app.delete('/capability/:capability_id', authMiddleware, async (req, res) => {
     const capability_id = req.params.capability_id;
