@@ -271,6 +271,28 @@ const start = module.exports = function makeServer() {
     }
   });
 
+  app.delete('/role/:role_id', authMiddleware, async (req, res) => {
+    const role_id = req.params.role_id;
+    const userId = res.locals.userId;
+    const users = await db.getUser(userId);
+
+    try {
+      if (users && users[0].user_admin == 1) {
+        const result = await db.removeRole(role_id);
+
+        res.send({ successful: true, message: 'Role deleted'});
+      } else {
+        throw new Error('You are not authorised to change this resource');
+      }
+    } catch (err) {
+      if (err.errno == 1451) {
+        err.sqlMessage = 'You must reassign users who are assigned to this role before deleting it';
+      }
+
+      return handleError(err, req, res);
+    }
+  });
+
 
   return server;
 };
