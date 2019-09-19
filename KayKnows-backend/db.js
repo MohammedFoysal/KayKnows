@@ -163,3 +163,12 @@ exports.removeCapability = async(capability_id) => {
 exports.storeUser = async(user_email, user_password, user_admin, role_id, user_full_name) => {
     return await query("INSERT INTO users (user_email, user_password, user_admin, role_id, user_full_name) VALUES (?, ?, ?, ?, ?)", [user_email, user_password, user_admin, role_id, user_full_name]);
 }
+
+exports.removeRole = async(role_id) => {
+  return await query("DELETE FROM roles WHERE role_id = ?", [role_id]);
+}
+
+exports.removeFamily = async(family_id) => {
+  return await query("DELETE FROM families WHERE family_id = ?", [family_id]);
+}
+

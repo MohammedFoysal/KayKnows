@@ -97,6 +97,20 @@ export class DataService {
     return this.http.delete<KayKnowsResponse>('/api/capability/' + capability_id, {headers});
   }
 
+  removeRole(role_id): Observable<KayKnowsResponse> {
+    const token = `Bearer ${localStorage.getItem('token')}`
+    const headers = new HttpHeaders().set('Authorization', token);
+
+    return this.http.delete<KayKnowsResponse>('/api/role/' + role_id, {headers});
+  }
+
+  removeFamily(family_id): Observable<KayKnowsResponse> {
+    const token = `Bearer ${localStorage.getItem('token')}`
+    const headers = new HttpHeaders().set('Authorization', token);
+
+    return this.http.delete<KayKnowsResponse>('/api/family/' + family_id, {headers});
+  }
+
   logout() {
     localStorage.removeItem('token');
     localStorage.removeItem('user_id');

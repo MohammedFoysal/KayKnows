@@ -43,8 +43,6 @@ export class TreeComponent implements OnInit {
       if(dataObject.type === "role"){
         this.switchboard.switchRole(dataObject.role_id);
       }
-      console.log("data object: ");
-      console.log(dataObject);
     }
 
     ngOnInit() {
