@@ -237,6 +237,8 @@ const start = module.exports = function makeServer() {
   app.get('/me', authMiddleware, async(req, res) => {
     const userId = res.locals.userId;
     const users = await db.getUser(userId);
+    const roles = await db.getAsyncRoleById(users[0].role_id)
+    users[0].role = roles[0]; 
 
     res.send(users[0]);
   });
