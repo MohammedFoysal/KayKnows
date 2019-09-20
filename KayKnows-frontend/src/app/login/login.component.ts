@@ -40,6 +40,7 @@ export class LoginComponent implements OnInit {
           localStorage.setItem("user_email", data.user.user_email);
           localStorage.setItem("user_admin", String(data.user.user_admin));
           localStorage.setItem("user_full_name", data.user.user_full_name);
+          localStorage.setItem('user_role_id', String(data.user.role.role_id));
   
           self.router.navigate(['/']);
           
