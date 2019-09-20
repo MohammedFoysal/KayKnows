@@ -558,10 +558,33 @@ const start = module.exports = function makeServer() {
       if (err.errno == 1451) {
         err.sqlMessage = 'You must delete capabilities which are assigned to this family before deleting it';
       }
-
       return handleError(err, req, res);
     }
   });
+  
+  app.put('/edit/role/', async (req, res) =>{
+    try{
+      var body = req.body;
+      console.log(req);
+      const role = db.updateRole(body.role_id, body.role_name, body.role_spec, body.role_description, body.capability_id, body.family_id, body.band_id);
+      res.send({ successful: true, message: 'Role updated'});
+    }
+    catch (err) {
+      return handleError(err, req, res);
+    }
+  })
+
+  app.put('/edit/family/', async (req, res) =>{
+    try{
+      var body = req.body;
+      console.log(req);
+      const role = db.updateFamily(body.family_id, body.family_name);
+      res.send({ successful: true, message: 'Family updated'});
+    }
+    catch (err) {
+      return handleError(err, req, res);
+    }
+  })
 
   app.delete('/band/:band_id', authMiddleware, async (req, res) => {
     const band_id = req.params.band_id;

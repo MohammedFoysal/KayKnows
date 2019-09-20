@@ -11,6 +11,7 @@ import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dial
 import { ConfirmComponent } from '../confirm/confirm.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Band } from '../band';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-more-information',
@@ -45,6 +46,7 @@ export class MoreInformationComponent implements OnInit, OnDestroy {
   role_description: string[];
   showRoleSpec: boolean = false;
   show: boolean;
+  editFields: boolean = false;
   buttonName:string = 'Show';
   confirmDialogRef: MatDialogRef<ConfirmComponent>;
   band: Band;
@@ -52,6 +54,25 @@ export class MoreInformationComponent implements OnInit, OnDestroy {
   band_responsibilities: string[];
   sub_list_competencies: string[][];
 
+  role_model = { role_id: -1, role_name: '', role_spec: '', role_description: '', capability_id: -1, family_id: -1, band_id: -1, band_order: -1};
+  family_model = { family_id: -1, family_name: '', capabilities: [], isSelected: false};
+  editRoleForm = new FormGroup({
+    role_name: new FormControl('', [
+      Validators.required,
+      Validators.maxLength(100)
+    ]),
+    role_description: new FormControl('', [
+    ]),
+    role_spec: new FormControl('', [
+      Validators.maxLength(500)
+    ])
+   });
+   editFamilyForm = new FormGroup({
+    family_name: new FormControl(this.family_model.family_name, [
+      Validators.required,
+      Validators.maxLength(100)
+    ])
+   });
   constructor(private dataService: DataService, switchboard: SwitchboardService, private dialog: MatDialog, private snackBar: MatSnackBar) { 
     this.switchboard = switchboard 
   }
@@ -73,8 +94,13 @@ export class MoreInformationComponent implements OnInit, OnDestroy {
   ngOnInit() : void {
     this.subFamily = this.switchboard.family$.subscribe((f) => {
       this.family = f;
+      console.log(this.family);
       this.selected = "family";
       this.show = true;
+      this.family_model.family_id = this.family.family_id;
+      this.family_model.family_name = f.label;
+      this.family_model.capabilities = f.capabilities;
+      this.family_model.isSelected = f.isSelected;
     });
     this.subCapability = this.switchboard.capability$.subscribe((c) => {
       this.capability = c;
@@ -86,7 +112,15 @@ export class MoreInformationComponent implements OnInit, OnDestroy {
     });
     this.subRole = this.switchboard.role$.subscribe((role) => {
       this.role = role;
-      this.role_description = this.createBulletList(role.role_description);
+      this.role_model.role_id = role.role_id;
+      this.role_model.role_name = this.role.role_name;
+      this.role_model.role_description = this.role.role_description;
+      this.role_model.role_spec = this.role.role_spec;
+      this.role_model.capability_id = this.role.capability_id;
+      this.role_model.family_id = this.role.family_id;
+      this.role_model.band_id = this.role.band_id;
+      this.role_model.band_order = this.role.band_order;
+      this.role_description = this.createBulletList(this.role_model.role_description);
       this.selected = "role";
       this.showRoleSpec = role.role_spec.length != 0;
       this.show = true;
@@ -139,6 +173,25 @@ export class MoreInformationComponent implements OnInit, OnDestroy {
         this.removeRole();
       }
     });
+  }
+
+  showEditFields(){
+    this.editFields = !this.editFields;
+  }
+
+  updateRole(){
+    console.log(this.role_model);
+    this.dataService.updateRole(this.role_model);
+    this.role_description = this.createBulletList(this.role_model.role_description);
+    this.dataService.loadTree();
+    this.editFields = false;
+  }
+
+  updateFamily(){
+    console.log("this shouldn't happen!");
+    this.dataService.updateFamily(this.family_model);
+    this.dataService.loadTree();
+    this.editFields = false;
   }
 
   showRemoveFamilyDialog() {
