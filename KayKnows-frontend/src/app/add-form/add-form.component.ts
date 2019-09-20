@@ -8,6 +8,7 @@ import { FormControl, NgForm, Validators, FormGroup } from '@angular/forms';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import {CapabilityLead} from "../capability-lead";
 import {User} from "../user";
+import { ResourceLoader } from '@angular/compiler';
 
 @Component({
   selector: 'app-add-form',
@@ -59,7 +60,11 @@ export class AddFormComponent implements OnInit {
   });
 
   constructor(private dataService: DataService) {
-    dataService.getCapabilities().subscribe({
+    this.reload(); 
+  }
+
+  reload(){
+    this.dataService.getCapabilities().subscribe({
       next : res => {
       this.capabilities = res;
       },
@@ -68,7 +73,7 @@ export class AddFormComponent implements OnInit {
       }
     });
 
-    dataService.getUsers().subscribe({
+    this.dataService.getUsers().subscribe({
       next : res => {
         this.users = res;
       },
@@ -77,7 +82,7 @@ export class AddFormComponent implements OnInit {
       }
     });
 
-    dataService.getBandNames().subscribe({
+    this.dataService.getBandNames().subscribe({
       next : res => {
         this.bands = res;
       },
@@ -86,7 +91,7 @@ export class AddFormComponent implements OnInit {
       }
     });
 
-    dataService.getFamilies().subscribe({
+    this.dataService.getFamilies().subscribe({
       next: res => {
         this.families = res;
       },
@@ -95,6 +100,7 @@ export class AddFormComponent implements OnInit {
       }
     });
   }
+
 
   ngOnInit() {
     this.newFamily = new Family();
@@ -164,6 +170,7 @@ export class AddFormComponent implements OnInit {
     form.resetForm();
     this.showSuccess = true;
     this.FadeOutLink();
+    this.reload();
   }
 
   FadeOutLink() {
