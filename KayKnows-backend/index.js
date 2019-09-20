@@ -136,6 +136,16 @@ const start = module.exports = function makeServer() {
     })
   });
 
+  app.get('/users', async (req, res) => {
+    try {
+      const users = await db.getUsers();
+
+      res.send(users);
+    } catch (e) {
+      return handleError(e, req, res)
+    }
+  });
+
   app.get('/users/:user_id', (req, res) => {
     db.getUserById(req.params.user_id, (error, rows) => {
       if (error) {
@@ -256,32 +266,6 @@ const start = module.exports = function makeServer() {
     res.send(users[0]);
   });
 
-  app.get('/test', async (req, res) => {
-    res.send(process.env.AUTH_SECRET);
-  });
-
-
-  app.delete('/capability/:capability_id', authMiddleware, async (req, res) => {
-    const capability_id = req.params.capability_id;
-    const userId = res.locals.userId;
-    const users = await db.getUser(userId);
-
-    try {
-      if (users && users[0].user_admin == 1) {
-        const result = await db.removeCapability(capability_id);
-
-        res.send({ successful: true, message: 'Capability deleted' });
-      } else {
-        throw new Error('You are not authorised to change this resource');
-      }
-    } catch (err) {
-      if (err.errno == 1451) {
-        err.sqlMessage = 'You must delete the roles associated with this capability before deleting it';
-      }
-      return handleError(err, req, res);
-    }
-  });
-
   app.post('/add-family', authMiddleware, [
     check('family_name')
       .exists().withMessage('Family name should be present')
@@ -375,6 +359,80 @@ const start = module.exports = function makeServer() {
       res.send(capability);
     } catch (err) {
       return handleError(err, req, res);
+    }
+  });
+
+  app.post('/add-cap-lead', [
+    check('capability_id')
+    .exists().withMessage('A capability is required')
+    .custom(async value => {
+      if (value) {
+        let res = await db.getCapabilitiesById(value);
+        return res.length === 1 ? Promise.resolve() : Promise.reject();
+      } else {
+        return Promise.resolve(); // Doesn't exist so will have been caught be the previous check
+      }
+    }).withMessage('Capability doesn\'t exist'),
+    check('user_id')
+    .exists().withMessage('A user is required')
+    .custom(async value => {
+      if (value) {
+        let res = await db.getUser(value);
+        return res.length === 1 ? Promise.resolve() : Promise.reject();
+      } else {
+        return Promise.resolve(); // Doesn't exist so will have been caught be the previous check
+      }
+    }).withMessage('User doesn\'t exist'),
+    check('capability_lead_message')
+    .exists().withMessage('A message is required')
+    .custom(value => {
+      if (value) {
+        return value.length > 0 && value.length <= 500 ? Promise.resolve()
+            : Promise.reject();
+      } else if (value.length === 0) { // captures an empty field
+        return Promise.reject();
+      } else {
+        return Promise.resolve(); // Doesn't exist so will have been caught be the previous check
+      }
+    }).withMessage('The message must be between 1 and 500 characters'),
+    check('capability_lead_photo')
+    .custom(value => {
+      if (value) {
+        return value.length > 0 && value.length <= 300 ? Promise.resolve()
+            : Promise.reject();
+      } else {
+        return Promise.resolve(); // Doesn't exist so will have been caught be the previous check
+      }
+    }).withMessage('The photo must be between 1 and 300 characters')
+  ], async (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return handleError(errors, req, res);
+    }
+
+    try {
+      const capLead = req.body;
+
+      if (capLead.capability_lead_id) {
+        delete capLead.capability_lead_id;
+      }
+
+      if (capLead.capability_lead_photo) {
+        if (capLead.capability_lead_photo.length === 0) {
+          capLead.capability_lead_photo = '';
+        }
+      } else {
+        capLead.capability_lead_photo = '';
+      }
+
+      const result = await db.addCapabilityLead(capLead);
+      capLead.capability_lead_id = result.insertId;
+
+      logger.info(`Added cap lead: ${capLead}`);
+
+      res.send(capLead);
+    } catch (e) {
+      return handleError(e, req, res);
     }
   });
 

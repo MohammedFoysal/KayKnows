@@ -20,9 +20,13 @@ CREATE TABLE IF NOT EXISTS capabilities(
 CREATE TABLE IF NOT EXISTS bands(
     band_id SMALLINT UNSIGNED PRIMARY KEY auto_increment,
     band_name VARCHAR(100) NOT NULL,
+<<<<<<< HEAD
     band_colour CHAR(7),
     band_competencies TEXT NOT NULL,
     band_responsibilities TEXT NOT NULL
+=======
+    band_colour CHAR(7)
+>>>>>>> Functionality to add a role to the tree
 );
 
 CREATE TABLE IF NOT EXISTS roles(
