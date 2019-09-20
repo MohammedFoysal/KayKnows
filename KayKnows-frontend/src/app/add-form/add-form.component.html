@@ -1,0 +1,181 @@
+<div class="content">
+  <div>
+    <p>
+      <label class="btn" for="modal-1">Add</label>
+    </p>
+  </div>
+</div>
+
+
+<input class="modal-state" id="modal-1" type="checkbox" />
+<div class="modal">
+    <label class="modal__bg" for="modal-1"></label>
+    <div class="modal__inner">
+        <label class="modal__close" for="modal-1"></label>
+        <fieldset>
+            <legend>ADD</legend>
+      <h4>What would you like to add?</h4>
+      <mat-form-field>
+        <mat-select [(value)]="selected" matNativeControl required>
+          <mat-option [value]="option" *ngFor="let option of options">{{option}}</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <div *ngIf="selected === 'Role'">
+        <form (ngSubmit)="addRole(addForm)" #addForm="ngForm" [formGroup]="roleForm">
+          <div>
+            <mat-form-field appearance="outline">
+              <mat-label>Role Name</mat-label>
+              <input id="roleInput" matInput (input)="detectInput()" [(ngModel)]="newRole.role_name"
+                     placeholder="Name of role" formControlName="roleName" required>
+              <mat-error
+                *ngIf="roleForm.get('roleName').invalid">{{getRoleNameErrorMessage()}}</mat-error>
+            </mat-form-field>
+            <div>
+              <mat-form-field appearance="outline">
+                <mat-label>Role Description</mat-label>
+                <textarea id="roleInput" matInput (input)="detectInput()"
+                          [(ngModel)]="newRole.role_description" placeholder="Description of role"
+                          formControlName="roleDescription"></textarea>
+              </mat-form-field>
+            </div>
+            <div>
+              <mat-form-field appearance="outline">
+                <mat-label>Role Specification</mat-label>
+                <textarea id="roleInput" matInput (input)="detectInput()"
+                          [(ngModel)]="newRole.role_spec" placeholder="Specification of role"
+                          formControlName="roleSpec"></textarea>
+                <mat-error
+                  *ngIf="roleForm.get('roleSpec').invalid">{{getRoleSpecErrorMessage()}}</mat-error>
+              </mat-form-field>
+            </div>
+            <div>
+              <mat-form-field appearance="outline">
+                <mat-label>Capability</mat-label>
+                <mat-select [(value)]="newRole.capability_id" (click)="detectInput()"
+                            matNativeControl formControlName="capabilityId" required>
+                  <mat-option [value]="capability.capability_id"
+                              *ngFor="let capability of capabilities">{{capability.capability_name}}</mat-option>
+                </mat-select>
+                <mat-error
+                  *ngIf="roleForm.get('capabilityId').invalid">{{getRoleCapabilityErrorMessage()}}</mat-error>
+              </mat-form-field>
+            </div>
+            <div>
+              <mat-form-field appearance="outline">
+                <mat-label>Band</mat-label>
+                <mat-select [(value)]="newRole.band_id" (click)="detectInput()" matNativeControl
+                            formControlName="bandId" required>
+                  <mat-option [value]="band.band_id"
+                              *ngFor="let band of bands">{{band.band_name}}</mat-option>
+                </mat-select>
+                <mat-error
+                  *ngIf="roleForm.get('capabilityId').invalid">{{getRoleBandErrorMessage()}}</mat-error>
+              </mat-form-field>
+            </div>
+          </div>
+          <span class="error" *ngIf="serverError != ''">{{serverError}}</span>
+          <div>
+            <button mat-flat-button input type="submit" [disabled]="!roleForm.valid">Submit
+            </button>
+          </div>
+        </form>
+      </div>
+
+      <div *ngIf="selected === 'Capability'">
+        <form (ngSubmit)="addCapability(addForm)" #addForm="ngForm" [formGroup]="capabilityForm">
+          <div>
+            <!--     Cap Name    -->
+            <mat-form-field appearance="outline">
+              <mat-label>Capability Name</mat-label>
+              <input id="capName" matInput (input)="detectInput()" (click)="detectInput()"
+                     [(ngModel)]="newCapability.capability_name" placeholder="Name of capability"
+                     formControlName="capabilityName" required>
+              <mat-error
+                *ngIf="capabilityForm.get('capabilityName').invalid">{{getCapabilityNameErrorMessage()}}</mat-error>
+            </mat-form-field>
+          </div>
+          <div>
+            <!--     Family      -->
+            <mat-form-field>
+              <mat-label>Select a Family</mat-label>
+              <mat-select id="famId" (click)="detectInput()" [(value)]="newCapability.family_id"
+                          matNativeControl
+                          formControlName="familyId" required>
+                <mat-option [value]="family.family_id"
+                            *ngFor="let family of families">{{family.family_name}}</mat-option>
+              </mat-select>
+              <mat-error
+                *ngIf="capabilityForm.get('familyId').invalid">{{getCapabilityFamilyIdErrorMessage()}}</mat-error>
+            </mat-form-field>
+          </div>
+          <div>
+            <!-- Cap Lead User -->
+            <mat-form-field>
+              <mat-label>Select a Capability Lead</mat-label>
+              <mat-select id="userId" (click)="detectInput()" [(value)]="newCapLead.user_id"
+                          matNativeControl
+                          formControlName="userId" required>
+                <mat-option [value]="user.user_id"
+                            *ngFor="let user of users">{{user.user_full_name}}</mat-option>
+              </mat-select>
+              <mat-error
+                *ngIf="capabilityForm.get('userId').invalid">{{getUserIdMessage()}}</mat-error>
+            </mat-form-field>
+          </div>
+          <div>
+            <!-- Cap lead message -->
+            <mat-form-field appearance="outline">
+              <mat-label>Capability Lead Message</mat-label>
+              <textarea id="capMessage" matInput (click)="detectInput()" (input)="detectInput()"
+                        [(ngModel)]="newCapLead.capability_lead_message" placeholder="Message"
+                        formControlName="message" required></textarea>
+              <mat-error
+                *ngIf="capabilityForm.get('message').invalid">{{getMessageMessage()}}</mat-error>
+            </mat-form-field>
+          </div>
+          <div>
+            <!-- Photo  -->
+            <mat-form-field appearance="outline">
+              <mat-label>Capability Lead Photo URL</mat-label>
+              <input id="capPhoto" matInput (click)="detectInput()" (input)="detectInput()"
+                     [(ngModel)]="newCapLead.capability_lead_photo"
+                     placeholder="Photo URL of Capability Lead"
+                     formControlName="photo">
+              <mat-error
+                *ngIf="capabilityForm.get('photo').invalid">{{getPhotoMessage()}}</mat-error>
+            </mat-form-field>
+          </div>
+          <span class="error" *ngIf="serverError != ''">{{serverError}}</span>
+          <div>
+            <button mat-flat-button input type="submit" [disabled]="!capabilityForm.valid">Submit
+            </button>
+          </div>
+        </form>
+      </div>
+
+      <div *ngIf="selected === 'Job Family'">
+        <form (ngSubmit)="addFamily(addForm)" #addForm="ngForm" [formGroup]="familyForm">
+          <div>
+            <mat-form-field appearance="outline">
+              <mat-label>Job Family Name</mat-label>
+              <input id="familyInput" matInput (input)="detectInput()"
+                     [(ngModel)]="newFamily.family_name" placeholder="Name of job family"
+                     formControlName="familyName" required>
+              <mat-error
+                *ngIf="familyForm.get('familyName').invalid">{{getFamilyErrorMessage()}}</mat-error>
+                          </mat-form-field>
+          </div>
+          <span class="error" *ngIf="serverError != ''">{{serverError}}</span>
+          <div>
+            <button mat-flat-button input type="submit" [disabled]="!familyForm.valid">Submit
+            </button>
+          </div>
+        </form>
+      </div>
+        </fieldset>
+        <div class="alert success" *ngIf="showSuccess" [@fadeInOut]>
+            <strong>Successfully added</strong>
+        </div>
+    </div>
+</div>

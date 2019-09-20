@@ -1,0 +1,154 @@
+<ng-container *ngIf="show">
+  <div class="detailFamily" *ngIf="selected == 'family' && family" [@EnterLeave]="'flyIn'">
+    <form [formGroup]="editFamilyForm" (ngSubmit)="editFamilyForm.valid && updateFamily()" id="editRoleForm">
+
+      <div class="detailHeaderSectionFamily">
+        <span class="hideButtonSection"><i class="hideButton material-icons" (click)="toggle()">arrow_forward</i>
+        </span>
+        <span class="detailTitle" *ngIf="!editFields || !dataService.isViewingAsAdmin"> {{family_model.family_name}}</span>
+        <span class="detailTitle" *ngIf="editFields && dataService.isViewingAsAdmin"><input id="editRoleName" type="text" placeholder="Family Name" formControlName="family_name" [(ngModel)]="family_model.family_name" name="family_name" required/></span>
+        <!-- <div *ngIf = "family_name.required">Family name is required!</div> -->
+      </div>
+      <div class="actionButtons">
+        <div class="actions" *ngIf="dataService.isViewingAsAdmin">
+          <button id="deleteIcon" type="button" (click)="showRemoveFamilyDialog()" class="show"><i class="material-icons">delete</i>Delete
+            Family</button>
+        </div>
+
+        <div class="actions" *ngIf="dataService.isViewingAsAdmin">
+          <button id="editIcon" type="button" (click)="showEditFields()" class="show"><i class="material-icons">edit</i>Edit
+            Family</button>
+        </div>
+        <div class="actions" *ngIf="dataService.isViewingAsAdmin">
+            <button id="submitIcon" type="submit" alt="Submit Button" class="submit" id="submitRole" (ngSubmit)="updateFamily()">Save</button>
+        </div>
+      </div>
+    </form>
+  </div>
+
+  <div class="detail" *ngIf="selected == 'capability' && capability" [@EnterLeave]="'flyIn'">
+    <div class="detailHeaderSectionCapability">
+      <span class="hideButtonSection"><i class="hideButton material-icons" (click)="toggle()">arrow_forward</i>
+      </span>
+      <span class="detailTitle">{{capability.label}}</span>
+    </div>
+
+    <div class="actions" *ngIf="dataService.isViewingAsAdmin">
+      <button id="deleteIcon" (click)="showRemoveCapabilityDialog()" class="show"><i
+          class="material-icons">delete</i>Delete Capability</button>
+    </div>
+
+    <div *ngIf="capability_lead">
+      <div class="capabilityLeadTitle">
+        <h5>Lead</h5>
+      </div>
+      <hr class="line">
+      <div class="capabilityLeadProfile">
+        <img class="capabilityLeadPhoto" src="{{capability_lead.capability_lead_photo}}" alt="Capability Lead Photo" />
+        <br>
+        <div class="capabilityLeadName">{{capability_lead.user_full_name}}</div>
+      </div>
+      <hr class="line" />
+      <span class="description">{{capability_lead.capability_lead_message}}</span>
+    </div>
+  </div>
+
+  <div class="detailRole" *ngIf="selected == 'role' && role" [@EnterLeave]="'flyIn'">
+    <form [formGroup]="editRoleForm" (ngSubmit)="editRoleForm.valid && updateRole()" id="editRoleForm">
+      <div class="detailHeaderSectionRole" *ngIf="dataService.isViewingAsAdmin && editFields">
+        <span class="hideButtonSection"><i class="hideButton material-icons" (click)="toggle()">arrow_forward</i>
+        </span>
+        <span class="detailTitle"><input id="editRoleName" type="text" placeholder="Role Name" formControlName="role_name" [(ngModel)]="role_model.role_name" name="role_name" required/></span>
+      </div>
+      <div class="detailHeaderSectionRole" *ngIf="!editFields || !dataService.isViewingAsAdmin">
+        <span class="hideButtonSection"><i class="hideButton material-icons" (click)="toggle()">arrow_forward</i>
+        </span>
+        <span class="detailTitle"> {{role_model.role_name}}</span>
+      </div>
+      <div class="actionButtons">
+        <div class="actions" *ngIf="dataService.isViewingAsAdmin">
+          <button id="deleteIcon" type="button" (click)="showRemoveRoleDialog()" class="show"><i class="material-icons">delete</i>Delete
+            Role</button>
+        </div>
+
+        <div class="actions" *ngIf="dataService.isViewingAsAdmin">
+          <button id="editIcon" type="button" (click)="showEditFields()" class="show"><i class="material-icons">edit</i>Edit
+            Role</button>
+        </div>
+        <div class="actions" *ngIf="dataService.isViewingAsAdmin">
+            <button id="submitIcon" type="submit" alt="Submit Button" class="submit" id="submitRole" (ngSubmit)="updateRole()">Save</button>
+        </div>
+      </div>
+      <div class="capabilityLeadTitle">
+        <h5 class="detailSubtitle">Responsibilities</h5>
+      </div>
+      <div class="detailBody" *ngIf="dataService.isViewingAsAdmin && editFields">
+        <hr class="line">
+        <div class="roleDescription">
+          <textarea type="text" placeholder="Role Description" formControlName="role_description" [(ngModel)]="role_model.role_description" name="role_description">
+          </textarea>
+        </div>
+        <hr class="line">
+        <div class="capabilityLeadTitle" *ngIf="showRoleSpec">
+          <span class="descriptionRole"> <input type="text" placeholder="Role specification Sharepoint link" formControlName="role_spec" name="role_spec" [(ngModel)]="role_model.role_spec"></span>
+        </div>
+      </div>
+  </form>
+    <div class="detailBody" *ngIf="!editFields || !dataService.isViewingAsAdmin">
+      <hr class="line">
+      <div class="roleDescription">
+        <ul>
+          <li *ngFor="let descriptionPoint of role_description">{{descriptionPoint}}</li>
+        </ul>
+      </div>
+      <hr class="line">
+      <div class="capabilityLeadTitle">
+        <span class="descriptionRole"> <a href="{{role_model.role_spec}}">{{role_model.role_name}} Specification</a></span>
+      </div>
+    </div>
+  </div>
+
+  <div class="detailBand" *ngIf="selected == 'band' && band" [@EnterLeave]="'flyIn'">
+    <div class="detailHeaderSectionBand" [ngStyle]="{
+        'background-color': band.band_colour}">
+      <span class="hideButtonSection"> <input class="hideButton" (click)="toggle()" type="image"
+          src="https://icon-library.net/images/arrow-icon-transparent-background/arrow-icon-transparent-background-12.jpg" />
+      </span>
+      <span class="detailTitle"> {{band.band_name}}</span>
+    </div>
+
+    <div class="actions" *ngIf="dataService.isViewingAsAdmin">
+      <button id="deleteIcon" (click)="showRemoveBandDialog()" class="show"><i class="material-icons">delete</i>Delete Band</button>
+    </div>
+
+    <div class="capabilityLeadTitle">
+      <h5 class="detailSubtitle">Competencies</h5>
+    </div>
+    <hr class="line">
+    <div class="descriptionBandCompetencies">
+      <ul>
+        <li *ngFor="let competenciesPoint of band_competencies">{{createListTitle(competenciesPoint)}}
+          <ul class="subListCompetencies">
+            <li *ngFor="let competencySubPoint of createSubBulletList(competenciesPoint)">{{competencySubPoint}}
+            </li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+    <div class="capabilityLeadTitle">
+      <h5 class="detailSubtitle">Responsibilities</h5>
+    </div>
+    <hr class="line">
+    <div class="descriptionBandResponsibilities">
+      <ul>
+        <li *ngFor="let responsibilitiesPoint of band_responsibilities">{{createListTitle(responsibilitiesPoint)}}
+          <ul class="subListCompetencies">
+            <li *ngFor="let responsibilitySubPoint of createSubBulletList(responsibilitiesPoint)">
+              {{responsibilitySubPoint}}
+            </li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+  </div>
+</ng-container>

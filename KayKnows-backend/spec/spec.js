@@ -37,7 +37,7 @@ describe('loading express', () => {
   });
 });
 
-// These tests assume that the dummy data script has been run
+// These tests assume that the dummy data script has been run, please rerun the test db script before running
 describe('get endpoints for base tables', () => {
   it('should respond to /capabilities', () => {
     return request(server)
@@ -88,4 +88,72 @@ describe('get endpoints for base tables', () => {
       assert(json.length === 23);
     })
   });
+
+  it('should respond to /roles/role_id', () => {
+    return request(server)
+    .get('/roles/1')
+    .expect(200)
+    .then(res => {
+      let json = JSON.parse(res.text);
+      assert(json[0].role_id === 1);
+      assert(json.length === 1);
+    })
+  });
+
+  it('should respond to /capability-leads/capability_id', () => {
+    return request(server)
+    .get('/capability-leads/2')
+    .expect(200)
+    .then(res => {
+      let json = JSON.parse(res.text);
+      assert(json[0].capability_lead_id === 1);
+      assert(json.length === 1);
+    })
+  });
+
+  it('should respond to /users/user_id', () => {
+    return request(server)
+    .get('/users/1')
+    .expect(200)
+    .then(res => {
+      let json = JSON.parse(res.text);
+      assert(json[0].user_id === 1);
+      assert(json.length === 1);
+    })
+  });
+});
+
+describe('post endpoints', () => {
+  it('should respond to /add-family', () => {
+    const family = {
+      family_name: 'a family name'
+    };
+
+    return request(server)
+    .post('/add-family')
+    .send(family)
+    .expect(200)
+    .then(res => {
+      let fam = JSON.parse(res.text);
+      assert(fam.family_name === family.family_name);
+    })
+  });
+
+  it('should accept a valid /add-capability', function () {
+    const capability = {
+      capability_name: 'steve',
+      family_id: 1
+    };
+
+    return request(server)
+    .post('/add-capability')
+    .send(capability)
+    .expect(200)
+    .then(res => {
+      let cap = JSON.parse(res.text);
+      assert(cap.capability_name === capability.capability_name);
+      assert(cap.family_id === capability.family_id);
+    })
+  });
+
 });
