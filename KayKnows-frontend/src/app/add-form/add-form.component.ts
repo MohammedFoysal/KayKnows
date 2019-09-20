@@ -52,28 +52,6 @@ export class AddFormComponent implements OnInit {
   // Capability Form Controls
   capabilityForm = new FormGroup({
     capabilityName: new FormControl('', [Validators.required, Validators.maxLength(100)]),
-    familyId: new FormControl('', [Validators.required]) // Tie this into the family ids
-  });
-  
-  bandForm = new FormGroup({
-    bandName: new FormControl('', [Validators.required, Validators.maxLength(100)])
-  });
-
-  roleForm = new FormGroup({
-    roleName: new FormControl('', [Validators.required, Validators.maxLength(100)]),
-    capabilityId: new FormControl('', [Validators.required]),
-    bandId: new FormControl('', [Validators.required]),
-    roleSpec: new FormControl('', [Validators.maxLength(500)]),
-    roleDescription: new FormControl('', [ Validators.maxLength(65000)])
-  });
-
-  familyForm = new FormGroup({
-    familyName: new FormControl('', [Validators.required, Validators.maxLength(100)])
-  });
-
-  // Capability Form Controls
-  capabilityForm = new FormGroup({
-    capabilityName: new FormControl('', [Validators.required, Validators.maxLength(100)]),
     familyId: new FormControl('', [Validators.required]),
     userId: new FormControl('', [Validators.required]),
     photo: new FormControl('', [Validators.maxLength(300)]),
