@@ -7,10 +7,11 @@
         </span>
         <span class="detailTitle" *ngIf="!editFields || !dataService.isViewingAsAdmin"> {{family_model.family_name}}</span>
         <span class="detailTitle" *ngIf="editFields && dataService.isViewingAsAdmin"><input id="editRoleName" type="text" placeholder="Family Name" formControlName="family_name" [(ngModel)]="family_model.family_name" name="family_name" required/></span>
+        <!-- <div *ngIf = "family_name.required">Family name is required!</div> -->
       </div>
       <div class="actionButtons">
         <div class="actions" *ngIf="dataService.isViewingAsAdmin">
-          <button id="deleteIcon" type="button" (click)="showRemoveRoleDialog()" class="show"><i class="material-icons">delete</i>Delete
+          <button id="deleteIcon" type="button" (click)="showRemoveFamilyDialog()" class="show"><i class="material-icons">delete</i>Delete
             Family</button>
         </div>
 

@@ -61,7 +61,7 @@ export class MoreInformationComponent implements OnInit, OnDestroy {
     ])
    });
    editFamilyForm = new FormGroup({
-    family_name: new FormControl('', [
+    family_name: new FormControl(this.family_model.family_name, [
       Validators.required,
       Validators.maxLength(100)
     ])

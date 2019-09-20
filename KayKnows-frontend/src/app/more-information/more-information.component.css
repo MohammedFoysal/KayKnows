@@ -113,7 +113,7 @@ button#submitRole{
 
 textarea {
   width: 100%;
-  height: -webkit-fill-available;
+  height: 300px;
   font-size: smaller;
 }
 
