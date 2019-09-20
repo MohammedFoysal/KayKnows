@@ -177,9 +177,17 @@ export class DataService {
   getBandNames(): Observable<Band[]> {
     return this.http.get<Band[]>('/api/bands').pipe(catchError(this.handleError));
   }
-  
+
   addCapability(capability: Capability): Observable<Capability> {
     return this.http.post<Capability>('/api/add-capability', capability).pipe(catchError(this.handleError));
+  }
+
+  addCapabilityLead(leadToAdd: CapabilityLead): Observable<CapabilityLead> {
+    return this.http.post<CapabilityLead>('/api/add-cap-lead', leadToAdd).pipe(catchError(this.handleError));
+  }
+
+  getUsers(): Observable<User[]> {
+    return this.http.get<User[]>('/api/users').pipe(catchError(this.handleError));
   }
 
   private handleError(error: HttpErrorResponse) {
