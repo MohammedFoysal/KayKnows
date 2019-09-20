@@ -264,6 +264,8 @@ const start = module.exports = function makeServer() {
     if (user_email && user_password) {
       try {
         const users = await db.getUserByEmailWithPassword(user_email);
+        const roles = await db.getAsyncRoleById(users[0].role_id)
+        users[0].role = roles[0];
         const comparePass = await utils.comparePassword(user_password, users[0].user_password)
 
         if (comparePass) {

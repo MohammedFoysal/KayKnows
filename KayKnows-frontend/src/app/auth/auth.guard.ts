@@ -33,7 +33,7 @@ export class AuthGuard implements CanActivate {
             localStorage.setItem('user_admin', String(data.user_admin));
             localStorage.setItem('user_role_id', String(data.role.role_id));
             localStorage.setItem('user_capability_id', String(data.role.capability_id));
-            localStorage.setItem('user_family_id', String(data.role.family_id));
+            localStorage.setItem('user_`family_id', String(data.role.family_id));
   
             return true;    
           } else {
