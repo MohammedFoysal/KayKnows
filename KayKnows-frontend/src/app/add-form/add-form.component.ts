@@ -36,6 +36,28 @@ export class AddFormComponent implements OnInit {
   showSuccess = false;
   // Will store and provide the binding for any errors from the database
   serverError: '';
+  
+  roleForm = new FormGroup({
+    roleName: new FormControl('', [Validators.required, Validators.maxLength(100)]),
+    capabilityId: new FormControl('', [Validators.required]),
+    bandId: new FormControl('', [Validators.required]),
+    roleSpec: new FormControl('', [Validators.maxLength(500)]),
+    roleDescription: new FormControl('', [ Validators.maxLength(65000)])
+  });
+
+  familyForm = new FormGroup({
+    familyName: new FormControl('', [Validators.required, Validators.maxLength(100)])
+  });
+
+  // Capability Form Controls
+  capabilityForm = new FormGroup({
+    capabilityName: new FormControl('', [Validators.required, Validators.maxLength(100)]),
+    familyId: new FormControl('', [Validators.required]) // Tie this into the family ids
+  });
+  
+  bandForm = new FormGroup({
+    bandName: new FormControl('', [Validators.required, Validators.maxLength(100)])
+  });
 
   roleForm = new FormGroup({
     roleName: new FormControl('', [Validators.required, Validators.maxLength(100)]),
@@ -209,7 +231,7 @@ export class AddFormComponent implements OnInit {
       console.error('Add Role form is in an invalid state');
     }
   }
-
+  
   addCapability(addForm): void {
     if (addForm.valid) {
       const capabilityToAdd = this.newCapability;

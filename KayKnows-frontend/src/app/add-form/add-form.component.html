@@ -7,14 +7,13 @@
 </div>
 
 
-<input class="modal-state" id="modal-1" type="checkbox"/>
+<input class="modal-state" id="modal-1" type="checkbox" />
 <div class="modal">
-  <label class="modal__bg" for="modal-1"></label>
-  <div class="modal__inner">
-    <label class="modal__close" for="modal-1"></label>
-    <fieldset>
-      <legend>ADD</legend>
-
+    <label class="modal__bg" for="modal-1"></label>
+    <div class="modal__inner">
+        <label class="modal__close" for="modal-1"></label>
+        <fieldset>
+            <legend>ADD</legend>
       <h4>What would you like to add?</h4>
       <mat-form-field>
         <mat-select [(value)]="selected" matNativeControl required>
@@ -165,7 +164,7 @@
                      formControlName="familyName" required>
               <mat-error
                 *ngIf="familyForm.get('familyName').invalid">{{getFamilyErrorMessage()}}</mat-error>
-            </mat-form-field>
+                          </mat-form-field>
           </div>
           <span class="error" *ngIf="serverError != ''">{{serverError}}</span>
           <div>
@@ -174,10 +173,11 @@
           </div>
         </form>
       </div>
-    </fieldset>
 
-    <div class="alert success" *ngIf="showSuccess" [@fadeInOut]>
-      <strong>Successfully added</strong>
+        </fieldset>
+
+        <div class="alert success" *ngIf="showSuccess" [@fadeInOut]>
+            <strong>Successfully added</strong>
+        </div>
     </div>
-  </div>
 </div>

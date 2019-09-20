@@ -196,8 +196,6 @@ exports.addCapabilityLead =  async(capLead) => {
   return await query("INSERT INTO capability_leads SET ?", [capLead]);
 };
 
-
-
 exports.getCapabilitiesByFamIdAndCapName = async(family_id, capability_name) => {
   return await query("SELECT * FROM capabilities WHERE family_id = ? AND capability_name = ?", [family_id, capability_name]);
 };
