@@ -211,7 +211,7 @@ right connector from last child*/
     /* Position the tooltip */
     position: absolute;
     z-index: 1000;
-    top: 4em;
+    top: 5em;
     left: 50%;
     transform: translateX(-50%) translateY(-2px);
 }

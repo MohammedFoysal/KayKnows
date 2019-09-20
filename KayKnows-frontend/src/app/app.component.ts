@@ -21,14 +21,20 @@ export class AppComponent {
   band: Band;
   user_full_name: String = '';
 
-  constructor(private dataService: DataService, private logger: LogService,  private route: ActivatedRoute, private router: Router, private switchboard: SwitchboardService) { 
+  constructor(private dataService: DataService, private logger: LogService, private route: ActivatedRoute, private router: Router, private switchboard: SwitchboardService) {
     logger.info('AppComponent: Successful launch');
     let localAdmin = localStorage.getItem('user_admin');
-    this.dataService.isAdmin = localAdmin != null && localAdmin == '1' ? true : false;
+    this.dataService.isAdmin = localAdmin != null && localAdmin == '1';
     this.user_full_name = localStorage.getItem('user_full_name');
+    this.dataService.logged_user_role_id = localStorage.getItem('user_role_id');
   }
 
   ngOnInit() {
+    this.dataService.loadTree();
+  }
+
+  searchChanged(event) {
+    this.dataService.getCheckboxData();
   }
 
   onSelect(band: Band): void {
