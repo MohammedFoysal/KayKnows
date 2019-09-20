@@ -1,4 +1,4 @@
-require('dotenv').config({ path: 'config.env' })
+require('dotenv').config({ path: 'config.env' });
 const util = require('util');
 const mysql = require('mysql');
 var log4js = require('log4js');
@@ -120,58 +120,87 @@ exports.getFamilies = async () => {
     return await query("SELECT * FROM families");
 };
 
-exports.getRolesForCapabilityId = async (capability_id) => {
+exports.getFamilyById = async(family_id) => {
+  return await query("SELECT * FROM families WHERE family_id = ?", [family_id])
+};
+
+exports.getRolesForCapabilityId = async(capability_id) => {
     return await query("SELECT * FROM roles WHERE capability_id = ?", [capability_id]);
 };
 
 exports.getAsyncCapabilitiesByFamilyId = async (family_id) => {
     return await query("SELECT * FROM capabilities WHERE family_id = ?", [family_id]);
-}
-
+};
 
 exports.getUsers = async () => {
     return await query("SELECT user_id, user_email, user_admin, role_id, user_full_name FROM users");
-}
+};
 
 exports.getUser = async (user_id) => {
     return await query("SELECT user_id, user_email, user_admin, role_id, user_full_name FROM users WHERE user_id = ?", [user_id]);
-}
+};
 
 exports.getUserByEmail = async (email) => {
     return await query("SELECT user_id, user_email, user_admin, role_id, user_full_name FROM users WHERE user_email = ?", [email]);
-}
-exports.addFamily = async (family_name) => {
+};
+
+exports.addFamily = async(family_name) => {
     return await query("INSERT INTO families (family_name) VALUES (?)", [family_name]);
 };
 
-exports.getFamilyNamesByFamilyName = async (family_name) => {
+exports.addRole = async(data) => {
+    return await query("INSERT INTO roles SET ?", [data]);
+};
+
+exports.getFamilyNamesByFamilyName = async(family_name) => {
     return await query("SELECT family_name FROM families WHERE family_name = ?", [family_name]);
 };
 
-exports.getUserByEmailWithPassword = async (email) => {
+exports.getRolesByCapabilityAndBand = async(capability_id, band_id) => {
+    return await query("SELECT capability_id, band_id FROM roles WHERE capability_id = ? AND band_id = ?", [capability_id, band_id])
+};
+
+exports.getUserByEmailWithPassword = async(email) => {
     return await query("SELECT user_id, user_password, user_email, user_admin, role_id, user_full_name FROM users WHERE user_email = ?", [email]);
-}
+};
 
 exports.isUserAdmin = async (user_id) => {
     return await query("SELECT user_id, user_email, user_admin, role_id, user_full_name FROM users WHERE user_id = ? AND user_admin = 1", [user_id]);
-}
+};
 
 exports.removeCapability = async (capability_id) => {
     return await query("DELETE FROM capabilities WHERE capability_id = ?", [capability_id]);
-}
+};
 
 exports.storeUser = async (user_email, user_password, user_admin, role_id, user_full_name) => {
     return await query("INSERT INTO users (user_email, user_password, user_admin, role_id, user_full_name) VALUES (?, ?, ?, ?, ?)", [user_email, user_password, user_admin, role_id, user_full_name]);
-}
+};
 
-exports.removeRole = async (role_id) => {
+exports.removeRole = async(role_id) => {
     return await query("DELETE FROM roles WHERE role_id = ?", [role_id]);
-}
+};
 
-exports.removeFamily = async (family_id) => {
-    return await query("DELETE FROM families WHERE family_id = ?", [family_id]);
-}
+exports.removeFamily = async(family_id) => {
+  return await query("DELETE FROM families WHERE family_id = ?", [family_id]);
+};
 
 exports.removeBand = async (band_id) => {
     return await query("DELETE FROM bands WHERE band_id = ?", [band_id]);
+}
+
+exports.addCapability = async(capability) => {
+  return await query("INSERT INTO capabilities SET ?", [capability]);
+};
+
+exports.getCapabilitiesByFamIdAndCapName = async(family_id, capability_name) => {
+  return await query("SELECT * FROM capabilities WHERE family_id = ? AND capability_name = ?", [family_id, capability_name]);
+};
+
+
+exports.getCapabilitiesById = async(id) => {
+  return await query("SELECT * FROM capabilities WHERE capability_id = ?", [id])
+};
+
+exports.getBandsById = async(id) => {
+    return await query("SELECT * FROM bands WHERE band_id = ?", [id])
 }
