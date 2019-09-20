@@ -98,7 +98,7 @@ export class MoreInformationComponent implements OnInit, OnDestroy {
       this.selected = "family";
       this.show = true;
       this.family_model.family_id = this.family.family_id;
-      this.family_model.family_name = f.family_name;
+      this.family_model.family_name = f.label;
       this.family_model.capabilities = f.capabilities;
       this.family_model.isSelected = f.isSelected;
     });
