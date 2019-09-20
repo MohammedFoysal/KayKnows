@@ -1,11 +1,11 @@
-require('dotenv').config({ path: 'config.env' });
+require('dotenv').config({path: 'config.env'});
+
 const util = require('util');
 const mysql = require('mysql');
 var log4js = require('log4js');
 var logger = log4js.getLogger();
 logger.level = 'debug';
 const env = process.env.NODE_ENV === 'test' || 'dev';
-
 const connection = (env === 'dev') ? process.env.DB_DATABASE :
     process.env.DB_TEST_DATABASE;
 
@@ -191,6 +191,12 @@ exports.removeBand = async (band_id) => {
 exports.addCapability = async(capability) => {
   return await query("INSERT INTO capabilities SET ?", [capability]);
 };
+
+exports.addCapabilityLead =  async(capLead) => {
+  return await query("INSERT INTO capability_leads SET ?", [capLead]);
+};
+
+
 
 exports.getCapabilitiesByFamIdAndCapName = async(family_id, capability_name) => {
   return await query("SELECT * FROM capabilities WHERE family_id = ? AND capability_name = ?", [family_id, capability_name]);

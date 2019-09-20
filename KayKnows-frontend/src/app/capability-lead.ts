@@ -4,4 +4,5 @@ export class CapabilityLead {
   user_full_name: string;
   capability_lead_photo: string;
   capability_lead_message: string;
+  capability_id: number;
 }

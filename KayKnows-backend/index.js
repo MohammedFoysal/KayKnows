@@ -72,13 +72,14 @@ const start = module.exports = function makeServer() {
     logger.info('express started on port 8002');
   });
 
-  app.get('/families', (req, res) => {
-    db.getFamilies((error, rows) => {
-      if (error) {
-        return handleError(error, req, res);
-      }
-      res.send(rows)
-    })
+  app.get('/families', async (req, res) => {
+    try {
+      const families = await db.getFamilies();
+
+      res.send(families);
+    } catch (err) {
+      return handleError(err, req, res);
+    }
   });
 
   app.get('/capabilities', (req, res) => {
@@ -133,6 +134,16 @@ const start = module.exports = function makeServer() {
       }
       res.send(rows);
     })
+  });
+
+  app.get('/users', async (req, res) => {
+    try {
+      const users = await db.getUsers();
+
+      res.send(users);
+    } catch (e) {
+      return handleError(e, req, res)
+    }
   });
 
   app.get('/users/:user_id', (req, res) => {
@@ -374,6 +385,25 @@ const start = module.exports = function makeServer() {
       res.send(capability);
     } catch (err) {
       return handleError(err, req, res);
+    }
+  });
+
+  app.post('/add-cap-lead', [], async (req, res) => {
+    try {
+      const capLead = req.body;
+
+      if (capLead.capability_lead_id) {
+        delete capLead.capability_lead_id;
+      }
+
+      const result = await db.addCapabilityLead(capLead);
+      capLead.capability_lead_id = result.insertId;
+
+      logger.info(`Added cap lead: ${capLead}`);
+
+      res.send(capLead);
+    } catch (e) {
+      return handleError(e, req, res);
     }
   });
 

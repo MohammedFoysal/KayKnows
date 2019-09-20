@@ -6,6 +6,8 @@ import { Capability } from '../capability';
 import { Band } from '../band';
 import { FormControl, NgForm, Validators, FormGroup } from '@angular/forms';
 import { animate, state, style, transition, trigger } from '@angular/animations';
+import {CapabilityLead} from "../capability-lead";
+import {User} from "../user";
 
 @Component({
   selector: 'app-add-form',
@@ -22,18 +24,19 @@ import { animate, state, style, transition, trigger } from '@angular/animations'
 export class AddFormComponent implements OnInit {
 
   selected = '';
-  options = ['Role', 'Capability', 'Band', 'Job Family'];
+  options = ['Role', 'Capability', 'Job Family'];
   families: Family[];
   capabilities: Capability[];
   bands: Band[];
+  users: User[];
   newRole: Role;
   newCapability: Capability;
-  newBand: Band;
+  newCapLead: CapabilityLead;
   newFamily: Family;
   showSuccess = false;
   // Will store and provide the binding for any errors from the database
   serverError: '';
-  
+
   roleForm = new FormGroup({
     roleName: new FormControl('', [Validators.required, Validators.maxLength(100)]),
     capabilityId: new FormControl('', [Validators.required]),
@@ -49,18 +52,40 @@ export class AddFormComponent implements OnInit {
   // Capability Form Controls
   capabilityForm = new FormGroup({
     capabilityName: new FormControl('', [Validators.required, Validators.maxLength(100)]),
-    familyId: new FormControl('', [Validators.required]) // Tie this into the family ids
+    familyId: new FormControl('', [Validators.required]),
+    userId: new FormControl('', [Validators.required]),
+    photo: new FormControl('', [Validators.maxLength(300)]),
+    message: new FormControl('', [Validators.required, Validators.maxLength(500)])
   });
 
   constructor(private dataService: DataService) {
-    dataService.getCapabilities().subscribe(res => {
+    dataService.getCapabilities().subscribe({
+      next : res => {
       this.capabilities = res;
-    })
+      },
+      error: err => {
+        this.serverError = err.message;
+      }
+    });
 
-    dataService.getBandNames().subscribe(res => {
-      this.bands = res;
-    })
-    
+    dataService.getUsers().subscribe({
+      next : res => {
+        this.users = res;
+      },
+      error: err => {
+        this.serverError = err.message;
+      }
+    });
+
+    dataService.getBandNames().subscribe({
+      next : res => {
+        this.bands = res;
+      },
+      error: err => {
+        this.serverError = err.message;
+      }
+    });
+
     dataService.getFamilies().subscribe({
       next: res => {
         this.families = res;
@@ -69,13 +94,13 @@ export class AddFormComponent implements OnInit {
         this.serverError = err.message;
       }
     });
-
   }
 
   ngOnInit() {
     this.newFamily = new Family();
     this.newRole = new Role();
     this.newCapability = new Capability();
+    this.newCapLead = new CapabilityLead();
   }
 
   getFamilyErrorMessage() {
@@ -93,7 +118,6 @@ export class AddFormComponent implements OnInit {
   getRoleSpecErrorMessage() {
       return this.roleForm.get('roleSpec').hasError('maxlength') ? 'Role specification must be less than 500 characters' :
         '';
-  
   }
 
   getRoleCapabilityErrorMessage() {
@@ -104,7 +128,6 @@ export class AddFormComponent implements OnInit {
   getRoleBandErrorMessage() {
       return this.roleForm.get('bandId').hasError('required') ? 'Please select a band' :
        '';
-
   }
 
   getCapabilityNameErrorMessage() {
@@ -117,6 +140,20 @@ export class AddFormComponent implements OnInit {
     return this.capabilityForm.get('familyId').hasError('required') ? 'Please select a family' :
       '';
 }
+
+  getUserIdMessage() {
+    return this.capabilityForm.get('userId').hasError('required') ? 'Please select a user' :
+      '';
+  }
+
+  getPhotoMessage() {
+    return this.capabilityForm.get('photo').hasError('maxlength') ? 'The photo url must be no longer than 300 characters' : '';
+  }
+
+  getMessageMessage() {
+    return this.capabilityForm.get('message').hasError('required') ? 'A message is required' :
+      this.capabilityForm.get('message').hasError('maxlength') ? 'The message can be no longer than 500 characters' : '';
+  }
 
   detectInput() {
     this.serverError = '';
@@ -172,15 +209,25 @@ export class AddFormComponent implements OnInit {
       console.error('Add Role form is in an invalid state');
     }
   }
-  
+
   addCapability(addForm): void {
     if (addForm.valid) {
       const capabilityToAdd = this.newCapability;
+      const leadToAdd = this.newCapLead;
       this.dataService.addCapability(capabilityToAdd).subscribe({
         next: res => {
-          this.dataService.loadTree();
-          this.onSuccess(this.capabilityForm, addForm);
-          this.newCapability = new Capability();
+          leadToAdd.capability_id = res.capability_id;
+          this.dataService.addCapabilityLead(leadToAdd).subscribe({
+            next: result => {
+              this.dataService.loadTree();
+              this.onSuccess(this.capabilityForm, addForm);
+              this.newCapability = new Capability();
+              this.newCapLead = new CapabilityLead();
+            },
+            error: err => {
+              this.serverError = err.message;
+            }
+          });
         },
         error: err => {
           this.serverError = err.message;
