@@ -63,4 +63,32 @@ export class TreeComponent implements OnInit {
     setHighlighted(band_id: number) {
         TreeComponent.highlighted = band_id;
     }
+
+    getCustomisedBackgroundColor(dataObject) {
+      if (dataObject.is_important) {
+        return this.getBackgroundColour(dataObject); 
+      }
+
+      if (this.getHighlighted() === dataObject.band_id) {
+        return this.getBackgroundColour(dataObject);
+      } else {
+        return 'white';
+      }
+    }
+
+    getCustomisedColor(dataObject) {
+      if (dataObject.is_important) {
+        return 'white';
+      }
+
+      if (this.getHighlighted() === dataObject.band_id) {
+        return 'white';
+      } else {
+        return 'black';
+      } 
+
+      if (dataObject.type === 'role' || dataObject.type === 'family') {
+        return 'black';
+      }
+    }
 }

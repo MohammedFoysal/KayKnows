@@ -21,21 +21,25 @@ export class DataService {
   nestedData = [];
   familyIds = [];
   capabilityIds = [];
+  searchQuery = '';
   bands: Band[] = [];
   isAdmin: Boolean = false;
+  logged_user_role_id;
   isViewingAsAdmin: Boolean = false;
 
   constructor(private http: HttpClient) {
-    this.loadTree();
+
   }
 
   loadTree(): void {
+    let localAdmin = localStorage.getItem('user_admin');
+    let token = localStorage.getItem('token');
+    this.isAdmin = localAdmin != null && localAdmin == '1'
+    this.logged_user_role_id = localStorage.getItem('user_role_id');
+
     this.getCheckboxData();
     this.getTreeData();
     this.getBands();
-
-    let localAdmin = localStorage.getItem('user_admin');
-    this.isAdmin = localAdmin != null && localAdmin == '1' ? true : false;
   }
 
   getTreeData(): void {
@@ -62,7 +66,15 @@ export class DataService {
   }
 
   getCheckboxData() {
-    this.http.get<Family[]>('/api/family-filters').subscribe(res => {
+    const token = `Bearer ${localStorage.getItem('token')}`
+    const headers = new HttpHeaders().set('Authorization', token);
+    
+    let query = '';
+    if (this.searchQuery) {
+      query = this.searchQuery;
+    }
+
+    this.http.get<Family[]>('/api/family-filters/' + query, {headers}).subscribe(res => {
       if (res[0] == null) {
         console.error(res);
       } else {
@@ -71,10 +83,6 @@ export class DataService {
       }
     });
   }
-
-  // getBands(): Observable<Band[]>{
-  //   return this.http.get<Band[]>('/api/bands')
-  // }
 
   getBands() {
     this.http.get<Band[]>('/api/bands').subscribe(res => {
@@ -87,6 +95,15 @@ export class DataService {
     });
   }
 
+  updateRole(updatedRole: Role): void{
+    console.log(updatedRole);
+    this.http.put<Role>('/api/edit/role', updatedRole).subscribe(res => {
+      if (res[0] == null) {
+        console.error(res);
+      }
+    });
+  }
+  
   login(data): Observable<AuthResponse> {
     return this.http.post<AuthResponse>('/api/login', data);
   }
@@ -291,7 +308,7 @@ export class DataService {
   }
 
   makeRole(data) {
-    return {
+    let role = {
       role_id: data.role_id,
       label: data.role_name,
       band_id: data.band_id,
@@ -301,8 +318,15 @@ export class DataService {
       capability_id: data.capability_id,
       family_id: data.family_id,
       type: 'role',
+      is_important: false,
       opened: true
     };
+
+    if (this.logged_user_role_id && role.role_id == this.logged_user_role_id) {
+      role.is_important = true;
+    }
+
+    return role;
   }
 
   getFamiliesNested(flatData) {
@@ -406,5 +430,13 @@ export class DataService {
     }
 
     return false;
+  }
+
+  updateFamily(updatedFamily: Family) {
+    this.http.put<Role>('/api/edit/family', updatedFamily).subscribe(res => {
+      if (res[0] == null) {
+        console.error(res);
+      }
+    });
   }
 }
