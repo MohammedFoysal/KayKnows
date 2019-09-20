@@ -168,6 +168,14 @@ exports.isUserAdmin = async (user_id) => {
     return await query("SELECT user_id, user_email, user_admin, role_id, user_full_name FROM users WHERE user_id = ? AND user_admin = 1", [user_id]);
 };
 
+exports.getAsyncRoleById = async (role_id) => {
+    return await query("SELECT * FROM roles WHERE role_id = ?", [role_id]);
+};
+
+exports.searchRolesByQuery = async (queryTerm) => {
+    return await query("SELECT * FROM roles WHERE role_name LIKE ?", ['%' + queryTerm + '%']);
+};
+
 exports.removeCapability = async (capability_id) => {
     return await query("DELETE FROM capabilities WHERE capability_id = ?", [capability_id]);
 };
@@ -186,7 +194,7 @@ exports.removeFamily = async(family_id) => {
 
 exports.removeBand = async (band_id) => {
     return await query("DELETE FROM bands WHERE band_id = ?", [band_id]);
-}
+};
 
 exports.addCapability = async(capability) => {
   return await query("INSERT INTO capabilities SET ?", [capability]);
@@ -207,4 +215,17 @@ exports.getCapabilitiesById = async(id) => {
 
 exports.getBandsById = async(id) => {
     return await query("SELECT * FROM bands WHERE band_id = ?", [id])
+}
+
+// role_description TEXT NULL,
+//     capability_id SMALLINT UNSIGNED,
+//     family_id SMALLINT UNSIGNED,
+//     band_id SMALLINT UNSIGNED,
+
+exports.updateRole = async (role_id, role_name, role_spec, role_description, capability_id, family_id, band_id) => {
+  return await query("UPDATE roles SET role_name = ?, role_spec = ?, role_description = ?, capability_id = ?, family_id = ?, band_id = ? WHERE role_id = ?", [role_name, role_spec, role_description, capability_id, family_id, band_id, role_id]);
+}
+
+exports.updateFamily = async(family_id, family_name) => {
+  return await query("UPDATE families SET family_name = ? WHERE family_id = ?", [family_name, family_id]);
 }

@@ -42,6 +42,7 @@ export class LoginComponent implements OnInit {
           localStorage.setItem("user_full_name", data.user.user_full_name);
   
           self.router.navigate(['/']);
+          
         } else {
           self.response = 'Email and password is incorrect';
         }

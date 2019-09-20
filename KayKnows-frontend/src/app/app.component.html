@@ -40,6 +40,7 @@
     </div>
 
     <div class="tree-container">
+        <input type="text" class="searchField" [(ngModel)]="dataService.searchQuery" placeholder="Search roles..." (ngModelChange)="searchChanged($event)">
         <div class="tree">
             <ul app-tree *ngIf="dataService.familyIds.length > 0; else placeholder" [data]="dataService.nestedData">
             </ul>

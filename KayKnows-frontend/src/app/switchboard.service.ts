@@ -43,7 +43,6 @@ export class SwitchboardService {
   public switchCapabilityLead(capability_id: number){
     this.dataService.getCapabilityLeadForCapability(capability_id).subscribe(res => {
       if (res[0] == null) {
-       console.error(res);
        this.capability_lead_watcher.next();
      } else {
         this.capability_lead_watcher.next(res[0]);
