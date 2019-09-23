@@ -28,14 +28,20 @@ To run express first make sure that the database is [setup](#setup-the-database)
   npm install
   ```
 
-+ Ensure that a `mysql.env` file is located within the directory with the following content:
++ Ensure that a `config.env` file is located within the directory with the following content:
+
+  ```shell
+  cp config.env.example config.env
+  ```
 
   ```properties
-  DB_HOST= #host
-  DB_USER= #mysql user
-  DB_PASS= #password
-  DB_DATABASE= #dev/production database
-  DB_TEST_DATABASE= #test database
+    DB_HOST=localhost
+    DB_USER=database_user
+    DB_PASS=database_password
+    DB_DATABASE=database_name
+    DB_TEST_DATABASE=test_database_name
+
+    AUTH_SECRET=auth_client_secret_here
   ```
 
 + Install [nodemon](https://github.com/remy/nodemon)
